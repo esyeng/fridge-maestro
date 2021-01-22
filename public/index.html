@@ -7,6 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <title>FridgeMaestro</title>
+    <meta name="author" content="Em Yenigun">
 </head>
 
 <body>
@@ -27,31 +28,53 @@
             those instant noodles with something healthy, delicious, and
             available to you right away. That's where we come in.
         </p>
-        <p> <em>Lets orchestrate dinner tonight.</em></p>
-        <h1>Hello Fridge!</h1>
+        <p> <em>Lets orchestrate your next meal.</em></p>
 
     </section>
     <section class="container-sm">
         <!-- Main form selection area -->
         <article class="container-sm">
-            <div class="mb-3">
-                <label for="Ingredients" class="form-label">Ingredients</label>
-                <input style="margin-bottom: 0.625rem;" type="search" class="form-control" id="ingredients_bar"
-                    placeholder="Enter ingredients to find recipes...">
-                <select style="margin-bottom: 0.625rem;" class="form-select" aria-label="Default select example">
-                    <option selected>Filter results by preference</option>
-                    <option value="Non-Veg">Non-Vegan/Vegitarian</option>
-                    <option value="Vegitarian">Vegitarian </option>
-                    <option value="Vegan">Vegan</option>
-                    <option value="Dairy-Free">Dairy Free</option>
-                    <option value="Low-Carb">Low Carb</option>
-                    <option value="Gluten-Free">Gluten Free</option>
-                </select>
-                <label for="Email" class="form-label">Email</label>
-                <input style="margin-bottom: 0.625rem;" type="email" class="form-control" id="email_validation"
-                    placeholder="Enter email address to receive results in your inbox">
-                <button style="float:right" type="button" class="btn btn-dark">Search</button>
-            </div>
+            <form class="mb-3">
+                <fieldset style="margin: 0.625rem; border:0.0625rem solid black">
+                    <legend style="margin: 0.625rem; margin-left: 33%">I'm making:</legend>
+                    <div class="form-check form-check-inline">
+                        <label for="Meal" class="form-check-label">Breakfast</label>
+                        <input id="breakfast_check" value="breakfast" name="breakfast" type="checkbox"
+                            class="form-check-inline">
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <label for="Meal" class="form-check-label">Lunch</label>
+                        <input id="lunch_check" value="lunch" name="lunch" type="checkbox" class="form-check-inline">
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <label for="Meal" class="form-check-label">Dinner</label>
+                        <input id="dinner_check" value="dinner" name="dinner" type="checkbox" class="form-check-inline">
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <label for="Meal" class="form-check-label">Just a snack</label>
+                        <input id="snack_check" value="snack" name="snack" type="checkbox" class="form-check-inline">
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <label role="contentinfo" for="Ingredients" class="form-label">Enter your ingredients below to get
+                        started</label>
+                    <input name="q" style="margin-bottom: 0.625rem;" type="search" class="form-control"
+                        id="ingredients_bar" placeholder="Enter ingredients to find recipes...">
+                    <select style="margin-bottom: 0.625rem;" class="form-select" aria-label="Default select example">
+                        <option selected>Filter results by preference</option>
+                        <option value="Non-Veg">Non-Vegan/Vegetarian</option>
+                        <option value="Vegetarian">Vegetarian </option>
+                        <option value="Vegan">Vegan</option>
+                        <option value="Dairy-Free">Dairy Free</option>
+                        <option value="Low-Carb">Low Carb</option>
+                        <option value="Gluten-Free">Gluten Free</option>
+                    </select>
+                    <label for="Email" class="form-label">Email</label>
+                    <input style="margin-bottom: 0.625rem;" type="email" class="form-control" id="email_validation"
+                        placeholder="Enter email address to receive results in your inbox">
+                </fieldset>
+                <button style="float:right" type="submit" class="btn btn-dark">Search</button>
+            </form>
         </article>
     </section>
     <section class="container-sm">
