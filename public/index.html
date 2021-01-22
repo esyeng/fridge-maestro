@@ -4,53 +4,57 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <title>FridgeMaestro</title>
+    <style></style>
 </head>
 
 <body>
-    <section>
-        <div>
-            <h1>FridgeMaestro</h1>
-            <img src="../content/potoffood.jpg" alt="FridgeMaestro Cauldron"
-                srcset="../content/potoffood.jpg 500w, ../content/potoffood250.jpg 250w"
-                sizes="(max-width: 500px) 25vw, 50vw" />
-            <p>We get it.</p>
+    <section class="container-sm">
 
-            <p>
-                You've opened and closed the fridge about 4 times now,
-                possibly rummaged through your cabinets.
-            </p>
-            <p>
-                You have food, what you lack is the ingenuity to replace
-                those instant noodles with something healthy, delicious, and
-                available to you right away. That's where we come in.
-            </p>
-            <p> <em>Lets orchestrate dinner tonight.</em></p>
-            <h1>Hello Fridge!</h1>
-        </div>
+        <h1>FridgeMaestro</h1>
+        <img src="../content/potoffood.jpg" alt="FridgeMaestro Cauldron"
+            srcset="../content/potoffood.jpg 500w, ../content/potoffood250.jpg 250w"
+            sizes="(max-width: 31.25rem) 25vw, 50vw" />
+        <p>We get it.</p>
+
+        <p>
+            You've opened and closed the fridge about 4 times now,
+            possibly <mark>rummaged</mark> through your cabinets.
+        </p>
+        <p>
+            You have food, what you lack is the ingenuity to replace
+            those instant noodles with something healthy, delicious, and
+            available to you right away. That's where we come in.
+        </p>
+        <p> <em>Lets orchestrate dinner tonight.</em></p>
+        <h1>Hello Fridge!</h1>
+
     </section>
-    <article>
+
+    <article class="container-sm">
         <h3>Recently Viewed Recipes</h3>
-        <ul>
-            <li>
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item">
                 <a href="https://www.jocooks.com/recipes/coconut-shrimp-curry/" target="_blank"
                     rel="noreferrer noopener">Coconut Curry Shrimp
                 </a>
             </li>
-            <li>
+            <li class="breadcrumb-item">
                 <a href="https://thewoksoflife.com/beef-with-broccoli-all-purpose-stir-fry-sauce/" target="_blank"
                     rel="noreferrer noopener">Authentic Beef & Broccoli Stir-Fry</a>
             </li>
         </ul>
     </article>
-    <section>
+    <section class="container-sm">
         <header>
             <h3>
                 This is a section where a table is going because I've never
                 used tables in plain HTML
             </h3>
             _________________________________________
-            <table border="1">
+            <table class="table">
                 <caption>
                     Ingredients on hand
                 </caption>
@@ -92,9 +96,13 @@
                 </tfoot>
             </table>
         </header>
+        _________________________________________
     </section>
-    _________________________________________
     <footer>@EmYen 2021</footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+        crossorigin="anonymous"></script>
+
 </body>
 
 </html>
