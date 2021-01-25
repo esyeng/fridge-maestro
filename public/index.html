@@ -6,7 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-    <link href="/public/styles.css" rel="stylesheet">
+    <link href="/public/styles/styles.css" rel="stylesheet">
+    <link href="styles/fonts.css" rel="stylesheet">
+    <link href="styles/forms.css" rel="stylesheet">
+    <link href="styles/tables.css" rel="stylesheet">
+    <link href="styles/layout.css" rel="stylesheet">
     <title>FridgeMaestro</title>
     <meta name="author" content="Em Yenigun">
 </head>
@@ -14,7 +18,11 @@
 <body>
     <section class="container-sm">
         <!--Introduction section-->
-        <h1>FridgeMaestro</h1>
+        <hr>
+        <h1 class="main_title">
+            FridgeMaestro
+        </h1>
+        <hr>
         <img style="float:left" src="../content/potoffood.jpg" alt="FridgeMaestro Cauldron"
             srcset="../content/potoffood.jpg 500w, ../content/potoffood250.jpg 250w"
             sizes="(max-width: 31.25rem) 25vw, 50vw" />
@@ -98,11 +106,10 @@
         <!-- A table, just because. Will probably need a similar table to list facts per ingredient, possibly a modal -->
 
         <h3>
-            This is a section where a table is going because I've never
-            used tables in plain HTML
+            Ingredient list
         </h3>
-        _________________________________________
-        <table class="table">
+        <hr>
+        <table class="table table_hidden">
             <caption>
                 Ingredients on hand
             </caption>
@@ -144,7 +151,7 @@
             </tfoot>
         </table>
 
-        _________________________________________
+        <hr>
     </section>
     <footer>@EmYen 2021</footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"

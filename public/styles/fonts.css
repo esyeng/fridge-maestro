@@ -1,0 +1,9 @@
+* {
+    font-family: sans-serif;
+}
+
+.main_title {
+    font-size: 36pt;
+    font-style: italic;
+    text-align: center;
+}

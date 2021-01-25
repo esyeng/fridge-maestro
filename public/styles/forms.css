@@ -1,17 +1,25 @@
+/* 
+Form control 
+*/
+
+/* Group fields with border */
 .fieldset_bordered {
     margin: 0.625rem;
     border: 0.0625rem solid black;
 }
 
+/* Apply margin rule with legend */
 .fieldset_bordered_legend {
     margin: 0.625rem;
     margin-left: 33%;
 }
 
+/* Set spacing for an input element */
 .input_margin {
     margin-bottom: 0.625rem;
 }
 
+/* Class selector for floating right */
 .float_right {
     float: right;
 }
