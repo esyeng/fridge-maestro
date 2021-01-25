@@ -18,6 +18,10 @@ app.use(morgan('dev'));
  * to the front end to interact with, rather than hardcoding temp data for the sole purpose of design
  */
 
+/**
+ * This function sends an http request to the foodish API and receives an object with an image path
+ */
+
 const generatePhoto = async () => {
     try {
         http.request(
@@ -32,7 +36,6 @@ const generatePhoto = async () => {
                     data += d;
                 });
                 res.on('end', () => {
-                    console.log(data);
                     return data;
                 });
             }
@@ -42,6 +45,10 @@ const generatePhoto = async () => {
     }
 };
 
+/**
+ * By calling this function from the browser, a parameter n will generate the user's
+ * desired number of images and return an array of these images
+ */
 const generatePics = (n) => {
     let pics = [];
     for (let i = 0; i < n; i++) {
@@ -51,20 +58,26 @@ const generatePics = (n) => {
     return pics;
 };
 
+/**
+ * Static root route to serve up HTML
+ */
 app.use('/', async (req, res) => {
     try {
-        await generatePhoto();
         res.sendFile(path.join(__dirname, '..', 'public/index.html'));
     } catch (err) {
         console.log(err);
     }
 });
 
+/**
+ * This route calls the api based on the input value and sends back the photo array
+ */
 app.use('/foodpics/:n', async (req, res) => {
     try {
         const input = req.params.n;
         const results = generatePics(input);
         console.log(results);
+        res.send(results);
     } catch (err) {
         console.log(err);
     }
