@@ -1,0 +1,17 @@
+.fieldset_bordered {
+    margin: 0.625rem;
+    border: 0.0625rem solid black;
+}
+
+.fieldset_bordered_legend {
+    margin: 0.625rem;
+    margin-left: 33%;
+}
+
+.input_margin {
+    margin-bottom: 0.625rem;
+}
+
+.float_right {
+    float: right;
+}
