@@ -6,24 +6,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-    <link href="/public/styles/styles.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap" rel="stylesheet">
     <link href="styles/fonts.css" rel="stylesheet">
     <link href="styles/forms.css" rel="stylesheet">
     <link href="styles/tables.css" rel="stylesheet">
     <link href="styles/layout.css" rel="stylesheet">
+    <link href="styles/images.css" rel="stylesheet">
+    <link href="styles/links.css" rel="stylesheet">
+
     <title>FridgeMaestro</title>
     <meta name="author" content="Em Yenigun">
 </head>
 
 <body>
-    <section class="container-sm">
-        <!--Introduction section-->
+    <section class="container-sm header_default">
         <hr>
         <h1 class="main_title">
             FridgeMaestro
         </h1>
         <hr>
-        <img style="float:left" src="../content/potoffood.jpg" alt="FridgeMaestro Cauldron"
+        <ul class="list_nav breadcrumb">
+            <li class="list_nav_item">
+                <a class="float_right" href="#recipes">Recipes</a>
+            </li>
+        </ul>
+    </section>
+    <section class="container-sm">
+        <!--Introduction section-->
+
+        <img class="float_left" src="../content/potoffood.jpg" alt="FridgeMaestro Cauldron"
             srcset="../content/potoffood.jpg 500w, ../content/potoffood250.jpg 250w"
             sizes="(max-width: 31.25rem) 25vw, 50vw" />
         <p>We get it.</p>
@@ -83,12 +95,13 @@
                     <input class="input_margin" type="email" class="form-control" id="email_validation"
                         placeholder="Enter email address to receive results in your inbox">
                 </fieldset>
-                <button class="float_right" type="submit" class="btn btn-dark">Search</button>
+                <button type="submit" class="btn btn-dark float_right search">Search</button>
             </form>
         </article>
     </section>
     <section class="container-sm">
         <!-- Recently viewed -->
+        <a name="recipes"></a>
         <h3>Recently Viewed Recipes</h3>
         <ul class="breadcrumb">
             <li class="breadcrumb-item">

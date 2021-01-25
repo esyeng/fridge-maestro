@@ -19,7 +19,8 @@ Form control
     margin-bottom: 0.625rem;
 }
 
-/* Class selector for floating right */
-.float_right {
-    float: right;
+/* buttons */
+.search:hover {
+    background-color: beige;
+    color: black;
 }
