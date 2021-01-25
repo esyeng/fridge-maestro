@@ -11,7 +11,7 @@ Form control
 /* Apply margin rule with legend */
 .fieldset_bordered_legend {
     margin: 0.625rem;
-    margin-left: 33%;
+    text-align: center;
 }
 
 /* Set spacing for an input element */
@@ -19,6 +19,19 @@ Form control
     margin-bottom: 0.625rem;
 }
 
+/* validation fields */
+
+/* specifics to ingredients_search */
+.search_bar {
+    /* min-width: 31.25rem; */
+    padding: 0.75rem;
+    margin-bottom: 0rem;
+}
+@media (max-width: 23.125rem) {
+    .search_bar {
+        min-width: 23.125rem;
+    }
+}
 /* buttons */
 .search:hover {
     background-color: beige;

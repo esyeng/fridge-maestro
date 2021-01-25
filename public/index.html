@@ -20,6 +20,7 @@
 </head>
 
 <body>
+    <!--Header + Navigation-->
     <section class="container-sm header_default">
         <hr>
         <h1 class="main_title">
@@ -77,12 +78,16 @@
                     </div>
                 </fieldset>
                 <fieldset>
-                    <label role="contentinfo" for="ingredients_bar" class="form-label">Enter your ingredients below to
+                    <label role="contentinfo" for="ingredients_bar" class="form-label">Enter your ingredients below
+                        to
                         get
                         started</label>
-                    <input name="q" class="input_margin" type="search" class="form-control" id="ingredients_bar"
-                        placeholder="Enter ingredients to find recipes...">
-                    <select class="input_margin" class="form-select" aria-label="Default select example">
+                    <div class="input-group mb-3">
+                        <input name="q" class="form-control search_bar input_margin" type="search" id="ingredients_bar"
+                            placeholder="Enter ingredients to find recipes...">
+                        <button class="btn btn-outline-secondary" type="button" id="add_to_list">+ Add to list</button>
+                    </div>
+                    <select class="form-select input_margin" aria-label="Default select example">
                         <option selected>Filter results by preference</option>
                         <option value="Non-Veg">Non-Vegan/Vegetarian</option>
                         <option value="Vegetarian">Vegetarian </option>
@@ -91,8 +96,8 @@
                         <option value="Low-Carb">Low Carb</option>
                         <option value="Gluten-Free">Gluten Free</option>
                     </select>
-                    <label for="email_validation" class="form-label">Email</label>
-                    <input class="input_margin" type="email" class="form-control" id="email_validation"
+                    <label for="email_validation" class="form-label">Email Address</label>
+                    <input class="form-control input_margin" type="email" id="email_validation"
                         placeholder="Enter email address to receive results in your inbox">
                 </fieldset>
                 <button type="submit" class="btn btn-dark float_right search">Search</button>
