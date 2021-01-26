@@ -1,4 +1,8 @@
 /* Class selector for floating right */
+body {
+    background-color: #fcf8e3;
+}
+
 .float_right {
     float: right;
 }

@@ -9,11 +9,11 @@
 .list_nav_item a {
     text-decoration: none;
     color: black;
-    background-color: white;
+    background-color: #fcf8e3;
     padding: 0.25rem;
 }
 
 .list_nav_item a:hover {
-    color: white;
+    color: #fcf8e3;
     background-color: black;
 }
