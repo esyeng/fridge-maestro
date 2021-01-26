@@ -54,6 +54,38 @@ const generatePhoto = () => {
     });
 };
 
+const getIngredients = async (ingredients) => {
+    return new Promise((resolve, reject) => {
+        const options = {
+            host: 'api.spoonacular.com',
+            path: `/food/ingredients/search?query=${ingredients}`,
+            method: 'GET',
+        };
+        const req = http.request(options, (res) => {
+            if (req.statusCode < 200 || res.statusCode >= 300) {
+                return reject(new Error('statusCode=', res.statusCode));
+            }
+            let body = [];
+            res.on('data', (d) => {
+                body.push(d);
+            });
+            res.on('end', () => {
+                try {
+                    body = JSON.parse(Buffer.concat(body).toString());
+                } catch (e) {
+                    reject(e);
+                }
+                resolve(body);
+            });
+        });
+        req.on('error', (e) => {
+            reject(e.message);
+        });
+        req.end();
+        return req;
+    });
+};
+
 generatePhoto().then((data) => {
     const response = {
         statusCode: 200,
@@ -81,14 +113,31 @@ const generatePics = async (n) => {
     return pics;
 };
 
+// initial ingredients route scaffolded here
+// app.use('/ingredients', async (req, res) => {
+//     try {
+//         const input = req.params.ingredients;
+//         const queryResult = await getIngredients(input).then((data) => {
+//             const response = {
+//                 statusCode: 200,
+//                 body: JSON.stringify(data),
+//             };
+//             return response;
+//         });
+//         res.send(queryResult);
+//     } catch (err) {
+//         console.log(err);
+//     }
+// });
+
 /**
  * This route calls the api based on the input value and sends back the photo array
  */
-app.use('/foodpics/:n', async (req, res) => {
+app.use('/:n', async (req, res) => {
     try {
         const input = req.params.n;
         const results = await generatePics(input);
-        res.send(results);
+        res.status(200).send(results);
     } catch (err) {
         console.log(err);
     }

@@ -14,7 +14,7 @@
     <link href="styles/layout.css" rel="stylesheet">
     <link href="styles/images.css" rel="stylesheet">
     <link href="styles/links.css" rel="stylesheet">
-
+    <script src="../client/index.js" type="text/javascript"></script>
     <title>FridgeMaestro</title>
     <meta name="author" content="Em Yenigun">
 </head>
@@ -141,6 +141,8 @@
     </section>
     <section class="container-sm">
         <!-- Recently viewed -->
+        <button id="get_photos" type="submit" class="btn btn-dark get_photos">Click to populate with foods</button>
+        <div id="food_container" class="container-fluid food_container"></div>
         <a name="recipes"></a>
         <h3>Recently Viewed Recipes</h3>
         <ul class="breadcrumb">

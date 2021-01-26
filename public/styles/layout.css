@@ -2,3 +2,12 @@
 .float_right {
     float: right;
 }
+
+.food_container {
+    display: flex;
+}
+
+.food_container img {
+    flex-grow: 1;
+    flex-basis: 33%;
+}
