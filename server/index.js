@@ -101,16 +101,16 @@ generatePhoto().then((data) => {
  * desired number of images and return an array of these images
  */
 const generatePics = async (n) => {
-    let pics = [];
+    let pics = {};
     for (let i = 0; i < n; i++) {
         let datapoint = await generatePhoto().then((data) => {
             const response = {
                 statusCode: 200,
-                body: JSON.stringify(data),
+                body: data,
             };
             return response;
         });
-        pics.push(datapoint);
+        pics[i] = datapoint;
     }
     return pics;
 };
