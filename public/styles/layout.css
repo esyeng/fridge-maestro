@@ -9,9 +9,12 @@ body {
 
 .food_container {
     display: flex;
+    width: 85vw;
+    flex-wrap: wrap;
 }
 
-.food_container img {
+.food_container_img {
     flex-grow: 1;
-    flex-basis: 33%;
+    max-height: 18.75rem;
+    max-width: 18.75rem;
 }

@@ -29,14 +29,30 @@ const picData = [
 ];
 
 const queryBtn = document.getElementById('get_photos');
+const clearBtn = document.getElementById('clear_photos');
 const photoContainer = document.getElementById('food_container');
 
 queryBtn.addEventListener('click', (e) => {
     if (e.target) {
-        picData.forEach((item) => {
-            let newChildNode = document.createElement('img');
-            newChildNode.src = item.image;
-            photoContainer.appendChild(newChildNode);
-        });
+        if (
+            photoContainer.childElementCount >= 0 &&
+            photoContainer.childElementCount <= 9
+        ) {
+            picData.forEach((item) => {
+                let newChildNode = document.createElement('img');
+                newChildNode.src = item.image;
+                newChildNode.setAttribute('class', 'food_container_img');
+                photoContainer.appendChild(newChildNode);
+            });
+        }
+    }
+});
+
+clearBtn.addEventListener('click', (e) => {
+    if (e.target) {
+        while (photoContainer.firstChild) {
+            photoContainer.removeChild(photoContainer.firstChild);
+        }
+        return;
     }
 });

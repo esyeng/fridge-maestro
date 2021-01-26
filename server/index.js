@@ -4,12 +4,14 @@ const path = require('path');
 const PORT = 5500;
 const morgan = require('morgan');
 const http = require('https');
+
 const server = app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
 });
 
 app.use(express.static(path.resolve(__dirname, '..', 'public')));
 app.use(express.static(path.resolve(__dirname, '..', 'content')));
+app.use('/client', express.static(path.resolve(__dirname, '..', 'client')));
 app.use(morgan('dev'));
 
 /**
