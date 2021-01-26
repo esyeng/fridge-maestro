@@ -1,0 +1,9 @@
+/* Image rules */
+
+/* float */
+
+.float_left {
+    float: left;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+}

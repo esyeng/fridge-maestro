@@ -1,0 +1,25 @@
+{
+  "name": "fridge-maestro",
+  "version": "1.0.0",
+  "description": "Recommend recipes based on ingredients on-hand",
+  "main": "server/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/esyeng/eyenigun-projectrepo.git"
+  },
+  "author": "Emre Yenigun",
+  "license": "MIT",
+  "homepage": "https://bitbucket.org/esyeng/eyenigun-projectrepo#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}

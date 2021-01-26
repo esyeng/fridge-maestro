@@ -1,0 +1,17 @@
+/* Class selector for floating right */
+body {
+    background-color: #fcf8e3;
+}
+
+.float_right {
+    float: right;
+}
+
+.food_container {
+    display: flex;
+}
+
+.food_container img {
+    flex-grow: 1;
+    flex-basis: 33%;
+}

@@ -1,0 +1,19 @@
+/* Link & a tag rules */
+
+/* Navigation list */
+.list_nav {
+    display: inline-block;
+    list-style-type: none;
+}
+
+.list_nav_item a {
+    text-decoration: none;
+    color: black;
+    background-color: #fcf8e3;
+    padding: 0.25rem;
+}
+
+.list_nav_item a:hover {
+    color: #fcf8e3;
+    background-color: black;
+}
