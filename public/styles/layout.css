@@ -84,6 +84,11 @@ body {
     flex-grow: 1;
 }
 
+.ingredient_li {
+    min-width: 7.25rem;
+    width: fit-content;
+}
+
 @media only screen and (max-width: 37.5rem) {
     .result_box {
         flex-wrap: wrap;

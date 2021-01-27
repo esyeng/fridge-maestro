@@ -74,6 +74,16 @@ function removeIngredient(ingredientText) {
     ingredientList.removeChild(ingredientToRemove);
 }
 
+function hasDuplicates(collection, text) {
+    for (let i = 0; i < collection.length; i++) {
+        let node = collection[i];
+        if (node.id === text) {
+            return true;
+        }
+    }
+    return false;
+}
+
 /**
  *
  * Element event listeners
@@ -82,18 +92,26 @@ function removeIngredient(ingredientText) {
 
 addToListBtn.addEventListener('click', (e) => {
     if (e.target) {
+        let listNodes = [...ingredientList.children];
         let ingredientText = queryBar.value;
         ingredientText = ingredientText.replace(/\W+/g, '');
-        let ingredientToAdd = document.createElement('li');
-        ingredientToAdd.setAttribute('class', 'ingredient_li tag-remove');
-        ingredientToAdd.setAttribute('id', ingredientText);
-        ingredientToAdd.setAttribute(
-            'onclick',
-            `removeIngredient(${ingredientToAdd.id})`
-        );
-        ingredientToAdd.innerHTML = ingredientText;
-        queryBar.value = '';
-        ingredientList.appendChild(ingredientToAdd);
+
+        if (hasDuplicates(listNodes, ingredientText)) {
+            queryBar.value = '';
+            return false;
+        } else {
+            let ingredientToAdd = document.createElement('li');
+            ingredientToAdd.setAttribute('class', 'ingredient_li tag-remove');
+            ingredientToAdd.setAttribute('id', ingredientText);
+            ingredientToAdd.setAttribute(
+                'onclick',
+                `removeIngredient(${ingredientToAdd.id})`
+            );
+            ingredientToAdd.innerHTML = ingredientText;
+            queryBar.value = '';
+
+            ingredientList.appendChild(ingredientToAdd);
+        }
     }
 });
 
