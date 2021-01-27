@@ -3,7 +3,7 @@ const clearBtn = document.getElementById('clear_photos');
 const numSelect = document.getElementById('num_select');
 const photoContainer = document.getElementById('food_container');
 
-const getPhotosXML = (num) => {
+const getPhotos = async (num) => {
     const generate = new Promise((resolve, reject) => {
         fetch(`http://localhost:5500/${num}`, {
             method: 'GET',
@@ -11,14 +11,12 @@ const getPhotosXML = (num) => {
             .then((response) => response.json())
             .then((json) => {
                 resolve(json);
-                console.log('parsed json', json);
             })
             .catch((err) => {
                 reject((err) => console.error(err));
             });
     });
     return generate.then((res) => {
-        console.log(res);
         return res;
     });
 };
@@ -28,23 +26,22 @@ numSelect.addEventListener('change', (e) => {
 });
 
 queryBtn.addEventListener('click', async (e) => {
-    if (e.target) {
-        if (
-            photoContainer.childElementCount >= 0 &&
-            photoContainer.childElementCount <= 9
-        ) {
-            const numItemsToGet = numSelect.value;
-            const picUrlObj = await getPhotosXML(numItemsToGet);
-            const picPack = Object.keys(picUrlObj);
-            const picData = Object.values(picUrlObj);
+    const isCountInRange =
+        photoContainer.childElementCount >= 0 &&
+        photoContainer.childElementCount <= 9;
 
-            picPack.forEach((i) => {
-                let newChildNode = document.createElement('img');
-                newChildNode.src = picData[i].body.image;
-                newChildNode.setAttribute('class', 'food_container_img');
-                photoContainer.appendChild(newChildNode);
-            });
-        }
+    if (e.target && isCountInRange) {
+        const numItemsToGet = numSelect.value;
+        const picUrlObj = await getPhotos(numItemsToGet);
+        const picPack = Object.keys(picUrlObj);
+        const picData = Object.values(picUrlObj);
+
+        picPack.forEach((i) => {
+            let newChildNode = document.createElement('img');
+            newChildNode.src = picData[i].body.image;
+            newChildNode.setAttribute('class', 'food_container_img');
+            photoContainer.appendChild(newChildNode);
+        });
     }
 });
 
@@ -56,5 +53,3 @@ clearBtn.addEventListener('click', (e) => {
         return;
     }
 });
-
-// console.log(getPhotosXML(3));
