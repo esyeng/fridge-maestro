@@ -109,4 +109,16 @@ body {
 
 .footer {
     position: sticky;
+    height: 6.25rem;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    margin: auto;
+    background-color: #000000e3;
+}
+
+.footer_text {
+    align-items: center;
 }
