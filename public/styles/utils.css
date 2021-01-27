@@ -1,0 +1,30 @@
+/* Buttons & functional components */
+
+#get_photos {
+    max-width: 25rem;
+}
+
+.get_photos {
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
+    max-width: 12.5rem;
+    min-width: 3.75rem;
+}
+
+/* specifics to ingredients_search */
+#add_to_list {
+    background-color: black;
+    color: white;
+}
+
+#add_to_list:hover {
+    background-color: #04d63cd2;
+    color: black;
+}
+
+.tag-remove::before {
+    content: 'x ';
+    color: red;
+    font-weight: 300;
+    font-family: Arial, sans-serif;
+}

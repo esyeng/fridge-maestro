@@ -26,10 +26,6 @@ Form control
 
 /* validation fields */
 
-/* specifics to ingredients_search */
-#add_to_list {
-    background-color: #0ac93dbb;
-}
 .search_bar {
     /* min-width: 31.25rem; */
     padding: 0.75rem;

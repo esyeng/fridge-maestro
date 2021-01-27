@@ -2,3 +2,7 @@
 .table_hidden {
     visibility: hidden;
 }
+
+.table_show {
+    visibility: visible;
+}

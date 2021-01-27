@@ -14,6 +14,7 @@
     <link href="styles/layout.css" rel="stylesheet">
     <link href="styles/images.css" rel="stylesheet">
     <link href="styles/links.css" rel="stylesheet">
+    <link href="styles/utils.css" rel="stylesheet">
     <script defer src="/client/index.js" type="text/javascript"></script>
     <title>FridgeMaestro</title>
     <meta name="author" content="Em Yenigun">
@@ -68,10 +69,13 @@
             </li>
         </ul>
     </section>
+
+    <!-- intro -->
+
     <section class="container-sm">
         <!--Introduction section-->
 
-        <img class="float_left" src="../content/potoffood.jpg" alt="FridgeMaestro Cauldron"
+        <img class="float_left intro_header_img" src="../content/potoffood.jpg" alt="FridgeMaestro Cauldron"
             srcset="../content/potoffood.jpg 500w, ../content/potoffood250.jpg 250w"
             sizes="(max-width: 31.25rem) 25vw, 50vw" />
         <p>We get it.</p>
@@ -88,6 +92,9 @@
         <p> <em>Lets orchestrate your next meal.</em></p>
 
     </section>
+
+    <!-- Main form -->
+
     <section class="container-sm">
         <!-- Main form selection area -->
         <article class="container-sm">
@@ -118,9 +125,9 @@
                         get
                         started</label>
                     <div class="input-group mb-3">
-                        <input name="q" class="form-control search_bar input_margin" type="search" id="ingredients_bar"
-                            placeholder="Enter ingredients to find recipes...">
-                        <button class="btn btn-outline-secondary" type="button" id="add_to_list">+ Add to list</button>
+                        <input name="query_bar" class="form-control search_bar input_margin" type="search"
+                            id="query_bar" placeholder="What're you bringing to the table?">
+                        <button id="add_to_list" class="btn btn-outline-secondary" type="button">+ Add to list</button>
                     </div>
                     <select class="form-select input_margin" aria-label="Default select example">
                         <option selected>Filter results by preference</option>
@@ -139,35 +146,61 @@
             </form>
         </article>
     </section>
-    <section class="container-sm">
-        <!-- Recently viewed -->
-        <button id="get_photos" type="button" class="btn btn-dark get_photos">Click to populate with foods</button>
-        <button id="clear_photos" type="button" class="btn btn-dark get_photos">Clear</button>
-        <input id="num_select" name="num_select" type="number" class="form-control form-control-sm"
-            placeholder="#pics to fetch">
-        <div id="food_container" class="food_container"></div>
-        <a name="recipes"></a>
-        <h3>Recently Viewed Recipes</h3>
-        <ul class="breadcrumb">
-            <li class="breadcrumb-item">
-                <a href="https://www.jocooks.com/recipes/coconut-shrimp-curry/" target="_blank"
-                    rel="noreferrer noopener">Coconut Curry Shrimp
-                </a>
-            </li>
-            <li class="breadcrumb-item">
-                <a href="https://thewoksoflife.com/beef-with-broccoli-all-purpose-stir-fry-sauce/" target="_blank"
-                    rel="noreferrer noopener">Authentic Beef & Broccoli Stir-Fry</a>
-            </li>
-        </ul>
-    </section>
-    <section class="container-sm">
-        <!-- A table, just because. Will probably need a similar table to list facts per ingredient, possibly a modal -->
 
-        <h3>
-            Ingredient list
+    <!-- Ingredients-->
+    <div class="result_box">
+        <section name="ingredient_list" class="container-sm result_box_container ingredient_list">
+            <header>
+                <h3 class="result_box_item ingredient">
+                    I've got in my fridge/pantry...
+                </h3>
+                <hr>
+            </header>
+            <ul id="ingredient_list_ul" class="result_box_item ingredient list-unstyled">
+            </ul>
+        </section>
+
+        <!-- Recipes -->
+
+        <section name="recipe_center" class="container-sm result_box_container">
+            <!-- Recently viewed -->
+            <button id="get_photos" type="button" class="result_box_item recipe btn btn-dark get_photos">Click to
+                populate
+                with foods</button>
+            <button id="clear_photos" type="button"
+                class="result_box_item recipe btn btn-dark get_photos">Clear</button>
+            <input id="num_select" name="num_select" type="number"
+                class="result_box_item recipe form-control form-control-sm get_photos" placeholder="#pics to fetch">
+            <div id="food_container" class="result_box_item recipe food_container"></div>
+            <hr>
+            <div class="recently_viewed">
+                <a name="recipes"></a>
+                <h3 class="result_box_item recipe">Recently Viewed Recipes</h3>
+                <ul class="result_box_item recipe breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="https://www.jocooks.com/recipes/coconut-shrimp-curry/" target="_blank"
+                            rel="noreferrer noopener">Coconut Curry Shrimp
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="https://thewoksoflife.com/beef-with-broccoli-all-purpose-stir-fry-sauce/"
+                            target="_blank" rel="noreferrer noopener">Authentic Beef & Broccoli Stir-Fry</a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </div>
+    <!-- Tables -->
+
+    <section class="container-md">
+        <!-- Ingredient nutrition info (visual demo)-->
+        <button id="toggle_nutrition" type="button" class="btn btn-dark float_right search">+
+            Nutrition Info</button>
+        <h3 id="nutrition_header" class="table_hidden">
+            Nutrition Facts
         </h3>
         <hr>
-        <table class="table table_hidden">
+        <table id="nutrition_table" class="table table_hidden">
             <caption>
                 Ingredients on hand
             </caption>
@@ -211,7 +244,9 @@
 
         <hr>
     </section>
-    <footer>@EmYen 2021</footer>
+    <footer class="footer">
+        Designed & Developed by Em Yenigun @ BORN Group, NY
+    </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
         crossorigin="anonymous"></script>
