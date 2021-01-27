@@ -129,7 +129,7 @@
                             id="query_bar" placeholder="What're you bringing to the table?">
                         <button id="add_to_list" class="btn btn-outline-secondary" type="button">+ Add to list</button>
                     </div>
-                    <select class="form-select input_margin" aria-label="Default select example">
+                    <select id="filter_results" name="filter_results" class="form-select input_margin">
                         <option selected>Filter results by preference</option>
                         <option value="Non-Veg">Non-Vegan/Vegetarian</option>
                         <option value="Vegetarian">Vegetarian </option>
@@ -142,7 +142,7 @@
                     <input class="form-control input_margin" type="email" id="email_validation"
                         placeholder="Enter email address to receive results in your inbox">
                 </fieldset>
-                <button type="submit" class="btn btn-dark float_right search">Search</button>
+
             </form>
         </article>
     </section>
@@ -158,6 +158,8 @@
             </header>
             <ul id="ingredient_list_ul" class="result_box_item ingredient list-unstyled">
             </ul>
+            <button id="submit_query" name="submit_query" type="submit" class="btn btn-dark float_right search">Find
+                meals</button>
         </section>
 
         <!-- Recipes -->

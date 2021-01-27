@@ -3,16 +3,24 @@
  * Query Selectors & element targets
  *
  */
+//  -- Buttons --
 
-const addToListBtn = document.getElementById('add_to_list');
-const queryBtn = document.getElementById('get_photos');
-const clearBtn = document.getElementById('clear_photos');
-const numSelect = document.getElementById('num_select');
-const queryBar = document.getElementById('query_bar');
-const toggleNutrition = document.getElementById('toggle_nutrition');
-const nutritionTable = document.getElementById('nutrition_table');
-const nutritionHeader = document.getElementById('nutrition_header');
-const ingredientList = document.getElementById('ingredient_list_ul');
+const addToListBtn = document.getElementById('add_to_list'); // add btn
+const queryBtn = document.getElementById('get_photos'); // test photo query btn
+const clearBtn = document.getElementById('clear_photos'); // clear results btn
+
+// -- Form --
+
+const numSelect = document.getElementById('num_select'); // select #photos (or results when applicable)
+const queryBar = document.getElementById('query_bar'); // entry field for query params
+const ingredientList = document.getElementById('ingredient_list_ul'); // ul of query params
+const submitQuery = document.getElementById('submit_query'); // btn to send request object to probe recipe API(s)
+
+// -- Table --
+
+const toggleNutrition = document.getElementById('toggle_nutrition'); // display table w/dummy data (or search ingredient info & populate table when applicable)
+const nutritionTable = document.getElementById('nutrition_table'); // table with dummy data (or nutrition facts)
+const nutritionHeader = document.getElementById('nutrition_header'); // label text for table
 
 /**
  *
@@ -62,7 +70,6 @@ const getPhotos = async (num) => {
  */
 
 function removeIngredient(ingredientText) {
-    console.log(ingredientText);
     let ingredientToRemove = document.getElementById(ingredientText.id);
     ingredientList.removeChild(ingredientToRemove);
 }
