@@ -69,6 +69,20 @@ const getPhotos = async (num) => {
  *
  */
 
+function createDomItem(element) {
+    return document.createElement(element);
+}
+
+// maybe pointless but I wanted a way to set a bunch of attributes at once rather than write the setAttribute function a billion times
+function setAttributes(element, attributePairs) {
+    attributePairs.forEach((attributePair) => {
+        let attribute = attributePair.attribute;
+        let value = attributePair.value;
+        element.setAttribute(attribute, value);
+    });
+    return element;
+}
+
 function removeIngredient(ingredientText) {
     let ingredientToRemove = document.getElementById(ingredientText.id);
     ingredientList.removeChild(ingredientToRemove);
@@ -90,6 +104,7 @@ function hasDuplicates(collection, text) {
  *
  */
 
+// Ingredient list adding procedure
 addToListBtn.addEventListener('click', (e) => {
     if (e.target) {
         let listNodes = [...ingredientList.children];
@@ -100,13 +115,21 @@ addToListBtn.addEventListener('click', (e) => {
             queryBar.value = '';
             return false;
         } else {
-            let ingredientToAdd = document.createElement('li');
-            ingredientToAdd.setAttribute('class', 'ingredient_li tag-remove');
-            ingredientToAdd.setAttribute('id', ingredientText);
-            ingredientToAdd.setAttribute(
-                'onclick',
-                `removeIngredient(${ingredientToAdd.id})`
-            );
+            let ingredientToAdd = createDomItem('li');
+            ingredientToAdd = setAttributes(ingredientToAdd, [
+                {
+                    attribute: 'class',
+                    value: 'ingredient_li tag-remove',
+                },
+                {
+                    attribute: 'id',
+                    value: ingredientText,
+                },
+                {
+                    attribute: 'onclick',
+                    value: `removeIngredient(${ingredientText})`,
+                },
+            ]);
             ingredientToAdd.innerHTML = ingredientText;
             queryBar.value = '';
 
@@ -131,8 +154,8 @@ queryBtn.addEventListener('click', async (e) => {
         const picData = Object.values(picUrlObj);
 
         picPack.forEach((i) => {
-            let newCard = document.createElement('div');
-            let newPhoto = document.createElement('img');
+            let newCard = createDomItem('div');
+            let newPhoto = createDomItem('img');
             newPhoto.src = picData[i].body.image;
             newCard.innerHTML = 'Recipe card example';
 
