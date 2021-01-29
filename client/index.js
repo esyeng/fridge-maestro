@@ -45,6 +45,8 @@ const photoContainer = document.getElementById('food_container');
  *
  */
 
+const { api, apiController } = require('./apiController');
+
 const getPhotos = async (num) => {
     const generate = new Promise((resolve, reject) => {
         fetch(`http://localhost:5500/${num}`, {
@@ -69,11 +71,9 @@ const getPhotos = async (num) => {
  *
  */
 
-function createDomItem(element) {
-    return document.createElement(element);
-}
+const createDomItem = (element) => document.createElement(element);
 
-// maybe pointless but I wanted a way to set a bunch of attributes at once rather than write the setAttribute function a billion times
+// quickly set multiple attributes
 function setAttributes(element, attributePairs) {
     attributePairs.forEach((attributePair) => {
         let attribute = attributePair.attribute;
@@ -142,6 +142,10 @@ numSelect.addEventListener('change', (e) => {
     numSelect.value = e.target.value;
 });
 
+/**
+ * Generate demo query
+ */
+
 queryBtn.addEventListener('click', async (e) => {
     const isCountInRange =
         photoContainer.childElementCount >= 0 &&
@@ -169,15 +173,19 @@ queryBtn.addEventListener('click', async (e) => {
     }
 });
 
+/**
+ * clear viewport container
+ */
 clearBtn.addEventListener('click', (e) => {
-    if (e.target) {
-        while (photoContainer.firstChild) {
-            photoContainer.removeChild(photoContainer.firstChild);
-        }
-        return;
+    while (photoContainer.firstChild) {
+        photoContainer.removeChild(photoContainer.firstChild);
     }
+    return;
 });
 
+/**
+ * toggle nutrition table
+ */
 toggleNutrition.addEventListener('click', (e) => {
     nutritionTable.classList.toggle('table_hidden');
     nutritionHeader.classList.toggle('table_hidden');
