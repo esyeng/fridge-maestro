@@ -38,17 +38,16 @@ const photoContainer = document.getElementById('food_container');
  */
 
 /**
+ * @summary Pointless in retrospect
  * @param  {String} tag
  */
 
 const createDomItem = (tag) => document.createElement(tag);
 
 /**
- *
  * @summary Set multiple attributes on single element
  * @param  {HTML} element
  * @param  {Array} attributePairs
- *
  */
 
 function setAttributes(element, attributePairs) {

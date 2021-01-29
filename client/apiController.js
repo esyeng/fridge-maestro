@@ -29,31 +29,48 @@ export const apiController = {
         fetch(`${api.ingredientSearch}/${queryStr}`)
             .then((response) => response.json())
             .then((json) => json)
-            .catch((e) => console.error(e));
+            .catch(() => this.fallBackRequest().catch((e) => console.error(e)));
     },
     findRecipes: (queryStr) => {
         fetch(`${api.recipeSearch}/${queryStr}`)
             .then((response) => response.json())
             .then((json) => json)
-            .catch((e) => console.error(e));
+            .catch(() => this.fallBackRequest().catch((e) => console.error(e)));
+    },
+    fallBackRequest: (queryStr) => {
+        fetch(`${api.random}/${queryStr}`)
+            .then((response) => response.json())
+            .then((json) => json)
+            .catch((e) => this.getPhotos(9));
     },
     getPhotos: (num) => {
-        fetch(`http://localhost:5500`);
+        fetch(`http://localhost:5500/${num}`)
+            .then((response) => response.json())
+            .then((json) => json)
+            .catch((e) => console.error(e));
     },
-
     resolve: (promise) => {
+        console.log(`${promise} pending`);
         promise.then((result) => result);
     },
 };
 
-// saving for reference //
-
-/*
-const getPhotos = async (num) => {
-    const generate = new Promise((resolve, reject) => {
-        fetch(`http://localhost:5500/${num}`, {
-            method: 'GET',
-        })
+/**
+ * @notes 
+ * 
+ * 
+ * findRecipes("stringwithparams").then(data => resolve(data))
+ * 
+ * 
+ 
+ 
+ // saving for reference //
+ 
+ const getPhotos = async (num) => {
+     const generate = new Promise((resolve, reject) => {
+         fetch(`http://localhost:5500/${num}`, {
+             method: 'GET',
+            })
             .then((response) => response.json())
             .then((json) => {
                 resolve(json);
@@ -61,20 +78,18 @@ const getPhotos = async (num) => {
             .catch((err) => {
                 reject((err) => console.error(err));
             });
-    });
-    return generate.then((res) => {
-        return res;
-    });
-};
-
-
-generatePhoto().then((data) => {
-    const response = {
-        statusCode: 200,
-        body: JSON.stringify(data),
+        });
+        return generate.then((res) => {
+            return res;
+        });
     };
-    return response;
-});
-
-
-*/
+    
+    generatePhoto().then((data) => {
+        const response = {
+            statusCode: 200,
+            body: JSON.stringify(data),
+        };
+        return response;
+    });
+    
+    */
