@@ -1,26 +1,10 @@
 /**
  *
- * Query Selectors & element targets
+ * Module Imports
  *
  */
-//  -- Buttons --
-
-const addToListBtn = document.getElementById('add_to_list'); // add btn
-const queryBtn = document.getElementById('get_photos'); // test photo query btn
-const clearBtn = document.getElementById('clear_photos'); // clear results btn
-
-// -- Form --
-
-const numSelect = document.getElementById('num_select'); // select #photos (or results when applicable)
-const queryBar = document.getElementById('query_bar'); // entry field for query params
-const ingredientList = document.getElementById('ingredient_list_ul'); // ul of query params
-const submitQuery = document.getElementById('submit_query'); // btn to send request object to probe recipe API(s)
-
-// -- Table --
-
-const toggleNutrition = document.getElementById('toggle_nutrition'); // display table w/dummy data (or search ingredient info & populate table when applicable)
-const nutritionTable = document.getElementById('nutrition_table'); // table with dummy data (or nutrition facts)
-const nutritionHeader = document.getElementById('nutrition_header'); // label text for table
+import * as selectors from './selectors';
+import { api, apiController } from './apiController';
 
 /**
  *
@@ -44,8 +28,6 @@ const photoContainer = document.getElementById('food_container');
  * Public API methods
  *
  */
-
-const { api, apiController } = require('./apiController');
 
 const getPhotos = async (num) => {
     const generate = new Promise((resolve, reject) => {
@@ -85,7 +67,7 @@ function setAttributes(element, attributePairs) {
 
 function removeIngredient(ingredientText) {
     let ingredientToRemove = document.getElementById(ingredientText.id);
-    ingredientList.removeChild(ingredientToRemove);
+    selectors.ingredientList.removeChild(ingredientToRemove);
 }
 
 function hasDuplicates(collection, text) {
@@ -105,14 +87,14 @@ function hasDuplicates(collection, text) {
  */
 
 // Ingredient list adding procedure
-addToListBtn.addEventListener('click', (e) => {
+selectors.addToListBtn.addEventListener('click', (e) => {
     if (e.target) {
-        let listNodes = [...ingredientList.children];
-        let ingredientText = queryBar.value;
+        let listNodes = [...selectors.ingredientList.children];
+        let ingredientText = selectors.queryBar.value;
         ingredientText = ingredientText.replace(/\W+/g, '');
 
         if (hasDuplicates(listNodes, ingredientText)) {
-            queryBar.value = '';
+            selectors.queryBar.value = '';
             return false;
         } else {
             let ingredientToAdd = createDomItem('li');
@@ -131,28 +113,27 @@ addToListBtn.addEventListener('click', (e) => {
                 },
             ]);
             ingredientToAdd.innerHTML = ingredientText;
-            queryBar.value = '';
+            selectors.queryBar.value = '';
 
-            ingredientList.appendChild(ingredientToAdd);
+            selectors.ingredientList.appendChild(ingredientToAdd);
         }
     }
 });
 
-numSelect.addEventListener('change', (e) => {
-    numSelect.value = e.target.value;
+selectors.numSelect.addEventListener('change', (e) => {
+    selectors.numSelect.value = e.target.value;
 });
 
 /**
  * Generate demo query
  */
-
-queryBtn.addEventListener('click', async (e) => {
+selectors.queryBtn.addEventListener('click', async (e) => {
     const isCountInRange =
         photoContainer.childElementCount >= 0 &&
         photoContainer.childElementCount <= 9;
 
     if (e.target && isCountInRange) {
-        const numItemsToGet = numSelect.value;
+        const numItemsToGet = selectors.numSelect.value;
         const picUrlObj = await getPhotos(numItemsToGet);
         const picPack = Object.keys(picUrlObj);
         const picData = Object.values(picUrlObj);
@@ -176,7 +157,7 @@ queryBtn.addEventListener('click', async (e) => {
 /**
  * clear viewport container
  */
-clearBtn.addEventListener('click', (e) => {
+selectors.clearBtn.addEventListener('click', (e) => {
     while (photoContainer.firstChild) {
         photoContainer.removeChild(photoContainer.firstChild);
     }
@@ -186,7 +167,7 @@ clearBtn.addEventListener('click', (e) => {
 /**
  * toggle nutrition table
  */
-toggleNutrition.addEventListener('click', (e) => {
-    nutritionTable.classList.toggle('table_hidden');
-    nutritionHeader.classList.toggle('table_hidden');
+selectors.toggleNutrition.addEventListener('click', (e) => {
+    selectors.nutritionTable.classList.toggle('table_hidden');
+    selectors.nutritionHeader.classList.toggle('table_hidden');
 });

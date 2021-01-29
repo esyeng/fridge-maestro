@@ -1,11 +1,4 @@
-export const api = {
-    baseUrl: `https://api.spoonacular.com/`,
-    ingredientSearch: `https://api.spoonacular.com/food/ingredients/search`,
-    recipeSearch: `GET https://api.spoonacular.com/recipes/complexSearch`,
-    ingredientInfo: (id) =>
-        `https://api.spoonacular.com/food/ingredients/${id}/information`,
-    // recipeByIngredients: `https://api.spoonacular.com/recipes/findByIngredients`,
-};
+import api from './private.js';
 
 /*********** API CONTROLLER *******
  * Methods for converting HTML queries to simple json, probe api, and receive simple json
