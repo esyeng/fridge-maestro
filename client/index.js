@@ -19,7 +19,7 @@ const photoContainer = document.getElementById('food_container');
  *
  ** @todo: --
  * - In progress:
- *  -- ensure reliability of apiController (test in postman)
+ *  -- ensure reliability of apiController
  *  -- write a set of functions that synthesize form input into standardized json
  *  -- write JS listener to run input form => apiController method => DOMinsertion
  * - Then:
