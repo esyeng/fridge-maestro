@@ -1,6 +1,6 @@
 /**
  *
- * Module Imports
+ * @Module Imports
  *
  */
 import * as selectors from './selectors';
@@ -8,54 +8,49 @@ import { api, apiController } from './apiController';
 
 /**
  *
- * Data containers
+ * @description Data containers
  *
  */
 
 const photoContainer = document.getElementById('food_container');
 
 /**
- * *****************************************************************
+ * **************************** FRIDGE MAESTRO **********************
  *
- * Expanded directory structure in progress. For now, buttons & data methods exist here, will
- * refactor to separate button controllers from data access methods
+ ** @todo: --
+ * - In progress:
+ *  -- ensure reliability of apiController (test in postman)
+ *  -- write a set of functions that synthesize form input into standardized json
+ *  -- write JS listener to run input form => apiController method => DOMinsertion
+ * - Then:
+ *  -- Evaluate performance, refactor & clean as needed
+ *  -- Create user login/acct suite
+ *  -- Mealplanning tool
+ *  -- Determine additional features to implement
  *
- * *****************************************************************
+ * ******************************************************************
  */
 
 /**
  *
- * Public API methods
+ * @global Helper functions
  *
  */
 
-const getPhotos = async (num) => {
-    const generate = new Promise((resolve, reject) => {
-        fetch(`http://localhost:5500/${num}`, {
-            method: 'GET',
-        })
-            .then((response) => response.json())
-            .then((json) => {
-                resolve(json);
-            })
-            .catch((err) => {
-                reject((err) => console.error(err));
-            });
-    });
-    return generate.then((res) => {
-        return res;
-    });
-};
+/**
+ * @param  {String} tag
+ */
+
+const createDomItem = (tag) => document.createElement(tag);
 
 /**
  *
- * Helper functions
+ * @summary Set multiple attributes on single element
+ * @param  {HTML} element
+ * @param  {Array} attributePairs
  *
  */
 
-const createDomItem = (element) => document.createElement(element);
-
-// quickly set multiple attributes
 function setAttributes(element, attributePairs) {
     attributePairs.forEach((attributePair) => {
         let attribute = attributePair.attribute;
@@ -65,10 +60,21 @@ function setAttributes(element, attributePairs) {
     return element;
 }
 
+/**
+ * @summary Remove element from DOM
+ * @param  {String} ingredientText
+ */
+
 function removeIngredient(ingredientText) {
     let ingredientToRemove = document.getElementById(ingredientText.id);
     selectors.ingredientList.removeChild(ingredientToRemove);
 }
+
+/**
+ * @summary Check if element with given ID exists in node collection
+ * @param {Array} collection
+ * @param {String} text
+ */
 
 function hasDuplicates(collection, text) {
     for (let i = 0; i < collection.length; i++) {
@@ -82,11 +88,17 @@ function hasDuplicates(collection, text) {
 
 /**
  *
- * Element event listeners
+ * @global Element event listeners
  *
  */
 
-// Ingredient list adding procedure
+/**
+ * @summary Reads ingredient nodelist and entry value upon add event.
+ * Removes special chars & clears input and exits function if item exists in list.
+ * Formats new list item with remove and class attributes, clears query before
+ * appending to nodelist.
+ */
+
 selectors.addToListBtn.addEventListener('click', (e) => {
     if (e.target) {
         let listNodes = [...selectors.ingredientList.children];
@@ -120,13 +132,18 @@ selectors.addToListBtn.addEventListener('click', (e) => {
     }
 });
 
+/**
+ * @summary Sets select value
+ */
+
 selectors.numSelect.addEventListener('change', (e) => {
     selectors.numSelect.value = e.target.value;
 });
 
 /**
- * Generate demo query
+ * @summary Populate photo container with random food images -- temp function
  */
+
 selectors.queryBtn.addEventListener('click', async (e) => {
     const isCountInRange =
         photoContainer.childElementCount >= 0 &&
@@ -155,8 +172,9 @@ selectors.queryBtn.addEventListener('click', async (e) => {
 });
 
 /**
- * clear viewport container
+ * @summary Clear viewport container
  */
+
 selectors.clearBtn.addEventListener('click', (e) => {
     while (photoContainer.firstChild) {
         photoContainer.removeChild(photoContainer.firstChild);
@@ -165,8 +183,9 @@ selectors.clearBtn.addEventListener('click', (e) => {
 });
 
 /**
- * toggle nutrition table
+ * @summary Toggle nutrition table
  */
+
 selectors.toggleNutrition.addEventListener('click', (e) => {
     selectors.nutritionTable.classList.toggle('table_hidden');
     selectors.nutritionHeader.classList.toggle('table_hidden');

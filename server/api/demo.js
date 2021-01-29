@@ -7,10 +7,12 @@ const http = require('https');
  * I set up a light express server to probe an api for food pictures that I'll "feed" (pun intended)
  * to the front end to interact with, rather than hardcoding temp data for the sole purpose of design
  */
-/**
- * This function sends an http request to the foodish API and returns a Promise
- */
 
+/**
+ * @summary Send http request to endpoint that returns a random image of food.
+ *
+ * @returns <Promise>
+ */
 const generatePhoto = () => {
     return new Promise((resolve, reject) => {
         const options = {
@@ -43,14 +45,13 @@ const generatePhoto = () => {
     });
 };
 
-generatePhoto().then((data) => {
-    const response = {
-        statusCode: 200,
-        body: JSON.stringify(data),
-    };
-    return response;
-});
-
+/**
+ *
+ * @summary Generate array of random food items
+ * @param  {number} n
+ * @param  {object} data
+ * @returns {array} pics
+ */
 const generatePics = async (n) => {
     let pics = {};
     for (let i = 0; i < n; i++) {
@@ -66,4 +67,4 @@ const generatePics = async (n) => {
     return pics;
 };
 
-module.exports = { apiController, generatePhoto, generatePics };
+module.exports = { generatePhoto, generatePics };

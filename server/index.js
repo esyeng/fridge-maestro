@@ -1,9 +1,8 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const PORT = 5500;
+const PORT = process.env.PORT || 5500;
 const morgan = require('morgan');
-const http = require('https');
 
 const server = app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
@@ -17,8 +16,13 @@ app.use(morgan('dev'));
 const { generatePics } = require('./api/demo');
 
 /**
- * This route calls the (rather limited) foodpics api based on the input value and sends back the photo array
+ * @summary This route calls the foodpics api based on the input value and sends back the photo array
+ *
+ * @async
+ * @param  {Request} req
+ * @param  {Response} res
  */
+
 app.use('/:n', async (req, res) => {
     try {
         const input = req.params.n;
@@ -30,8 +34,9 @@ app.use('/:n', async (req, res) => {
 });
 
 /**
- * Static root route to serve up HTML
+ * @static root route to serve up HTML
  */
+
 app.use('/', async (req, res) => {
     try {
         res.sendFile(path.join(__dirname, '..', 'public/index.html'));
