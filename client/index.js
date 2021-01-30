@@ -91,6 +91,23 @@ function hasDuplicates(collection, text) {
  *
  */
 
+const addToListBtn = document.getElementById('add_to_list'); // add btn
+const queryBtn = document.getElementById('get_photos'); // test photo query btn
+const clearBtn = document.getElementById('clear_photos'); // clear results btn
+
+// -- Form --
+
+const numSelect = document.getElementById('num_select'); // select #photos (or results when applicable)
+const queryBar = document.getElementById('query_bar'); // entry field for query params
+const ingredientList = document.getElementById('ingredient_list_ul'); // ul of query params
+const submitQuery = document.getElementById('submit_query'); // btn to send request object to probe recipe API(s)
+
+// -- Table --
+
+const toggleNutrition = document.getElementById('toggle_nutrition'); // display table w/dummy data (or search ingredient info & populate table when applicable)
+const nutritionTable = document.getElementById('nutrition_table'); // table with dummy data (or nutrition facts)
+const nutritionHeader = document.getElementById('nutrition_header'); // label text for table
+
 /**
  * @summary Reads ingredient nodelist and entry value upon add event.
  * Removes special chars & clears input and exits function if item exists in list.
@@ -98,14 +115,14 @@ function hasDuplicates(collection, text) {
  * appending to nodelist.
  */
 
-selectors.addToListBtn.addEventListener('click', (e) => {
+addToListBtn.addEventListener('click', (e) => {
     if (e.target) {
-        let listNodes = [...selectors.ingredientList.children];
-        let ingredientText = selectors.queryBar.value;
+        let listNodes = [...ingredientList.children];
+        let ingredientText = queryBar.value;
         ingredientText = ingredientText.replace(/\W+/g, '');
 
         if (hasDuplicates(listNodes, ingredientText)) {
-            selectors.queryBar.value = '';
+            queryBar.value = '';
             return false;
         } else {
             let ingredientToAdd = createDomItem('li');
@@ -124,9 +141,9 @@ selectors.addToListBtn.addEventListener('click', (e) => {
                 },
             ]);
             ingredientToAdd.innerHTML = ingredientText;
-            selectors.queryBar.value = '';
+            queryBar.value = '';
 
-            selectors.ingredientList.appendChild(ingredientToAdd);
+            ingredientList.appendChild(ingredientToAdd);
         }
     }
 });
@@ -135,21 +152,21 @@ selectors.addToListBtn.addEventListener('click', (e) => {
  * @summary Sets select value
  */
 
-selectors.numSelect.addEventListener('change', (e) => {
-    selectors.numSelect.value = e.target.value;
+numSelect.addEventListener('change', (e) => {
+    numSelect.value = e.target.value;
 });
 
 /**
  * @summary Populate photo container with random food images -- temp function
  */
 
-selectors.queryBtn.addEventListener('click', async (e) => {
+queryBtn.addEventListener('click', async (e) => {
     const isCountInRange =
         photoContainer.childElementCount >= 0 &&
         photoContainer.childElementCount <= 9;
 
     if (e.target && isCountInRange) {
-        const numItemsToGet = selectors.numSelect.value;
+        const numItemsToGet = numSelect.value;
         const picUrlObj = await getPhotos(numItemsToGet);
         const picPack = Object.keys(picUrlObj);
         const picData = Object.values(picUrlObj);
@@ -174,7 +191,7 @@ selectors.queryBtn.addEventListener('click', async (e) => {
  * @summary Clear viewport container
  */
 
-selectors.clearBtn.addEventListener('click', (e) => {
+clearBtn.addEventListener('click', (e) => {
     while (photoContainer.firstChild) {
         photoContainer.removeChild(photoContainer.firstChild);
     }
@@ -185,7 +202,7 @@ selectors.clearBtn.addEventListener('click', (e) => {
  * @summary Toggle nutrition table
  */
 
-selectors.toggleNutrition.addEventListener('click', (e) => {
-    selectors.nutritionTable.classList.toggle('table_hidden');
-    selectors.nutritionHeader.classList.toggle('table_hidden');
+toggleNutrition.addEventListener('click', (e) => {
+    nutritionTable.classList.toggle('table_hidden');
+    nutritionHeader.classList.toggle('table_hidden');
 });

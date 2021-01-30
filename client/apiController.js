@@ -13,7 +13,7 @@ import api from './private.js';
  * @method resolve Resolve promise and return result @param {Function} promise => @returns {Any}
  */
 
-export const apiController = {
+const apiController = {
     parseQuery: (data) => {
         let query = data.url;
         for (let param in data.params) {
