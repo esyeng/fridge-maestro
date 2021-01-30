@@ -1,4 +1,4 @@
-import api from './private.js';
+import { api } from './api.js';
 
 /*********** API CONTROLLER *******
  * @description Methods for converting HTML queries to simple json, probe api, and receive simple json
@@ -13,8 +13,13 @@ import api from './private.js';
  * @method resolve Resolve promise and return result @param {Function} promise => @returns {Any}
  */
 
-const apiController = {
-    parseQuery: (data) => {
+export class ApiController {
+    constructor() {
+        this.ingredients = {};
+        this.recipes = {};
+        this.photos = {};
+    }
+    parseQuery(data) {
         let query = data.url;
         for (let param in data.params) {
             query +=
@@ -24,36 +29,126 @@ const apiController = {
                 '&';
         }
         return query.slice(0, -1);
-    },
-    getIngredients: (queryStr) => {
+    }
+    getIngredients(queryStr) {
         fetch(`${api.ingredientSearch}/${queryStr}`)
             .then((response) => response.json())
             .then((json) => json)
             .catch(() => this.fallBackRequest().catch((e) => console.error(e)));
-    },
-    findRecipes: (queryStr) => {
+    }
+    findRecipes(queryStr) {
         fetch(`${api.recipeSearch}/${queryStr}`)
             .then((response) => response.json())
             .then((json) => json)
             .catch(() => this.fallBackRequest().catch((e) => console.error(e)));
-    },
-    fallBackRequest: (queryStr) => {
+    }
+    fallBackRequest(queryStr) {
         fetch(`${api.random}/${queryStr}`)
             .then((response) => response.json())
             .then((json) => json)
             .catch((e) => this.getPhotos(9));
-    },
-    getPhotos: (num) => {
+    }
+    getPhotos(num) {
         fetch(`http://localhost:5500/${num}`)
             .then((response) => response.json())
             .then((json) => json)
             .catch((e) => console.error(e));
-    },
-    resolve: (promise) => {
+    }
+    resolve(promise) {
         console.log(`${promise} pending`);
         promise.then((result) => result);
-    },
-};
+    }
+}
+
+// export default ApiController.prototype = {
+//     parseQuery: (data) => {
+//         let query = data.url;
+//         for (let param in data.params) {
+//             query +=
+//                 encodeURIComponent(param) +
+//                 '=' +
+//                 encodeURIComponent(data.params[param]) +
+//                 '&';
+//         }
+//         return query.slice(0, -1);
+//     },
+//     getIngredients: (queryStr) => {
+//         fetch(`${api.ingredientSearch}/${queryStr}`)
+//             .then((response) => response.json())
+//             .then((json) => json)
+//             .catch(() => this.fallBackRequest().catch((e) => console.error(e)));
+//     },
+//     findRecipes: (queryStr) => {
+//         fetch(`${api.recipeSearch}/${queryStr}`)
+//             .then((response) => response.json())
+//             .then((json) => json)
+//             .catch(() => this.fallBackRequest().catch((e) => console.error(e)));
+//     },
+//     fallBackRequest: (queryStr) => {
+//         fetch(`${api.random}/${queryStr}`)
+//             .then((response) => response.json())
+//             .then((json) => json)
+//             .catch((e) => this.getPhotos(9));
+//     },
+//     getPhotos: (num) => {
+//         fetch(`http://localhost:5500/${num}`)
+//             .then((response) => response.json())
+//             .then((json) => json)
+//             .catch((e) => console.error(e));
+//     },
+//     resolve: (promise) => {
+//         console.log(`${promise} pending`);
+//         promise.then((result) => result);
+//     },
+// };
+
+// export const ApiController = () => {
+//     return {
+//         parseQuery: (data) => {
+//             let query = data.url;
+//             for (let param in data.params) {
+//                 query +=
+//                     encodeURIComponent(param) +
+//                     '=' +
+//                     encodeURIComponent(data.params[param]) +
+//                     '&';
+//             }
+//             return query.slice(0, -1);
+//         },
+//         getIngredients: (queryStr) => {
+//             fetch(`${api.ingredientSearch}/${queryStr}`)
+//                 .then((response) => response.json())
+//                 .then((json) => json)
+//                 .catch(() =>
+//                     this.fallBackRequest().catch((e) => console.error(e))
+//                 );
+//         },
+//         findRecipes: (queryStr) => {
+//             fetch(`${api.recipeSearch}/${queryStr}`)
+//                 .then((response) => response.json())
+//                 .then((json) => json)
+//                 .catch(() =>
+//                     this.fallBackRequest().catch((e) => console.error(e))
+//                 );
+//         },
+//         fallBackRequest: (queryStr) => {
+//             fetch(`${api.random}/${queryStr}`)
+//                 .then((response) => response.json())
+//                 .then((json) => json)
+//                 .catch((e) => this.getPhotos(9));
+//         },
+//         getPhotos: (num) => {
+//             fetch(`http://localhost:5500/${num}`)
+//                 .then((response) => response.json())
+//                 .then((json) => json)
+//                 .catch((e) => console.error(e));
+//         },
+//         resolve: (promise) => {
+//             console.log(`${promise} pending`);
+//             promise.then((result) => result);
+//         },
+//     };
+// };
 
 /**
  * @notes 
