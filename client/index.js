@@ -1,3 +1,5 @@
+const { response } = require('express');
+
 /**
  * **************************** FRIDGE MAESTRO **********************
  *
@@ -122,7 +124,7 @@ const photoContainer = document.getElementById('food_container');
 //  * @returns {Object} data
 //  */
 
-const complexFindByIngredients = (diet, intolerances, ingredients) => {
+const complexStringByIngredients = (diet, intolerances, ingredients) => {
     // arrays of params to str
     let resultStr;
     let ingStr;
@@ -156,7 +158,7 @@ const complexFindByIngredients = (diet, intolerances, ingredients) => {
     return resultStr;
 };
 
-const findByIngredients = (ingredients, number) => {
+const stringByIngredients = (ingredients, number) => {
     let ingStr;
     let num;
     let resultStr;
@@ -172,6 +174,14 @@ const findByIngredients = (ingredients, number) => {
 
     resultStr = `${ingStr}&${num}&ranking=1`;
     return resultStr;
+};
+
+const complexFinder = (str) => {
+    API.complexFind(str).then((data) => API.resolve(data));
+};
+
+const finder = (str) => {
+    API.findRecipes(str).then((data) => API.resolve(data));
 };
 
 // then to str? might be redundant. Lets try to include parseQuery's functionality into containify
@@ -248,21 +258,18 @@ const nutritionHeader = document.getElementById('nutrition_header'); // label te
 
 submit.addEventListener('click', (e) => {
     let ingredients = [...ingredientList.children];
-    let intolerances = [...mealType.children];
     let filter = filterResult.value;
+    let intolerances = [...mealType.children];
     let number = numSelect.value;
-
-    console.log(`Ingredients: `, ingredients);
-    console.log(`intolerances: `, intolerances);
-    console.log(`filter: `, filter);
-    console.log(`number: `, number);
-
-    // complexFindByIngredients(
-    //     ingredients,
-    //     `vegetarian`,
-    //     [`dairy`, `gluten`],
-    //     true
-    // );
+    let queryStr =
+        filter.length > 0
+            ? complexStringByIngredients(filter, intolerances, ingredients)
+            : number
+            ? stringByIngredients(ingredients, number)
+            : stringByIngredients(ingredients);
+    let result = filter.length > 0 ? complexFinder(queryStr) : finder(queryStr);
+    console.log(result);
+    return result;
 });
 
 /**
