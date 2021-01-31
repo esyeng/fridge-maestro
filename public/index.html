@@ -100,26 +100,7 @@
         <!-- Main form selection area -->
         <article class="container-sm">
             <form class="mb-3">
-                <fieldset id="meal_type" name="meal_type" class="fieldset_bordered fieldset_menu_bg">
-                    <legend class="fieldset_bordered_legend">I'm making:</legend>
-                    <div id="breakfast" name="breakfast" class="form-check form-check-inline">
-                        <label for="breakfast_check" class="form-check-label">Breakfast</label>
-                        <input id="breakfast_check" value="breakfast" name="breakfast" type="checkbox"
-                            class="form-check-inline">
-                    </div>
-                    <div id="lunch" class="form-check form-check-inline">
-                        <label for="lunch_check" class="form-check-label">Lunch</label>
-                        <input id="lunch_check" value="lunch" name="lunch" type="checkbox" class="form-check-inline">
-                    </div>
-                    <div id="dinner" class="form-check form-check-inline">
-                        <label for="dinner_check" class="form-check-label">Dinner</label>
-                        <input id="dinner_check" value="dinner" name="dinner" type="checkbox" class="form-check-inline">
-                    </div>
-                    <div id="snack" class="form-check form-check-inline">
-                        <label for="snack_check" class="form-check-label">Just a snack</label>
-                        <input id="snack_check" value="snack" name="snack" type="checkbox" class="form-check-inline">
-                    </div>
-                </fieldset>
+
                 <fieldset>
                     <label role="contentinfo" for="ingredients_bar" class="form-label">Enter your ingredients below
                         to
@@ -132,16 +113,24 @@
                     </div>
                     <select id="filter_results" name="filter_results" class="form-select input_margin">
                         <option selected>Filter results by preference</option>
-                        <option value="Non-Veg">Non-Vegan/Vegetarian</option>
-                        <option value="Vegetarian">Vegetarian </option>
+                        <option value="Vegetarian">Vegetarian</option>
                         <option value="Vegan">Vegan</option>
-                        <option value="Dairy-Free">Dairy Free</option>
-                        <option value="Low-Carb">Low Carb</option>
-                        <option value="Gluten-Free">Gluten Free</option>
                     </select>
                     <label for="email_validation" class="form-label">Email Address</label>
                     <input class="form-control input_margin" type="email" id="email_validation"
                         placeholder="Enter email address to receive results in your inbox">
+                </fieldset>
+                <fieldset id="meal_type" name="meal_type" class="fieldset_bordered fieldset_menu_bg">
+                    <legend class="fieldset_bordered_legend">I can't do:</legend>
+                    <div id="dairy" name="dairy" class="form-check form-check-inline">
+                        <label for="dairy_check" class="form-check-label">Dairy</label>
+                        <input id="dairy_check" name="dairy" type="checkbox" class="form-check-inline">
+                    </div>
+                    <div id="gluten" class="form-check form-check-inline">
+                        <label for="gluten_check" class="form-check-label">Gluten</label>
+                        <input id="gluten_check" name="gluten" type="checkbox" class="form-check-inline">
+                    </div>
+
                 </fieldset>
 
             </form>
@@ -173,7 +162,7 @@
             <button id="clear_photos" type="button"
                 class="result_box_item recipe btn btn-dark get_photos">Clear</button>
             <input id="num_select" name="num_select" type="number"
-                class="result_box_item recipe form-control form-control-sm get_photos" placeholder="#pics to fetch">
+                class="result_box_item recipe form-control form-control-sm get_photos" placeholder="limit results">
             <div id="food_container" class="result_box_item recipe food_container"></div>
             <hr>
             <div class="recently_viewed">

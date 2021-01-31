@@ -14,7 +14,7 @@
  *
  * ******************************************************************
  */
-
+const apiKey = `4676ee395dfc4a9e832257b61eb2f233`;
 /**
  * @summary api locations (not key protected)
  */
@@ -23,7 +23,8 @@ const api = (function () {
     return {
         baseUrl: `https://api.spoonacular.com/`,
         ingredientSearch: `https://api.spoonacular.com/food/ingredients/search`,
-        recipeSearch: `GET https://api.spoonacular.com/recipes/complexSearch`,
+        recipeSearch: `https://api.spoonacular.com/recipes/findByIngredients`,
+        complexSearch: `https://api.spoonacular.com/recipes/complexSearch`,
         ingredientInfo: (id) =>
             `https://api.spoonacular.com/food/ingredients/${id}/information`,
         random: `https://api.spoonacular.com/recipes/random`,
@@ -50,19 +51,14 @@ class ApiController {
         this.recipes = {};
         this.photos = {};
     }
-    parseQuery(data) {
-        let query = api.recipeSearch;
-        for (let param in data.params) {
-            query +=
-                encodeURIComponent(param) +
-                '=' +
-                encodeURIComponent(data.params[param]) +
-                '&';
-        }
-        return query.slice(0, -1);
-    }
     getIngredients(queryStr) {
         fetch(`${api.ingredientSearch}/${queryStr}`)
+            .then((response) => response.json())
+            .then((json) => json)
+            .catch(() => this.fallBackRequest().catch((e) => console.error(e)));
+    }
+    complexFind(queryStr) {
+        fetch(`${api.complexSearch}/${queryStr}`)
             .then((response) => response.json())
             .then((json) => json)
             .catch(() => this.fallBackRequest().catch((e) => console.error(e)));
@@ -113,6 +109,121 @@ const photoContainer = document.getElementById('food_container');
  *
  */
 
+/**
+ *
+ * @global Helper functions
+ *
+ */
+
+// /**
+//  *
+//  * Pull value and add to data object to querify for api
+//  * @param {Array} ingredients
+//  * @returns {Object} data
+//  */
+
+const complexFindByIngredients = (diet, intolerances, ingredients) => {
+    // arrays of params to str
+    let resultStr;
+    let ingStr;
+    let dietStr;
+    let intoleranceStr;
+    let nutritionBool;
+
+    diet.length > 0 ? (dietStr = `diet=` + diet) : '';
+    intolerances.length > 0
+        ? (intoleranceStr = intolerances.reduce((acc, cur) => {
+              acc += cur + `,`;
+              return acc;
+          }, ``))
+        : '';
+    intoleranceStr = `intolerances=${intoleranceStr.slice(
+        0,
+        intoleranceStr.length - 1
+    )}`;
+    ingredients.length > 0
+        ? (ingStr = ingredients.reduce((acc, cur) => {
+              acc += cur.id + `,`;
+              return acc;
+          }, ``))
+        : '';
+    ingStr = `includeIngredients=${ingStr.slice(0, ingStr.length - 1)}`;
+
+    nutritionBool = `addRecipeNutrition=true`;
+
+    resultStr = `${dietStr}&${intoleranceStr}&${ingStr}&${nutritionBool}`;
+
+    return resultStr;
+};
+
+const findByIngredients = (ingredients, number) => {
+    let ingStr;
+    let num;
+    let resultStr;
+
+    ingredients.length > 0
+        ? (ingStr = ingredients.reduce((acc, cur) => {
+              acc += cur.id + `,`;
+              return acc;
+          }, ``))
+        : '';
+    ingStr = `ingredients=${ingStr.slice(0, ingStr.length - 1)}`;
+    number ? (num = `number=` + number) : 12;
+
+    resultStr = `${ingStr}&${num}&ranking=1`;
+    return resultStr;
+};
+
+// then to str? might be redundant. Lets try to include parseQuery's functionality into containify
+
+/**
+ * @summary Pointless in retrospect
+ * @param  {String} tag
+ */
+
+const createDomItem = (tag) => document.createElement(tag);
+
+/**
+ * @summary Set multiple attributes on single element
+ * @param  {HTML} element
+ * @param  {Array} attributePairs
+ */
+
+function setAttributes(element, attributePairs) {
+    attributePairs.forEach((attributePair) => {
+        let attribute = attributePair.attribute;
+        let value = attributePair.value;
+        element.setAttribute(attribute, value);
+    });
+    return element;
+}
+
+/**
+ * @summary Remove element from DOM
+ * @param  {String} ingredientText
+ */
+
+/**
+ * @summary Check if element with given ID exists in node collection
+ * @param {Array} collection
+ * @param {String} text
+ */
+
+function hasDuplicates(collection, text) {
+    for (let i = 0; i < collection.length; i++) {
+        let node = collection[i];
+        if (node.id === text) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function removeIngredient(ingredientText) {
+    let ingredientToRemove = document.getElementById(ingredientText.id);
+    ingredientList.removeChild(ingredientToRemove);
+}
+
 const addToList = document.getElementById('add_to_list'); // add btn
 const clear = document.getElementById('clear_photos'); // clear results btn,
 const submit = document.getElementById('submit_query'); // btn to send request object to probe recipe API(s)
@@ -121,6 +232,7 @@ const photos = document.getElementById('get_photos'); // test photo query btn
 const numSelect = document.getElementById('num_select'); // select #photos (or results when applicable),
 const queryBar = document.getElementById('query_bar'); // entry field for query params
 const ingredientList = document.getElementById('ingredient_list_ul'); // ul of query params
+const filterResult = document.getElementById('filter_results');
 const mealType = document.getElementById('meal_type');
 const mealChoices = mealType.childNodes;
 
@@ -128,22 +240,30 @@ const toggleNutrition = document.getElementById('toggle_nutrition');
 const nutritionTable = document.getElementById('nutrition_table'); // table with dummy data (or nutrition facts),
 const nutritionHeader = document.getElementById('nutrition_header'); // label text for table
 
-submit.addEventListener('click', (e) => {
-    let listNodes = [...ingredientList.children];
-    let data = {
-        params: {
-            includeIngredients: `${ingredient.id}`,
-        },
-    };
-    API.parseQuery(ingredient.id);
-    listNodes.forEach((ingredient) => {});
-});
-
 /**
  *
  * @global Element event listeners
  *
  */
+
+submit.addEventListener('click', (e) => {
+    let ingredients = [...ingredientList.children];
+    let intolerances = [...mealType.children];
+    let filter = filterResult.value;
+    let number = numSelect.value;
+
+    console.log(`Ingredients: `, ingredients);
+    console.log(`intolerances: `, intolerances);
+    console.log(`filter: `, filter);
+    console.log(`number: `, number);
+
+    // complexFindByIngredients(
+    //     ingredients,
+    //     `vegetarian`,
+    //     [`dairy`, `gluten`],
+    //     true
+    // );
+});
 
 /**
  * @element Forms
@@ -256,72 +376,3 @@ toggleNutrition.addEventListener('click', (e) => {
     nutritionTable.classList.toggle('table_hidden');
     nutritionHeader.classList.toggle('table_hidden');
 });
-
-/**
- *
- * @global Helper functions
- *
- */
-
-// /**
-//  *
-//  * Pull value and add to data object to querify for api
-//  * @param {Array} ingredients
-//  * @returns {Object} data
-//  */
-
-// const containify = (ingredient) => {
-//     let data = {
-//         url: api.recipeSearch,
-//         params:
-//     }
-
-// }
-
-/**
- * @summary Pointless in retrospect
- * @param  {String} tag
- */
-
-const createDomItem = (tag) => document.createElement(tag);
-
-/**
- * @summary Set multiple attributes on single element
- * @param  {HTML} element
- * @param  {Array} attributePairs
- */
-
-function setAttributes(element, attributePairs) {
-    attributePairs.forEach((attributePair) => {
-        let attribute = attributePair.attribute;
-        let value = attributePair.value;
-        element.setAttribute(attribute, value);
-    });
-    return element;
-}
-
-/**
- * @summary Remove element from DOM
- * @param  {String} ingredientText
- */
-
-/**
- * @summary Check if element with given ID exists in node collection
- * @param {Array} collection
- * @param {String} text
- */
-
-function hasDuplicates(collection, text) {
-    for (let i = 0; i < collection.length; i++) {
-        let node = collection[i];
-        if (node.id === text) {
-            return true;
-        }
-    }
-    return false;
-}
-
-function removeIngredient(ingredientText) {
-    let ingredientToRemove = document.getElementById(ingredientText.id);
-    ingredientList.removeChild(ingredientToRemove);
-}

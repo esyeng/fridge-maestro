@@ -49,4 +49,4 @@ Thumbs.db
 *.wmv
 
 # workspace specific
-private.js
+api.js
