@@ -4,11 +4,9 @@
  *
  */
 
-import { ApiController } from './ApiController';
+// import { ApiController } from './ApiController';
 
-const API = ApiController;
-
-console.log(API);
+// const API = ApiController;
 
 /**
  *
@@ -42,9 +40,9 @@ const photoContainer = document.getElementById('food_container');
  */
 
 const addToList = document.getElementById('add_to_list'); // add btn
-const query = document.getElementById('get_photos'); // test photo query btn
 const clear = document.getElementById('clear_photos'); // clear results btn,
 const submit = document.getElementById('submit_query'); // btn to send request object to probe recipe API(s)
+const photos = document.getElementById('get_photos'); // test photo query btn
 
 const numSelect = document.getElementById('num_select'); // select #photos (or results when applicable),
 const queryBar = document.getElementById('query_bar'); // entry field for query params
@@ -55,6 +53,10 @@ const mealChoices = mealType.childNodes;
 const toggleNutrition = document.getElementById('toggle_nutrition');
 const nutritionTable = document.getElementById('nutrition_table'); // table with dummy data (or nutrition facts),
 const nutritionHeader = document.getElementById('nutrition_header'); // label text for table
+
+submit.addEventListener('click', (e) => {
+    console.log(`clicked! now looking for api contoller`, API);
+});
 
 /**
  *
@@ -126,7 +128,7 @@ addToList.addEventListener('click', (e) => {
  * @summary Populate photo container with random food images -- temp function
  */
 
-query.addEventListener('click', async (e) => {
+photos.addEventListener('click', async (e) => {
     const isCountInRange =
         photoContainer.childElementCount >= 0 &&
         photoContainer.childElementCount <= 9;

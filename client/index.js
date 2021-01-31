@@ -1,24 +1,4 @@
 /**
- *
- * @Module Imports
- *
- */
-
-// import { ApiController } from './ApiController.js';
-
-// const API = ApiController;
-
-// console.log(API);
-
-/**
- *
- * @description Data containers
- *
- */
-
-const photoContainer = document.getElementById('food_container');
-
-/**
  * **************************** FRIDGE MAESTRO **********************
  *
  ** @todo: --
@@ -36,15 +16,107 @@ const photoContainer = document.getElementById('food_container');
  */
 
 /**
+ * @summary api locations (not key protected)
+ */
+
+const api = (function () {
+    return {
+        baseUrl: `https://api.spoonacular.com/`,
+        ingredientSearch: `https://api.spoonacular.com/food/ingredients/search`,
+        recipeSearch: `GET https://api.spoonacular.com/recipes/complexSearch`,
+        ingredientInfo: (id) =>
+            `https://api.spoonacular.com/food/ingredients/${id}/information`,
+        random: `https://api.spoonacular.com/recipes/random`,
+    };
+    // recipeByIngredients: `https://api.spoonacular.com/recipes/findByIngredients`,
+})();
+
+/*********** API CONTROLLER *******
+ * @description Methods for converting HTML queries to simple json, probe api, and receive simple json
+ *
+ * @private Api access routes
+ * @public Access control
+ *
+ * @method parseQuery Concatenate URL with ingredients to queryStr @param {Object} data => @returns {String} parsedQuery
+ * @method getIngredients Fetch just ingredients @param {String} queryStr => @returns {Promise}
+ * @method findRecipes Fetch recipes, accepts specified parameters @param {String} queryStr => @returns {Promise}
+ * @method getPhotos Fetch demo data => @returns {Promise}
+ * @method resolve Resolve promise and return result @param {Function} promise => @returns {Any}
+ */
+
+class ApiController {
+    constructor() {
+        this.ingredients = {};
+        this.recipes = {};
+        this.photos = {};
+    }
+    parseQuery(data) {
+        let query = api.recipeSearch;
+        for (let param in data.params) {
+            query +=
+                encodeURIComponent(param) +
+                '=' +
+                encodeURIComponent(data.params[param]) +
+                '&';
+        }
+        return query.slice(0, -1);
+    }
+    getIngredients(queryStr) {
+        fetch(`${api.ingredientSearch}/${queryStr}`)
+            .then((response) => response.json())
+            .then((json) => json)
+            .catch(() => this.fallBackRequest().catch((e) => console.error(e)));
+    }
+    findRecipes(queryStr) {
+        fetch(`${api.recipeSearch}/${queryStr}`)
+            .then((response) => response.json())
+            .then((json) => json)
+            .catch(() => this.fallBackRequest().catch((e) => console.error(e)));
+    }
+    fallBackRequest(queryStr) {
+        fetch(`${api.random}/${queryStr}`)
+            .then((response) => response.json())
+            .then((json) => json)
+            .catch((e) => this.getPhotos(9));
+    }
+    getPhotos(num) {
+        fetch(`http://localhost:5500/${num}`)
+            .then((response) => response.json())
+            .then((json) => json)
+            .catch((e) => console.error(e));
+    }
+    resolve(promise) {
+        console.log(`${promise} pending`);
+        promise.then((result) => result);
+    }
+}
+
+/**
+ *
+ * @Module controller variable
+ *
+ */
+
+const API = ApiController;
+
+/**
+ *
+ * @description Data containers
+ *
+ */
+
+const photoContainer = document.getElementById('food_container');
+
+/**
  *
  * @global Query Selectors & element targets
  *
  */
 
 const addToList = document.getElementById('add_to_list'); // add btn
-const query = document.getElementById('get_photos'); // test photo query btn
 const clear = document.getElementById('clear_photos'); // clear results btn,
 const submit = document.getElementById('submit_query'); // btn to send request object to probe recipe API(s)
+const photos = document.getElementById('get_photos'); // test photo query btn
 
 const numSelect = document.getElementById('num_select'); // select #photos (or results when applicable),
 const queryBar = document.getElementById('query_bar'); // entry field for query params
@@ -55,6 +127,17 @@ const mealChoices = mealType.childNodes;
 const toggleNutrition = document.getElementById('toggle_nutrition');
 const nutritionTable = document.getElementById('nutrition_table'); // table with dummy data (or nutrition facts),
 const nutritionHeader = document.getElementById('nutrition_header'); // label text for table
+
+submit.addEventListener('click', (e) => {
+    let listNodes = [...ingredientList.children];
+    let data = {
+        params: {
+            includeIngredients: `${ingredient.id}`,
+        },
+    };
+    API.parseQuery(ingredient.id);
+    listNodes.forEach((ingredient) => {});
+});
 
 /**
  *
@@ -126,7 +209,7 @@ addToList.addEventListener('click', (e) => {
  * @summary Populate photo container with random food images -- temp function
  */
 
-query.addEventListener('click', async (e) => {
+photos.addEventListener('click', async (e) => {
     const isCountInRange =
         photoContainer.childElementCount >= 0 &&
         photoContainer.childElementCount <= 9;
@@ -179,6 +262,21 @@ toggleNutrition.addEventListener('click', (e) => {
  * @global Helper functions
  *
  */
+
+// /**
+//  *
+//  * Pull value and add to data object to querify for api
+//  * @param {Array} ingredients
+//  * @returns {Object} data
+//  */
+
+// const containify = (ingredient) => {
+//     let data = {
+//         url: api.recipeSearch,
+//         params:
+//     }
+
+// }
 
 /**
  * @summary Pointless in retrospect
