@@ -51,3 +51,5 @@ Thumbs.db
 # workspace specific
 api.js
 .env
+src/api.js
+src

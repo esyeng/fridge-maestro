@@ -4,13 +4,12 @@
  ** @todo: --
  * - In progress:
  *  -- ensure reliability of apiController
- *  -- write a set of functions that synthesize form input into standardized json
- *  -- write JS listener to run input form => apiController method => DOMinsertion
+ *  -- standardize layout, format
+ *  -- increase options for complex queries
  * - Then:
  *  -- Evaluate performance, refactor & clean as needed
  *  -- Create user login/acct suite
  *  -- Mealplanning tool
- *  -- Determine additional features to implement
  *
  * ******************************************************************
  */
@@ -30,7 +29,6 @@ const api = (function () {
         random: `https://api.spoonacular.com/recipes/random`,
         key: null,
     };
-    // recipeByIngredients: `https://api.spoonacular.com/recipes/findByIngredients`,
 })();
 
 const domain = 'http://localhost:5500' || process.env.PORT;
@@ -68,25 +66,25 @@ class ApiController {
         this.photos = {};
     }
     getIngredients(queryStr) {
-        fetch(`${api.ingredientSearch}/${queryStr}`)
+        fetch(`${api.ingredientSearch}?${queryStr}`)
             .then((response) => response.json())
             .then((json) => json)
             .catch(() => this.fallBackRequest().catch((e) => console.error(e)));
     }
     complexFind(queryStr) {
-        fetch(`${api.complexSearch}/${queryStr}`)
+        fetch(`${api.complexSearch}?${queryStr}`)
             .then((response) => response.json())
             .then((json) => json)
             .catch(() => this.fallBackRequest().catch((e) => console.error(e)));
     }
     findRecipes(queryStr) {
-        fetch(`${api.recipeSearch}/${queryStr}`)
+        fetch(`${api.recipeSearch}?${queryStr}`)
             .then((response) => response.json())
-            .then((json) => json)
-            .catch(() => this.fallBackRequest().catch((e) => console.error(e)));
+            .then((json) => this.resolve(json))
+            .catch((err) => console.error(err));
     }
     fallBackRequest(queryStr) {
-        fetch(`${api.random}/${queryStr}`)
+        fetch(`${api.random}`)
             .then((response) => response.json())
             .then((json) => json)
             .catch((e) => this.getPhotos(9));
@@ -97,9 +95,11 @@ class ApiController {
             .then((json) => json)
             .catch((e) => console.error(e));
     }
-    resolve(promise) {
-        console.log(`${promise} pending`);
-        promise.then((result) => result);
+    resolve(json) {
+        console.log('now resolving, setting this.recipes to our response data');
+        this.recipes = json;
+        console.log('what does this look like?', json);
+        showRecipes(this.recipes);
     }
 }
 
@@ -109,7 +109,7 @@ class ApiController {
  *
  */
 
-const API = ApiController;
+const API = new ApiController();
 
 /**
  *
@@ -138,41 +138,54 @@ const photoContainer = document.getElementById('food_container');
 //  * @returns {Object} data
 //  */
 
-const complexStringByIngredients = (diet, intolerances, ingredients) => {
-    // arrays of params to str
-    let resultStr;
-    let ingStr;
-    let dietStr;
-    let intoleranceStr;
-    let nutritionBool;
+/**
+ *
+ *                                                             | | |
+ * Currently unused functions for greater api query complexity V V V
+ *
+ */
+// const complexStringByIngredients = (diet, intolerances, ingredients) => {
+//     // arrays of params to str
+//     let resultStr;
+//     let ingStr;
+//     let dietStr;
+//     let intoleranceStr;
+//     let nutritionBool;
 
-    diet.length > 0 ? (dietStr = `diet=` + diet) : '';
-    intolerances.length > 0
-        ? (intoleranceStr = intolerances.reduce((acc, cur) => {
-              acc += cur + `,`;
-              return acc;
-          }, ``))
-        : '';
-    intoleranceStr = `intolerances=${intoleranceStr.slice(
-        0,
-        intoleranceStr.length - 1
-    )}`;
-    ingredients.length > 0
-        ? (ingStr = ingredients.reduce((acc, cur) => {
-              acc += cur.id + `,`;
-              return acc;
-          }, ``))
-        : '';
-    ingStr = `includeIngredients=${ingStr.slice(0, ingStr.length - 1)}`;
+//     diet.length > 0 ? (dietStr = `diet=` + diet) : '';
+//     intolerances.length > 0
+//         ? (intoleranceStr = intolerances.reduce((acc, cur) => {
+//               acc += cur + `,`;
+//               return acc;
+//           }, ``))
+//         : '';
+//     intoleranceStr = `intolerances=${intoleranceStr.slice(
+//         0,
+//         intoleranceStr.length - 1
+//     )}`;
+//     ingredients.length > 0
+//         ? (ingStr = ingredients.reduce((acc, cur) => {
+//               acc += cur.id + `,`;
+//               return acc;
+//           }, ``))
+//         : '';
 
-    nutritionBool = `addRecipeNutrition=true`;
+//     ingStr = `includeIngredients=${ingStr.slice(0, ingStr.length - 1)}`;
+//     nutritionBool = `addRecipeNutrition=true`;
+//     resultStr = `apiKey=${api.key}&${dietStr}&${intoleranceStr}&${ingStr}&${nutritionBool}`;
 
-    resultStr = `${dietStr}&${intoleranceStr}&${ingStr}&${nutritionBool}`;
+//     return resultStr;
+// };
 
-    return resultStr;
-};
+// const complexFinder = (str) => {
+//     API.complexFind(str).then((data) => API.resolve(data));
+// };
 
-const stringByIngredients = (ingredients, number) => {
+/**
+ * Stringify by ingredients for a 20-result query
+ */
+
+const stringByIngredients = (ingredients) => {
     let ingStr;
     let num;
     let resultStr;
@@ -184,21 +197,19 @@ const stringByIngredients = (ingredients, number) => {
           }, ``))
         : '';
     ingStr = `ingredients=${ingStr.slice(0, ingStr.length - 1)}`;
-    number ? (num = `number=` + number) : 12;
 
-    resultStr = `${ingStr}&${num}&ranking=1`;
+    resultStr = `apiKey=${api.key}&${ingStr}&number=20&ranking=1`;
     return resultStr;
 };
 
-const complexFinder = (str) => {
-    API.complexFind(str).then((data) => API.resolve(data));
-};
-
 const finder = (str) => {
-    API.findRecipes(str).then((data) => API.resolve(data));
+    return new Promise(
+        () => {
+            API.findRecipes(str);
+        },
+        (err) => console.log(err)
+    );
 };
-
-// then to str? might be redundant. Lets try to include parseQuery's functionality into containify
 
 /**
  * @summary Pointless in retrospect
@@ -223,11 +234,6 @@ function setAttributes(element, attributePairs) {
 }
 
 /**
- * @summary Remove element from DOM
- * @param  {String} ingredientText
- */
-
-/**
  * @summary Check if element with given ID exists in node collection
  * @param {Array} collection
  * @param {String} text
@@ -242,11 +248,19 @@ function hasDuplicates(collection, text) {
     }
     return false;
 }
+/**
+ * @summary Remove element from DOM
+ * @param  {String} ingredientText
+ */
 
 function removeIngredient(ingredientText) {
     let ingredientToRemove = document.getElementById(ingredientText.id);
     ingredientList.removeChild(ingredientToRemove);
 }
+
+/*                                                    */
+/* =================== SELECTORS ==================== */
+/*                                                    */
 
 const addToList = document.getElementById('add_to_list'); // add btn
 const clear = document.getElementById('clear_photos'); // clear results btn,
@@ -264,26 +278,102 @@ const toggleNutrition = document.getElementById('toggle_nutrition');
 const nutritionTable = document.getElementById('nutrition_table'); // table with dummy data (or nutrition facts),
 const nutritionHeader = document.getElementById('nutrition_header'); // label text for table
 
+/* __________________________________________________ */
+
+/*                                                    */
+/* =================== FUNCTIONS ==================== */
+/*                                                    */
+
+const showHide = (el) => {
+    if (el.className === 'show') {
+        el.setAttribute('class', 'hide');
+    }
+    el.setAttribute('class', 'show');
+};
+
+const importantProps = ['aisle', 'amount', 'meta', 'name', 'original', 'unit'];
+
+const paramsToPassToDOM = [
+    'missedIngredients',
+    'unusedIngredients',
+    'likes',
+    'usedIngredients',
+];
+
+const makeButton = (text, classes) => {
+    let button = createDomItem('button');
+    button.setAttribute('class', classes);
+    button.innerHTML = text;
+    return button;
+};
+
+const toggleRecipeData = (object) => {
+    let newList = createDomItem('ul');
+    let label = makeButton(
+        'expand',
+        'result_box_item recipe btn btn-dark show'
+    );
+
+    label.setAttribute('id', object.id);
+    label.onclick = function () {
+        newList.classList.toggle('hidden');
+    };
+    newList.appendChild(label);
+    newList.setAttribute('class', 'hidden result_box list-unstyled');
+
+    for (let subProperty in object) {
+        let li = createDomItem('li');
+        li.setAttribute('class', 'ingredient_li');
+        li.setAttribute('name', subProperty);
+        if (paramsToPassToDOM.includes(subProperty)) {
+            if (!Array.isArray(object[subProperty])) {
+                li.innerHTML = `${subProperty}: ${object[subProperty]}`;
+            } else {
+                object[subProperty].length > 0
+                    ? object[subProperty].forEach((attr) => {
+                          importantProps.indexOf(attr) > -1
+                              ? (li.innerHTML = `${attr}: ${object[attr]}`)
+                              : '';
+                      })
+                    : null;
+            }
+        }
+
+        newList.appendChild(li);
+    }
+    console.log('well heres our list', newList);
+    return newList;
+};
+
+const showRecipes = (arrRecipes) => {
+    arrRecipes.forEach((recipe) => {
+        let newCard = createDomItem('div');
+        let newPhoto = createDomItem('img');
+        newPhoto.src = recipe.image;
+        newCard.innerHTML = recipe.title;
+        newCard.appendChild(newPhoto);
+        newCard.setAttribute('class', 'food_container_card');
+        newPhoto.setAttribute('class', 'food_container_img');
+        let childList = toggleRecipeData(recipe);
+        newCard.appendChild(childList);
+        photoContainer.appendChild(newCard);
+    });
+};
+/* __________________________________________________ */
+
+/*                                                    */
+/* ================= LISTENERS ====================== */
+/*                                                    */
+
 /**
- *
- * @global Element event listeners
+ * @global =
  *
  */
 
-submit.addEventListener('submit', (e) => {
+submit.addEventListener('click', async (e) => {
     let ingredients = [...ingredientList.children];
-    let filter = filterResult.value;
-    let intolerances = [...mealType.children];
-    let number = numSelect.value;
-    let queryStr =
-        filter.length > 0
-            ? complexStringByIngredients(filter, intolerances, ingredients)
-            : number
-            ? stringByIngredients(ingredients, number)
-            : stringByIngredients(ingredients);
-    let result = filter.length > 0 ? complexFinder(queryStr) : finder(queryStr);
-    console.log(result);
-    return result;
+    let queryStr = stringByIngredients(ingredients);
+    await finder(queryStr);
 });
 
 /**
@@ -309,7 +399,6 @@ numSelect.addEventListener('change', (e) => {
 
 addToList.addEventListener('click', (e) => {
     if (e.target) {
-        console.log(api.key());
         let listNodes = [...ingredientList.children];
         let ingredientText = queryBar.value;
         ingredientText = ingredientText.replace(/\W+/g, '');
@@ -344,33 +433,6 @@ addToList.addEventListener('click', (e) => {
 /**
  * @summary Populate photo container with random food images -- temp function
  */
-
-photos.addEventListener('click', async (e) => {
-    const isCountInRange =
-        photoContainer.childElementCount >= 0 &&
-        photoContainer.childElementCount <= 9;
-
-    if (e.target && isCountInRange) {
-        const numItemsToGet = numSelect.value;
-        const picUrlObj = await getPhotos(numItemsToGet);
-        const picPack = Object.keys(picUrlObj);
-        const picData = Object.values(picUrlObj);
-
-        picPack.forEach((i) => {
-            let newCard = createDomItem('div');
-            let newPhoto = createDomItem('img');
-            newPhoto.src = picData[i].body.image;
-            newCard.innerHTML = 'Recipe card example';
-
-            newCard.appendChild(newPhoto);
-
-            newCard.setAttribute('class', 'food_container_card');
-            newPhoto.setAttribute('class', 'food_container_img');
-
-            photoContainer.appendChild(newCard);
-        });
-    }
-});
 
 /**
  * @summary Clear viewport container

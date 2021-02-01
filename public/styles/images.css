@@ -12,3 +12,18 @@
     max-width: 31.25rem;
     max-height: 31.25rem;
 }
+
+.show {
+    visibility: visible;
+    z-index: 2;
+    display: flex;
+    width: 65vw;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    flex-grow: 1;
+    margin: 0.125rem;
+}
+
+.hidden {
+    visibility: hidden;
+}
