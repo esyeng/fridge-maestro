@@ -3,6 +3,7 @@ const app = express();
 const path = require('path');
 const PORT = process.env.PORT || 5500;
 const morgan = require('morgan');
+require('dotenv').config();
 
 const server = app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);

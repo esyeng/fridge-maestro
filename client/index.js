@@ -1,5 +1,3 @@
-const { response } = require('express');
-
 /**
  * **************************** FRIDGE MAESTRO **********************
  *
@@ -16,7 +14,14 @@ const { response } = require('express');
  *
  * ******************************************************************
  */
-const apiKey = `4676ee395dfc4a9e832257b61eb2f233`;
+// const apiKey = `4676ee395dfc4a9e832257b61eb2f233`;
+
+(function () {
+    require('dotenv').config();
+})();
+
+console.log(process.env);
+
 /**
  * @summary api locations (not key protected)
  */
