@@ -14,16 +14,9 @@
  *
  * ******************************************************************
  */
-// const apiKey = `4676ee395dfc4a9e832257b61eb2f233`;
-
-(function () {
-    require('dotenv').config();
-})();
-
-console.log(process.env);
 
 /**
- * @summary api locations (not key protected)
+ * @summary API INITIATION
  */
 
 const api = (function () {
@@ -35,9 +28,25 @@ const api = (function () {
         ingredientInfo: (id) =>
             `https://api.spoonacular.com/food/ingredients/${id}/information`,
         random: `https://api.spoonacular.com/recipes/random`,
+        key: null,
     };
     // recipeByIngredients: `https://api.spoonacular.com/recipes/findByIngredients`,
 })();
+
+const domain = 'http://localhost:5500' || process.env.PORT;
+
+const key = fetch(`${domain}/api/key`)
+    .then((response) => response.text())
+    .then((text) => {
+        return text;
+    })
+    .catch((err) => console.log(err));
+
+const initKey = () => {
+    key.then((data) => (api.key = data));
+};
+
+initKey();
 
 /*********** API CONTROLLER *******
  * @description Methods for converting HTML queries to simple json, probe api, and receive simple json
@@ -261,7 +270,7 @@ const nutritionHeader = document.getElementById('nutrition_header'); // label te
  *
  */
 
-submit.addEventListener('click', (e) => {
+submit.addEventListener('submit', (e) => {
     let ingredients = [...ingredientList.children];
     let filter = filterResult.value;
     let intolerances = [...mealType.children];
@@ -298,14 +307,9 @@ numSelect.addEventListener('change', (e) => {
  * @summary Form control
  */
 
-submit.addEventListener('submit', (e) => {
-    if (Array.from(ingredientList).length > 0) {
-        // if ()
-    }
-});
-
 addToList.addEventListener('click', (e) => {
     if (e.target) {
+        console.log(api.key());
         let listNodes = [...ingredientList.children];
         let ingredientText = queryBar.value;
         ingredientText = ingredientText.replace(/\W+/g, '');
