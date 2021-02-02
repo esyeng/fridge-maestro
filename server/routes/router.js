@@ -1,3 +1,5 @@
+'use strict';
+
 const exp = require('express');
 const router = exp.Router();
 require('dotenv').config();
