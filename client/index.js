@@ -3,12 +3,37 @@
  * **************************** FRIDGE MAESTRO **********************
  *
  ** @todo: --
- * - In progress:
+ * -- PROJECT TASKS --
+ *
+ * CSS/HTML
+ * [1/1] Align all content according to viewport width - √
+ * [1/2] Hide & show table with nutrition info
+ * [0/1] Style navigation between recipes as responsive image blocks
+ * [0/1] Fix recipe sublist display in standard format
+ * [0/1] Create and style Nav
+ * [0/1] Create and style Recipe component
+ * [0/1] Create and style Recipes page with saved recipe cards
+ *
+ * JS
+ * [2/2] Populate list with selected ingredients (add, remove) - √
+ * [1/1] Enable a submit function to send search request - √
+ * [1/2] Fetch and display recipes - simple
+ * [0/2] Fetch and display recipes - complex
+ * [0/1] Save recipes in local storage
+ *
+ * Webpack
+ * [0/1] Modularize code / restructure files to small chunks
+ * [0/1] Webpack config
+ * [0/1] Test to serve working build
+ * [0/2] Run build as close to MVP as possible - complex/simple
+ *
+ * Ongoing/active:
  *  -- ensure reliability of apiController
  *  -- standardize layout, format
  *  -- increase options for complex queries
- * - Then:
  *  -- Evaluate performance, refactor & clean as needed
+ *
+ * Stretch:
  *  -- Create user login/acct suite
  *  -- Mealplanning tool
  *
