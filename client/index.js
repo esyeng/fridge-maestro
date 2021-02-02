@@ -139,49 +139,6 @@ const photoContainer = document.getElementById('food_container');
 //  */
 
 /**
- *
- *                                                             | | |
- * Currently unused functions for greater api query complexity V V V
- *
- */
-// const complexStringByIngredients = (diet, intolerances, ingredients) => {
-//     // arrays of params to str
-//     let resultStr;
-//     let ingStr;
-//     let dietStr;
-//     let intoleranceStr;
-//     let nutritionBool;
-
-//     diet.length > 0 ? (dietStr = `diet=` + diet) : '';
-//     intolerances.length > 0
-//         ? (intoleranceStr = intolerances.reduce((acc, cur) => {
-//               acc += cur + `,`;
-//               return acc;
-//           }, ``))
-//         : '';
-//     intoleranceStr = `intolerances=${intoleranceStr.slice(
-//         0,
-//         intoleranceStr.length - 1
-//     )}`;
-//     ingredients.length > 0
-//         ? (ingStr = ingredients.reduce((acc, cur) => {
-//               acc += cur.id + `,`;
-//               return acc;
-//           }, ``))
-//         : '';
-
-//     ingStr = `includeIngredients=${ingStr.slice(0, ingStr.length - 1)}`;
-//     nutritionBool = `addRecipeNutrition=true`;
-//     resultStr = `apiKey=${api.key}&${dietStr}&${intoleranceStr}&${ingStr}&${nutritionBool}`;
-
-//     return resultStr;
-// };
-
-// const complexFinder = (str) => {
-//     API.complexFind(str).then((data) => API.resolve(data));
-// };
-
-/**
  * Stringify by ingredients for a 20-result query
  */
 
@@ -307,6 +264,12 @@ const makeButton = (text, classes) => {
     return button;
 };
 
+/**
+ * @summary search object subtrees to transfer properties and their values into collapsible lists
+ * @param {Object} object
+ *
+ * @returns {HTMLCollection} newList
+ */
 const toggleRecipeData = (object) => {
     let newList = createDomItem('ul');
     let label = makeButton(
