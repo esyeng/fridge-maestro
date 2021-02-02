@@ -41,11 +41,9 @@ const key = fetch(`${domain}/api/key`)
     })
     .catch((err) => console.log(err));
 
-const initKey = () => {
+(function initKey() {
     key.then((data) => (api.key = data));
-};
-
-initKey();
+})();
 
 /*********** API CONTROLLER *******
  * @description Methods for converting HTML queries to simple json, probe api, and receive simple json
