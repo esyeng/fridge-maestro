@@ -297,21 +297,26 @@ const makeButton = (text, classes) => {
 const toggleRecipeData = (object) => {
     let newList = createDomItem('ul');
     let label = makeButton(
-        'expand',
-        'result_box_item recipe btn btn-dark show'
+        'view details',
+        'recipe_card_button recipe btn btn-dark show'
     );
 
     label.setAttribute('id', object.id);
     label.onclick = function () {
         newList.classList.toggle('hidden');
     };
-    newList.appendChild(label);
-    newList.setAttribute('class', 'hidden result_box list-unstyled');
+    label.appendChild(newList);
+
+    newList.setAttribute(
+        'class',
+        'hidden result_box recipe_card list-unstyled'
+    );
 
     for (let subProperty in object) {
         let li = createDomItem('li');
-        li.setAttribute('class', 'ingredient_li');
+        li.setAttribute('class', 'recipe_card_li');
         li.setAttribute('name', subProperty);
+
         if (paramsToPassToDOM.includes(subProperty)) {
             if (!Array.isArray(object[subProperty])) {
                 li.innerHTML = `${subProperty}: ${object[subProperty]}`;
@@ -325,11 +330,11 @@ const toggleRecipeData = (object) => {
                     : null;
             }
         }
-
+        li.innerHTML = 'TEST TEXT IF IT DIDNT WORK';
         newList.appendChild(li);
     }
-    console.log('well heres our list', newList);
-    return newList;
+    console.log('results label', label, 'list', newList);
+    return label;
 };
 
 const showRecipes = (arrRecipes) => {
