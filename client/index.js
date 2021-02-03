@@ -85,33 +85,33 @@ const key = fetch(`${domain}/api/key`)
 
 class ApiController {
     constructor() {
-        this.ingredients = {};
+        this.ingredients = [];
         this.recipes = {};
         this.photos = {};
-    }
-    getIngredients(queryStr) {
-        fetch(`${api.ingredientSearch}?${queryStr}`)
-            .then((response) => response.json())
-            .then((json) => json)
-            .catch(() => this.fallBackRequest().catch((e) => console.error(e)));
-    }
-    complexFind(queryStr) {
-        fetch(`${api.complexSearch}?${queryStr}`)
-            .then((response) => response.json())
-            .then((json) => json)
-            .catch(() => this.fallBackRequest().catch((e) => console.error(e)));
-    }
-    findRecipes(queryStr) {
-        fetch(`${api.recipeSearch}?${queryStr}`)
-            .then((response) => response.json())
-            .then((json) => this.resolve(json))
-            .catch((err) => console.error(err));
     }
     fallBackRequest(queryStr) {
         fetch(`${api.random}`)
             .then((response) => response.json())
             .then((json) => json)
             .catch((e) => this.getPhotos(9));
+    }
+    getIngredients(queryStr) {
+        fetch(`${api.ingredientSearch}?${queryStr}`)
+            .then((response) => response.json())
+            .then((json) => json)
+            .catch((e) => console.error(e));
+    }
+    complexFind(queryStr) {
+        fetch(`${api.complexSearch}?${queryStr}`)
+            .then((response) => response.json())
+            .then((json) => json)
+            .catch((e) => console.error(e));
+    }
+    findRecipes(queryStr) {
+        fetch(`${api.recipeSearch}?${queryStr}`)
+            .then((response) => response.json())
+            .then((json) => this.resolve(json))
+            .catch((err) => console.error(err));
     }
     getPhotos(num) {
         fetch(`http://localhost:5500/${num}`)

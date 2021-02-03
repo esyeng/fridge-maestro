@@ -23,15 +23,18 @@
 
 <body>
     <!--Header + Navigation-->
-    <section class="container-sm header_default">
-        <hr>
+    <header class="main_title">
+
         <h1 class="main_title slidein">
-            - FridgeMaestro -
+            𝄞 FridgeMaestro🍴
         </h1>
-        <hr>
+
+    </header>
+    <section class="header_default">
+        <hr class="header_hr_divider">
         <ul class="list_nav breadcrumb">
             <li class="list_nav_item">
-                <a class="float_right" href="#recipes">Recipes
+                <a href="#recipes"> ♩ Recipes
                     <svg id="Layer_1" enable-background="new 0 0 12 12" height="18" viewBox="0 0 512 512" width="18"
                         xmlns="http://www.w3.org/2000/svg">
                         <g>
@@ -66,34 +69,34 @@
                                     d="m96.001 210.215c-5.523 0-10 4.48-10 10.003s4.477 10 10 10 10-4.477 10-10v-.007c0-5.523-4.477-9.996-10-9.996z" />
                             </g>
                         </g>
-                    </svg> </a>
+                    </svg> ♩ </a>
             </li>
+
         </ul>
+        <hr class="header_hr_divider">
     </section>
 
     <!-- intro -->
+    <div class="hero">
+        <img class="hero_image" src="../content/ingredients-1200x600.jpg" alt="FM Hero"
+            srcset="./content/ingredients-1200x600.jpg 1200w, ./content/ingredients-600x300.jpg 600w, ./content/ingredients-250x125.jpg 250w"
+            sizes="(max-width: 75rem) 100vw, 100vw, 100vw" />
+        <section class=" hero_section_text">
+            <p>We get it.</p>
 
-    <section class="container-sm">
-        <!--Introduction section-->
+            <p>
+                You've opened and closed the fridge about 4 times now,
+                possibly <mark>rummaged</mark> through your cabinets.
+            </p>
+            <p>
+                You have food, what you lack is the ingenuity to replace
+                those instant noodles with something healthy, delicious, and
+                available to you right away. That's where we come in.
+            </p>
+            <p> <em>Lets orchestrate your next meal.</em></p>
 
-        <img class="float_left intro_header_img" src="../content/potoffood.jpg" alt="FridgeMaestro Cauldron"
-            srcset="../content/potoffood.jpg 500w, ../content/potoffood250.jpg 250w"
-            sizes="(max-width: 31.25rem) 25vw, 50vw" />
-        <p>We get it.</p>
-
-        <p>
-            You've opened and closed the fridge about 4 times now,
-            possibly <mark>rummaged</mark> through your cabinets.
-        </p>
-        <p>
-            You have food, what you lack is the ingenuity to replace
-            those instant noodles with something healthy, delicious, and
-            available to you right away. That's where we come in.
-        </p>
-        <p> <em>Lets orchestrate your next meal.</em></p>
-
-    </section>
-
+        </section>
+    </div>
     <!-- Main form -->
 
     <section class="container-sm">
@@ -156,9 +159,6 @@
 
         <section name="recipe_center" class="container-sm result_box_container">
             <!-- Recently viewed -->
-            <button id="get_photos" type="button" class="result_box_item recipe btn btn-dark get_photos">Click to
-                populate
-                with foods</button>
             <button id="clear_photos" type="button"
                 class="result_box_item recipe btn btn-dark get_photos">Clear</button>
             <input id="num_select" name="num_select" type="number"

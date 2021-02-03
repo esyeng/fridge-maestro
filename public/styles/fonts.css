@@ -3,10 +3,29 @@
 }
 
 .main_title {
+    background-color: black;
+    color: white;
+    max-width: 100vw;
     font-size: 36pt;
     font-style: italic;
     text-align: center;
     font-family: 'Yusei Magic', sans-serif;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+}
+
+.header_default {
+    height: fit-content;
+    padding: 0.625rem;
+    background-color: black;
+}
+
+.header_hr_divider {
+    margin: 0%;
+    color: white;
+    border-top: 2px double;
+    height: 5px;
+    /* background-size: 2px; */
 }
 
 .slidein {

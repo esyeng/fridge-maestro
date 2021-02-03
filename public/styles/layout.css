@@ -3,8 +3,48 @@ body {
     background-color: #fcf8e3;
 }
 
+.hero {
+}
+
+.hero_image {
+    max-width: max-content;
+    margin: 0;
+}
+
+.hero_section_bold {
+}
+
+.hero_section_text {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.76);
+    border-radius: 25px;
+    top: 25%;
+    right: 5%;
+    left: 50%;
+    padding-right: 4%;
+    padding-left: 2%;
+    color: white;
+    text-align: end;
+    max-height: 20rem;
+}
+
+@media screen and (max-width: 824px) {
+    .hero_section_text {
+        position: unset;
+        text-align: center;
+        background-color: black;
+        border-radius: 0;
+    }
+}
+
 .float_right {
     float: right;
+}
+
+.float_left {
+    float: left;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
 }
 
 /* Image container */

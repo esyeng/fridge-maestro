@@ -2,15 +2,9 @@
 
 /* float */
 
-.float_left {
-    float: left;
-    margin-right: 1rem;
-    margin-bottom: 1rem;
-}
-
 .intro_header_img {
-    max-width: 31.25rem;
-    max-height: 31.25rem;
+    max-width: 75rem;
+    max-height: 37.5rem;
 }
 
 .show {
