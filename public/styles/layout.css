@@ -1,4 +1,12 @@
 /* Class selector for floating right */
+*::before {
+    box-sizing: unset;
+}
+
+*::after {
+    box-sizing: unset;
+}
+
 body {
     background-color: #fcf8e3;
 }
@@ -100,16 +108,18 @@ body {
 
 .food_container {
     display: flex;
-    width: 65vw;
+
     flex-wrap: wrap;
-    justify-content: space-evenly;
+
     flex-grow: 1;
     margin: 0.125rem;
+    padding-right: 0.75rem;
 }
 
 .food_container_card {
     padding-left: 1.25rem;
     padding-top: 0.625rem;
+    max-width: 37.5rem;
     margin: auto;
     margin-top: 0.3125rem;
     border-radius: 25px;
@@ -121,7 +131,7 @@ body {
 
 .food_container_card:hover {
     max-height: 16.25rem;
-    max-width: 16.25rem;
+    /* max-width: 16.25rem; */
     min-height: 18.75rem;
     min-width: 100%;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset,
@@ -156,8 +166,8 @@ body {
 .result_box {
     /* flex-basis: 80%; */
     display: flex;
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
+    /* border-top: 1px solid black;
+    border-bottom: 1px solid black; */
 }
 
 .result_box_container {
