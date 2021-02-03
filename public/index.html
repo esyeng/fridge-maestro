@@ -81,34 +81,49 @@
         <img class="hero_image" src="../content/ingredients-1200x600.jpg" alt="FM Hero"
             srcset="./content/ingredients-1200x600.jpg 1200w, ./content/ingredients-600x300.jpg 600w, ./content/ingredients-250x125.jpg 250w"
             sizes="(max-width: 75rem) 100vw, 100vw, 100vw" />
-        <section class=" hero_section_text">
-            <p>We get it.</p>
+        <section class="hero_section_text">
+            <p class="hero_paragraph_bold slidein ">We get it.</p>
+            <div class="hero_div_text">
 
-            <p>
-                You've opened and closed the fridge about 4 times now,
-                possibly <mark>rummaged</mark> through your cabinets.
-            </p>
-            <p>
-                You have food, what you lack is the ingenuity to replace
-                those instant noodles with something healthy, delicious, and
-                available to you right away. That's where we come in.
-            </p>
-            <p> <em>Lets orchestrate your next meal.</em></p>
+                <p class="hero_div_text_p slidein">
+                    🤷🏽‍♀️
+                    <br>
+                    You've opened and closed the fridge about 4 times now,
+                    <strong class="hero_strong">rummaged</strong> through your cabinets.
+                </p>
+                <p class="hero_div_text_p slidein">
+                    🧅
+                    <br>
+                    You have food, what you lack is ingenuity
+                </p>
 
+                <p class="hero_div_text_p slidein">
+                    🎶 🥙 🎶
+                    <br>
+                    That's where we come in.
+                    <br>
+                    🎵 🍛 🎵
+                </p>
+            </div>
+
+            <a href="#form" class='btn btn-dark search hero_button_entry'>Lets orchestrate your next meal.</a>
         </section>
     </div>
     <!-- Main form -->
 
     <section class="container-sm">
         <!-- Main form selection area -->
+        <h2 class="form_label_start">
+            <label role="contentinfo" for="ingredients_bar" class="form-label form_label_start">
+                Enter your ingredients below to get started
+            </label>
+        </h2>
         <article class="container-sm">
             <form class="mb-3">
 
                 <fieldset>
-                    <label role="contentinfo" for="ingredients_bar" class="form-label">Enter your ingredients below
-                        to
-                        get
-                        started</label>
+                    <a name="form"></a>
+
                     <div class="input-group mb-3">
                         <input name="query_bar" class="form-control search_bar input_margin" type="search"
                             id="query_bar" placeholder="What're you bringing to the table?">
