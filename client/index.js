@@ -384,14 +384,25 @@ const recipeDataTypes = {
  * @returns {HTML}
  * 
  * @notes ** 
- * // need to make a show/hide on the result box, and when a recipe is clicked it should hide
+ *  need to make a show/hide on the result box 
+ * Option 1:
+    // when a recipe is clicked it should hide
     // if result box is showing, single recipe is hidden
     // if single recipe is showing, result box is hidden
     // two containers, one for all and one for one.
     // clicking a result in result box hides result box,
     // creates a new recipe object, and shows that in the single recipe
     // a button 'back' will reverse this
- * 
+
+    - conditionally render a section, create and style another container
+
+ * Option 2:
+    // open modal with formatted recipe, allow user to save to recently viewed
+    // generator creates and returns this element, 
+    // save appends a reference to it on a named anchor in recently viewed menu
+
+    - create & style a modal 
+
  */
 
 function makeRecipeComponent(singleRecipeData) {
