@@ -239,10 +239,35 @@ body {
     }
 }
 
-.article_single_recipe {
-    background-color: darkblue;
-    height: 400px;
-    width: 900px;
+.single_recipe {
+    max-height: 25rem;
+    max-width: 25rem;
+    background-color: black;
+    border-radius: 25px;
+    z-index: 100;
+}
+
+.single_recipe_list {
+    /* background-color: black;*/
+    max-height: 25rem;
+    max-width: 25rem;
+    color: white;
+}
+
+.single_recipe_inner {
+    background-color: black;
+    color: white;
+}
+
+.single_recipe_content {
+    background-color: black;
+    color: white;
+}
+
+.single_recipe_button {
+    height: 200px;
+    width: 200px;
+    color: red;
 }
 
 /* Footer */

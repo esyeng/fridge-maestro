@@ -331,6 +331,13 @@ function makeButton(text, classes) {
     return button;
 }
 
+function makeAnchor(text, classes) {
+    let anchor = document.createElement('a');
+    anchor.setAttribute('class', classes);
+    anchor.innerHTML = text;
+    return anchor;
+}
+
 /**
  * addGeneratorButtonToRecipe
  * @summary Append button to recipe, used to call function
@@ -341,17 +348,19 @@ function makeButton(text, classes) {
  */
 
 function addGeneratorButtonToRecipe(recipe) {
-    let expandResultButton = makeButton(
+    let container = document.createElement('div');
+    let expandResultButton = makeAnchor(
         'view details',
         'recipe_card_button recipe btn btn-dark show'
     );
     expandResultButton.setAttribute('id', recipe.id);
 
-    expandResultButton.addEventListener('click', (e) =>
-        makeRecipeComponent(recipe)
-    );
+    expandResultButton.addEventListener('click', (e) => {
+        makeRecipeComponent(recipe);
+    });
+    container.appendChild(expandResultButton);
 
-    return expandResultButton;
+    return container;
 }
 
 /**
@@ -402,13 +411,149 @@ const recipeDataTypes = {
     // save appends a reference to it on a named anchor in recently viewed menu
 
     - create & style a modal 
+    using function, inject data into html template at runtime,
+    assign a viewable class so it immediately opens
 
  */
 
+/**
+ * makeModal
+ *
+ */
+
+function makeModal() {
+    const recipeModal = document.createElement('section');
+    const innerModal = document.createElement('div');
+
+    const emailModal = document.createElement('button');
+    recipeModal.appendChild(innerModal);
+    recipeModal.appendChild(emailModal);
+
+    return recipeModal;
+}
+
+/**
+ * listFromIngredients
+ * @param {*} ingredients
+ */
+
+function listFromIngredients(ingredients) {
+    const listOfIngredients = document.createElement('ul');
+    listOfIngredients.setAttribute('class', 'single_recipe_list list_unstyled');
+    ingredients.forEach((ingredient) => {
+        const ingredientToAdd = document.createElement('li');
+        ingredientToAdd.setAttribute('class', 'single_recipe_list_item');
+        ingredientToAdd.innerHTML = `
+            <p>amount ${ingredient.amount} ${ingredient.unit} ${ingredient.name}</p>
+        `;
+        listOfIngredients.appendChild(ingredientToAdd);
+    });
+    return listOfIngredients;
+}
+
+/**
+ *
+ * @param {*} singleRecipeData
+ */
+
+function saveRecipe(singleRecipeData) {
+    const saveModal = document.createElement('button');
+    saveModal.addEventListener('click', (e) => {
+        const recent = document.getElementById('recently-viewed-recipes');
+        const currentRecipe = document.querySelector(
+            `#Recipe: ${singleRecipeData.id}`
+        );
+        const linkToCurrent = document.createElement('a');
+        linkToCurrent.setAttribute('href', currentRecipe.name);
+        recent.appendChild(linkToCurrent);
+    });
+    return saveModal;
+}
+
+/**
+ * makeRecipeComponent
+ * @param {*} singleRecipeData
+ */
+
 function makeRecipeComponent(singleRecipeData) {
-    // start by examining what we're working with
-    //
-    console.log(singleRecipeData);
+    const appendTo = document.getElementById(`${singleRecipeData.id}`);
+    const recipe = makeModal();
+    const ref = document.createElement('a');
+    const recipeDiv = recipe.firstChild;
+    const modalHeader = document.createElement('header');
+    const modalBody = document.createElement('div');
+    const modalFooter = document.createElement('footer');
+    const closeModal = document.createElement('button');
+    // const saveModal = saveRecipe(singleRecipeData);
+
+    let missedList;
+    singleRecipeData.missedIngredientCount > 0
+        ? (missedList = listFromIngredients(singleRecipeData.missedIngredients))
+        : '0';
+
+    let usedList;
+    singleRecipeData.usedIngredientCount > 0
+        ? (usedList = listFromIngredients(singleRecipeData.usedIngredients))
+        : '0';
+
+    ref.setAttribute('name', singleRecipeData.title);
+    recipeDiv.setAttribute('class', 'modal--inner single_recipe_inner');
+    modalHeader.setAttribute('id', `Recipe: ${singleRecipeData.id}-text`);
+    modalHeader.setAttribute('class', 'single_recipe_header');
+    modalBody.setAttribute('class', 'modal-content single_recipe_content');
+    modalFooter.setAttribute('class', 'single_recipe_footer');
+
+    setAttributes(closeModal, [
+        {
+            attribute: 'class',
+            value: 'btn btn-dark float_right search',
+        },
+    ]);
+    closeModal.addEventListener('click', (e) => {
+        const thisModal = document.getElementById(
+            `Recipe: ${singleRecipeData.id}`
+        );
+
+        thisModal.parentElement.removeChild(thisModal);
+    });
+
+    setAttributes(recipe, [
+        {
+            attribute: 'class',
+            value: 'modal--show single_recipe',
+        },
+        {
+            attribute: 'id',
+            value: `Recipe: ${singleRecipeData.id}`,
+        },
+        {
+            attribute: 'tabindex',
+            value: '-1',
+        },
+        {
+            attribute: 'role',
+            value: 'dialog',
+        },
+        {
+            attribute: 'aria-labelledby',
+            value: 'modal-label',
+        },
+        {
+            attribute: 'aria-hidden',
+            value: 'true',
+        },
+    ]);
+    modalHeader.innerHTML = `${singleRecipeData.title}`;
+    modalBody.innerHTML = `
+        <img src=${singleRecipeData.image}>
+    `;
+    modalBody.appendChild(missedList);
+    modalBody.appendChild(usedList);
+    recipeDiv.appendChild(modalHeader);
+    recipeDiv.appendChild(modalBody);
+    recipeDiv.appendChild(modalFooter);
+    recipe.appendChild(closeModal);
+    appendTo.appendChild(recipe);
 }
 
 /**
@@ -525,8 +670,8 @@ addToList.addEventListener('click', (e) => {
  */
 
 clear.addEventListener('click', (e) => {
-    while (photoContainer.firstChild) {
-        photoContainer.removeChild(photoContainer.firstChild);
+    while (foodContainer.firstChild) {
+        foodContainer.removeChild(foodContainer.firstChild);
     }
     return;
 });
