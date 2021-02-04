@@ -27,6 +27,9 @@
  * [0/1] Test to serve working build
  * [0/2] Run build as close to MVP as possible - complex/simple
  *
+ * Error handling
+ * [0/1] Enable fallback route for empty response
+ *
  * Ongoing/active:
  *  -- ensure reliability of apiController @update simple query working
  *  -- standardize layout, format
@@ -34,6 +37,7 @@
  *  -- Evaluate performance, refactor & clean as needed
  *
  * Stretch:
+ *  -- Though likely not in the scope of this project, a socket based live search would be cool
  *  -- Create user login/acct suite
  *  -- Mealplanning tool
  *
@@ -194,8 +198,10 @@ const nutritionHeader = document.getElementById('nutrition_header'); // label te
 
 /**
  * stringByIngredients
- * @summary Stringify by ingredients for a 20-result query
+ * @summary Stringify ingredients
  * @param {Array} ingredients
+ *
+ * @note ** currently hardcoded to return 20 results
  * @returns {String} api-friendly request parameters
  *
  *
@@ -246,7 +252,7 @@ function simpleRecipeFinder(str) {
  * setAttributes
  * @summary Set multiple attributes on single element
  * @param  {HTMLElement} element
- * @param  {Array} attributePairs
+ * @param  {Array} attributePairs attribute: value
  *
  * @returns {HTMLElement}
  *
@@ -326,20 +332,72 @@ function makeButton(text, classes) {
 }
 
 /**
- * generateRecipeCard
- * @summary Use each recipe object to make appended card
+ * addGeneratorButtonToRecipe
+ * @summary Append button to recipe, used to call function
+ * to generate dynamic recipe
  * @param {Object} recipe
  *
  * @returns {HTMLCollection} newList
  */
 
-function generateRecipeCard(recipe) {
+function addGeneratorButtonToRecipe(recipe) {
     let expandResultButton = makeButton(
         'view details',
         'recipe_card_button recipe btn btn-dark show'
     );
     expandResultButton.setAttribute('id', recipe.id);
+
+    expandResultButton.addEventListener('click', (e) =>
+        makeRecipeComponent(recipe)
+    );
+
     return expandResultButton;
+}
+
+/**
+ * @note **
+ * I'm being very particular about knowing the exact data types of this recipe
+ * object for the sake of building robust queries. Ex, with missed ingredients we
+ * could pull in a shopping library. The id of the ingredient exists on the used/unused items,
+ * these could be helpful in implicit loading of nutrition facts (ingredient nutrition method
+ * requires this).
+ */
+
+const recipeDataTypes = {
+    id: Number,
+    image: String,
+    imageType: String,
+    likes: Number,
+    missedIngredientCount: Number,
+    missedIngredients: Array,
+    title: String,
+    unusedIngredients: Array,
+    usedIngredientCount: Number,
+    usedIngredients: Array,
+};
+
+/**
+ * makeRecipeComponent
+ * @summary Use recipe object data to create single recipe HTML
+ *
+ * @param {Object} singleRecipeData 
+ * @returns {HTML}
+ * 
+ * @notes ** 
+ * // need to make a show/hide on the result box, and when a recipe is clicked it should hide
+    // if result box is showing, single recipe is hidden
+    // if single recipe is showing, result box is hidden
+    // two containers, one for all and one for one.
+    // clicking a result in result box hides result box,
+    // creates a new recipe object, and shows that in the single recipe
+    // a button 'back' will reverse this
+ * 
+ */
+
+function makeRecipeComponent(singleRecipeData) {
+    // start by examining what we're working with
+    //
+    console.log(singleRecipeData);
 }
 
 /**
@@ -347,33 +405,23 @@ function generateRecipeCard(recipe) {
  * @summary Called during the resolve method of API controller,
  *  populates foodContainer
  *
- * @param {Array} arrRecipes
+ * @param {Array} recipes
  *
  */
 
-function showRecipes(arrRecipes) {
-    arrRecipes.forEach((recipe) => {
-        let newCard = document.createElement('div');
-        let newPhoto = document.createElement('img');
-        newPhoto.src = recipe.image;
-        newCard.innerHTML = recipe.title;
-        newCard.appendChild(newPhoto);
-        newCard.setAttribute('class', 'food_container_card');
-        newPhoto.setAttribute('class', 'food_container_img');
-        let childList = generateRecipeCard(recipe);
-        newCard.appendChild(childList);
-        foodContainer.appendChild(newCard);
+function showRecipes(recipes) {
+    recipes.forEach((recipe) => {
+        let card = document.createElement('div');
+        let photo = document.createElement('img');
+        photo.src = recipe.image;
+        card.innerHTML = recipe.title;
+        card.appendChild(photo);
+        card.setAttribute('class', 'food_container_card');
+        photo.setAttribute('class', 'food_container_img');
+        let generateButton = addGeneratorButtonToRecipe(recipe);
+        card.appendChild(generateButton);
+        foodContainer.appendChild(card);
     });
-}
-
-function makeRecipeComponent(singleRecipeData) {
-    // need to make a show/hide on the result box, and when a recipe is clicked it should hide
-    // if result box is showing, single recipe is hidden
-    // if single recipe is showing, result box is hidden
-    // two containers, one for all and one for one.
-    // clicking a result in result box hides result box,
-    // creates a new recipe object, and shows that in the single recipe
-    // a button 'back' will reverse this
 }
 
 /* __________________________________________________ */
