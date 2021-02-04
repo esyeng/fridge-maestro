@@ -286,6 +286,7 @@ function hasDuplicates(collection, text) {
     }
     return false;
 }
+
 /**
  * removeIngredient
  * @summary Remove element from DOM & APIController store
@@ -348,19 +349,19 @@ function makeAnchor(text, classes) {
  */
 
 function addGeneratorButtonToRecipe(recipe) {
-    let container = document.createElement('div');
     let expandResultButton = makeAnchor(
         'view details',
         'recipe_card_button recipe btn btn-dark show'
     );
-    expandResultButton.setAttribute('id', recipe.id);
-
     expandResultButton.addEventListener('click', (e) => {
-        makeRecipeComponent(recipe);
+        if (e.target.parentElement.id === recipe.id) {
+            document.removeChild(e.target.parentElement);
+        } else {
+            makeRecipeComponent(recipe);
+        }
     });
-    container.appendChild(expandResultButton);
 
-    return container;
+    return expandResultButton;
 }
 
 /**
@@ -421,30 +422,71 @@ const recipeDataTypes = {
  *
  */
 
-function makeModal() {
-    const recipeModal = document.createElement('section');
-    const innerModal = document.createElement('div');
-
-    const emailModal = document.createElement('button');
-    recipeModal.appendChild(innerModal);
-    recipeModal.appendChild(emailModal);
-
-    return recipeModal;
+function modilify(parent, target) {
+    parent.appendChild(target);
 }
+
+function makeModal(id) {
+    // const recipeModal = document.createElement('section');
+    const modal = document.createElement('div');
+    modal.innerHTML = `
+    <button id="${id} btn" class="btn btn-dark float_right search">Open Modal</button>
+        <!-- The Modal -->
+        <div id="${id} modal-header" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content ${id}">
+                    <span class="close">&times;</span>
+                    <p>Some text in the Modal..</p>
+                </div>
+        </div>`;
+    modal.id = `${id} modal`;
+    return modal;
+}
+
+// Get the modal
+
+function injectFunctinoIntoModal(id) {
+    const modal = document.getElementById(`${id} modal`);
+    const btn = document.getElementById(`${id} btn`);
+    const span = document.getElementsByClassName('close')[0];
+
+    btn.onclick = function () {
+        modal.style.display = 'block';
+    };
+    span.onclick = function () {
+        modal.style.display = 'none';
+    };
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+    };
+}
+
+// Get the button that opens the modal
+
+// Get the <span> element that closes the modal
+
+// When the user clicks on the button, open the modal
+
+// When the user clicks on <span> (x), close the modal
+
+// When the user clicks anywhere outside of the modal, close it
 
 /**
  * listFromIngredients
  * @param {*} ingredients
  */
 
-function listFromIngredients(ingredients) {
+function listFromIngredients(ingredients, listType) {
     const listOfIngredients = document.createElement('ul');
     listOfIngredients.setAttribute('class', 'single_recipe_list list_unstyled');
+    listOfIngredients.innerHTML = `<h4>${listType}: </h4>`;
     ingredients.forEach((ingredient) => {
         const ingredientToAdd = document.createElement('li');
         ingredientToAdd.setAttribute('class', 'single_recipe_list_item');
         ingredientToAdd.innerHTML = `
-            <p>amount ${ingredient.amount} ${ingredient.unit} ${ingredient.name}</p>
+            <p>${ingredient.amount} ${ingredient.unit} ${ingredient.name}</p>
         `;
         listOfIngredients.appendChild(ingredientToAdd);
     });
@@ -475,85 +517,52 @@ function saveRecipe(singleRecipeData) {
  * @param {*} singleRecipeData
  */
 
-function makeRecipeComponent(singleRecipeData) {
-    const appendTo = document.getElementById(`${singleRecipeData.id}`);
-    const recipe = makeModal();
-    const ref = document.createElement('a');
-    const recipeDiv = recipe.firstChild;
-    const modalHeader = document.createElement('header');
-    const modalBody = document.createElement('div');
-    const modalFooter = document.createElement('footer');
-    const closeModal = document.createElement('button');
+function injectDataIntoModal(singleRecipeData) {
+    const recipe = document.getElementById(`${singleRecipeData.id} modal`);
+    const recipeContent = recipe.getElementsByClassName(
+        `modal-content ${singleRecipeData.id}`
+    );
+    const recipeHeader = document.getElementById(
+        `${singleRecipeData.id} modal-header`
+    );
+    const recipeFooter = document.createElement('footer');
     // const saveModal = saveRecipe(singleRecipeData);
 
     let missedList;
     singleRecipeData.missedIngredientCount > 0
-        ? (missedList = listFromIngredients(singleRecipeData.missedIngredients))
-        : '0';
+        ? (missedList = listFromIngredients(
+              singleRecipeData.missedIngredients,
+              'ingredients missing'
+          ))
+        : (missedList = listFromIngredients(
+              [{ amount: 0, unit: '', name: '' }],
+              'ingredients missing'
+          ));
 
     let usedList;
     singleRecipeData.usedIngredientCount > 0
-        ? (usedList = listFromIngredients(singleRecipeData.usedIngredients))
-        : '0';
+        ? (usedList = listFromIngredients(
+              singleRecipeData.usedIngredients,
+              'ingredients used'
+          ))
+        : (missedList = listFromIngredients(
+              [{ amount: 0, unit: '', name: '' }],
+              'ingredients used'
+          ));
 
-    ref.setAttribute('name', singleRecipeData.title);
-    recipeDiv.setAttribute('class', 'modal--inner single_recipe_inner');
-    modalHeader.setAttribute('id', `Recipe: ${singleRecipeData.id}-text`);
-    modalHeader.setAttribute('class', 'single_recipe_header');
-    modalBody.setAttribute('class', 'modal-content single_recipe_content');
-    modalFooter.setAttribute('class', 'single_recipe_footer');
+    recipeHeader.setAttribute('class', 'single_recipe_header');
+    recipeFooter.setAttribute('class', 'single_recipe_footer');
 
-    setAttributes(closeModal, [
-        {
-            attribute: 'class',
-            value: 'btn btn-dark float_right search',
-        },
-    ]);
-    closeModal.addEventListener('click', (e) => {
-        const thisModal = document.getElementById(
-            `Recipe: ${singleRecipeData.id}`
-        );
-
-        thisModal.parentElement.removeChild(thisModal);
-    });
-
-    setAttributes(recipe, [
-        {
-            attribute: 'class',
-            value: 'modal--show single_recipe',
-        },
-        {
-            attribute: 'id',
-            value: `Recipe: ${singleRecipeData.id}`,
-        },
-        {
-            attribute: 'tabindex',
-            value: '-1',
-        },
-        {
-            attribute: 'role',
-            value: 'dialog',
-        },
-        {
-            attribute: 'aria-labelledby',
-            value: 'modal-label',
-        },
-        {
-            attribute: 'aria-hidden',
-            value: 'true',
-        },
-    ]);
-    modalHeader.innerHTML = `${singleRecipeData.title}`;
-    modalBody.innerHTML = `
+    recipeHeader.innerHTML = `${singleRecipeData.title}`;
+    recipeBody.innerHTML = `
         <img src=${singleRecipeData.image}>
     `;
-    modalBody.appendChild(missedList);
-    modalBody.appendChild(usedList);
-    recipeDiv.appendChild(modalHeader);
-    recipeDiv.appendChild(modalBody);
-    recipeDiv.appendChild(modalFooter);
-    recipe.appendChild(closeModal);
-    appendTo.appendChild(recipe);
+    // console.log(missedList);
+    recipeContent.appendChild(missedList);
+    recipeContent.appendChild(usedList);
+    recipe.appendChild(recipeHeader);
+    recipe.appendChild(recipeContent);
+    recipe.appendChild(recipeFooter);
 }
 
 /**
@@ -567,15 +576,21 @@ function makeRecipeComponent(singleRecipeData) {
 
 function showRecipes(recipes) {
     recipes.forEach((recipe) => {
-        let card = document.createElement('div');
-        let photo = document.createElement('img');
+        const card = document.createElement('div');
+        const photo = document.createElement('img');
+        const recipeModal = makeModal(recipe.id);
+        modilify(card, recipeModal);
+        injectFunctinoIntoModal(recipe.id);
+        injectDataIntoModal(recipe);
+
         photo.src = recipe.image;
         card.innerHTML = recipe.title;
-        card.appendChild(photo);
+
+        card.setAttribute('id', recipe.id);
         card.setAttribute('class', 'food_container_card');
         photo.setAttribute('class', 'food_container_img');
-        let generateButton = addGeneratorButtonToRecipe(recipe);
-        card.appendChild(generateButton);
+
+        card.appendChild(photo);
         foodContainer.appendChild(card);
     });
 }
