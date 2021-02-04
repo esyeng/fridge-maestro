@@ -395,25 +395,10 @@ const recipeDataTypes = {
  * 
  * @notes ** 
  *  need to make a show/hide on the result box 
- * Option 1:
-    // when a recipe is clicked it should hide
-    // if result box is showing, single recipe is hidden
-    // if single recipe is showing, result box is hidden
-    // two containers, one for all and one for one.
-    // clicking a result in result box hides result box,
-    // creates a new recipe object, and shows that in the single recipe
-    // a button 'back' will reverse this
-
-    - conditionally render a section, create and style another container
 
  * Option 2:
-    // open modal with formatted recipe, allow user to save to recently viewed
-    // generator creates and returns this element, 
+  
     // save appends a reference to it on a named anchor in recently viewed menu
-
-    - create & style a modal 
-    using function, inject data into html template at runtime,
-    assign a viewable class so it immediately opens
 
  */
 
@@ -427,43 +412,28 @@ function makeModal(id) {
     const modal = document.createElement('div');
     modal.innerHTML = `
     <button id="${id}-btn">Open Modal</button>
-        <!-- The Modal -->
         <div id="${id}-modal-header" class="modal" style='display: none'>
-            <!-- Modal content -->
-            <div id="${id}-modal-content" class='modal-content' >
-                    <span class="close">&times;</span>
-                    <p>Wuzzah! Wuzzah!!</p>
-                </div>
+         <span class="close">&times;</span>
         </div>`;
     modal.id = `${id}-modal`;
     return modal;
 }
 
-// Get the modal
-
 function injectFunctionIntoModal(id) {
     const modal = document.getElementById(`${id}-modal-header`);
-    console.log('does this modal know its own class?', modal);
     const btn = document.getElementById(`${id}-btn`);
     const span = document.getElementsByClassName('close')[0];
-    // console.log('button before its puttin', btn);
-    // console.log('span before it can', span);
 
     btn.addEventListener('click', (e) => {
         if (modal.style.display === 'none') {
             modal.style.display = 'block';
-            // modal.setAttribute('class', 'modal-hello');
         } else {
             modal.style.display = 'none';
-            // modal.setAttribute('class', 'modal');
         }
     });
     span.addEventListener('click', (e) => {
         modal.style.display = 'none';
     });
-
-    console.log('button should do somethin', btn);
-    console.log("span, c'mon man", span);
 
     window.addEventListener('click', (e) => {
         if (e.target == modal) {
@@ -471,16 +441,6 @@ function injectFunctionIntoModal(id) {
         }
     });
 }
-
-// Get the button that opens the modal
-
-// Get the <span> element that closes the modal
-
-// When the user clicks on the button, open the modal
-
-// When the user clicks on <span> (x), close the modal
-
-// When the user clicks anywhere outside of the modal, close it
 
 /**
  * listFromIngredients
@@ -503,37 +463,14 @@ function listFromIngredients(ingredients, listType) {
 }
 
 /**
- *
- * @param {*} singleRecipeData
- */
-
-function saveRecipe(singleRecipeData) {
-    const saveModal = document.createElement('button');
-    saveModal.addEventListener('click', (e) => {
-        const recent = document.getElementById('recently-viewed-recipes');
-        const currentRecipe = document.querySelector(
-            `#Recipe: ${singleRecipeData.id}`
-        );
-        const linkToCurrent = document.createElement('a');
-        linkToCurrent.setAttribute('href', currentRecipe.name);
-        recent.appendChild(linkToCurrent);
-    });
-    return saveModal;
-}
-
-/**
  * makeRecipeComponent
  * @param {*} singleRecipeData
  */
 
 function injectDataIntoModal(singleRecipeData) {
     const recipe = document.getElementById(`${singleRecipeData.id}-modal`);
-    const recipeContent = document.getElementById(
-        `${singleRecipeData.id}-modal-content`
-    );
-    // getElementsByClassName(
-    //     `${singleRecipeData.id}-modal-content`
-    // );
+    const recipeContent = document.createElement(`div`);
+    recipeContent.setAttribute('class', 'modal-content');
 
     const recipeHeader = document.getElementById(
         `${singleRecipeData.id}-modal-header`
@@ -542,8 +479,7 @@ function injectDataIntoModal(singleRecipeData) {
     const recipeFooter = document.createElement('footer');
 
     recipeImage.src = `${singleRecipeData.image}`;
-
-    // const saveModal = saveRecipe(singleRecipeData);
+    recipeFooter.setAttribute('class', 'modal-footer');
 
     let missedList;
     singleRecipeData.missedIngredientCount > 0
@@ -567,12 +503,12 @@ function injectDataIntoModal(singleRecipeData) {
               'ingredients used'
           ));
 
-    // recipeFooter.setAttribute('class', 'single_recipe_footer');
-
     recipeHeader.innerHTML = `${singleRecipeData.title}`;
-    recipeHeader.appendChild(missedList);
-    recipeHeader.appendChild(usedList);
+    recipeContent.appendChild(missedList);
+    recipeContent.appendChild(usedList);
     recipeHeader.appendChild(recipeImage);
+    console.log(recipeContent);
+    recipeHeader.appendChild(recipeContent);
     recipe.appendChild(recipeHeader);
     recipe.appendChild(recipeFooter);
 }

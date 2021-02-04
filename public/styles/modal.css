@@ -4,6 +4,8 @@
 .modal {
     display: none; /* Hidden by default */
     /* visibility: hidden; */
+    margin-left: auto;
+    margin-right: auto;
     position: fixed; /* Stay in place */
     z-index: 200; /* Sit on top */
     left: 0;
