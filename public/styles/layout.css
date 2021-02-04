@@ -249,9 +249,11 @@ body {
 
 .single_recipe_list {
     /* background-color: black;*/
+    display: block;
     max-height: 25rem;
     max-width: 25rem;
     color: white;
+    background-color: black;
 }
 
 .single_recipe_inner {

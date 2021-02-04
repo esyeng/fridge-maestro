@@ -422,45 +422,54 @@ const recipeDataTypes = {
  *
  */
 
-function modilify(parent, target) {
-    parent.appendChild(target);
-}
-
 function makeModal(id) {
     // const recipeModal = document.createElement('section');
     const modal = document.createElement('div');
     modal.innerHTML = `
-    <button id="${id} btn" class="btn btn-dark float_right search">Open Modal</button>
+    <button id="${id}-btn">Open Modal</button>
         <!-- The Modal -->
-        <div id="${id} modal-header" class="modal">
+        <div id="${id}-modal-header" class="modal" style='display: none'>
             <!-- Modal content -->
-            <div class="modal-content ${id}">
+            <div id="${id}-modal-content" class='modal-content' >
                     <span class="close">&times;</span>
-                    <p>Some text in the Modal..</p>
+                    <p>Wuzzah! Wuzzah!!</p>
                 </div>
         </div>`;
-    modal.id = `${id} modal`;
+    modal.id = `${id}-modal`;
     return modal;
 }
 
 // Get the modal
 
-function injectFunctinoIntoModal(id) {
-    const modal = document.getElementById(`${id} modal`);
-    const btn = document.getElementById(`${id} btn`);
+function injectFunctionIntoModal(id) {
+    const modal = document.getElementById(`${id}-modal-header`);
+    console.log('does this modal know its own class?', modal);
+    const btn = document.getElementById(`${id}-btn`);
     const span = document.getElementsByClassName('close')[0];
+    // console.log('button before its puttin', btn);
+    // console.log('span before it can', span);
 
-    btn.onclick = function () {
-        modal.style.display = 'block';
-    };
-    span.onclick = function () {
+    btn.addEventListener('click', (e) => {
+        if (modal.style.display === 'none') {
+            modal.style.display = 'block';
+            // modal.setAttribute('class', 'modal-hello');
+        } else {
+            modal.style.display = 'none';
+            // modal.setAttribute('class', 'modal');
+        }
+    });
+    span.addEventListener('click', (e) => {
         modal.style.display = 'none';
-    };
-    window.onclick = function (event) {
-        if (event.target == modal) {
+    });
+
+    console.log('button should do somethin', btn);
+    console.log("span, c'mon man", span);
+
+    window.addEventListener('click', (e) => {
+        if (e.target == modal) {
             modal.style.display = 'none';
         }
-    };
+    });
 }
 
 // Get the button that opens the modal
@@ -518,14 +527,22 @@ function saveRecipe(singleRecipeData) {
  */
 
 function injectDataIntoModal(singleRecipeData) {
-    const recipe = document.getElementById(`${singleRecipeData.id} modal`);
-    const recipeContent = recipe.getElementsByClassName(
-        `modal-content ${singleRecipeData.id}`
+    const recipe = document.getElementById(`${singleRecipeData.id}-modal`);
+    const recipeContent = document.getElementById(
+        `${singleRecipeData.id}-modal-content`
     );
+    // getElementsByClassName(
+    //     `${singleRecipeData.id}-modal-content`
+    // );
+
     const recipeHeader = document.getElementById(
-        `${singleRecipeData.id} modal-header`
+        `${singleRecipeData.id}-modal-header`
     );
+    const recipeImage = document.createElement('img');
     const recipeFooter = document.createElement('footer');
+
+    recipeImage.src = `${singleRecipeData.image}`;
+
     // const saveModal = saveRecipe(singleRecipeData);
 
     let missedList;
@@ -550,18 +567,13 @@ function injectDataIntoModal(singleRecipeData) {
               'ingredients used'
           ));
 
-    recipeHeader.setAttribute('class', 'single_recipe_header');
-    recipeFooter.setAttribute('class', 'single_recipe_footer');
+    // recipeFooter.setAttribute('class', 'single_recipe_footer');
 
     recipeHeader.innerHTML = `${singleRecipeData.title}`;
-    recipeBody.innerHTML = `
-        <img src=${singleRecipeData.image}>
-    `;
-    // console.log(missedList);
-    recipeContent.appendChild(missedList);
-    recipeContent.appendChild(usedList);
+    recipeHeader.appendChild(missedList);
+    recipeHeader.appendChild(usedList);
+    recipeHeader.appendChild(recipeImage);
     recipe.appendChild(recipeHeader);
-    recipe.appendChild(recipeContent);
     recipe.appendChild(recipeFooter);
 }
 
@@ -579,9 +591,6 @@ function showRecipes(recipes) {
         const card = document.createElement('div');
         const photo = document.createElement('img');
         const recipeModal = makeModal(recipe.id);
-        modilify(card, recipeModal);
-        injectFunctinoIntoModal(recipe.id);
-        injectDataIntoModal(recipe);
 
         photo.src = recipe.image;
         card.innerHTML = recipe.title;
@@ -591,7 +600,11 @@ function showRecipes(recipes) {
         photo.setAttribute('class', 'food_container_img');
 
         card.appendChild(photo);
+        card.appendChild(recipeModal);
         foodContainer.appendChild(card);
+
+        injectFunctionIntoModal(recipe.id);
+        injectDataIntoModal(recipe);
     });
 }
 
