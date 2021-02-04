@@ -8,9 +8,9 @@
  * CSS/HTML
  * [1/1] Align all content according to viewport width - √
  * [1/2] Hide & show table with nutrition info
- * [0/1] Style navigation between recipes as responsive image blocks
- * [0/1] Fix recipe sublist display in standard format
- * [0/1] Create and style Nav
+ * [1/1] Style navigation between recipes as responsive image blocks
+ * [1/1] Fix recipe sublist display in standard format
+ * [1/1] Create and style Nav
  * [0/1] Create and style Recipe component
  * [0/1] Create and style Recipes page with saved recipe cards
  *
@@ -28,7 +28,7 @@
  * [0/2] Run build as close to MVP as possible - complex/simple
  *
  * Ongoing/active:
- *  -- ensure reliability of apiController
+ *  -- ensure reliability of apiController @update simple query working
  *  -- standardize layout, format
  *  -- increase options for complex queries
  *  -- Evaluate performance, refactor & clean as needed
@@ -129,44 +129,79 @@ class ApiController {
 
 /**
  *
- * @Module controller variable
+ * @Module Controller initialization
  *
  */
 
 const API = new ApiController();
 
-/**
- *
- * @description Data containers
- *
- */
-
-const photoContainer = document.getElementById('food_container');
+/*                                                    */
+/* =================== SELECTORS ==================== */
+/*                                                    */
 
 /**
  *
- * @global Query Selectors & element targets
+ * @element Data container
+ *
+ */
+
+const foodContainer = document.getElementById('food_container');
+
+/**
+ *
+ * @element Button
+ *
+ */
+
+const addToList = document.getElementById('add_to_list'); // add btn
+const clear = document.getElementById('clear_photos'); // clear results btn,
+const submit = document.getElementById('submit_query'); // btn to send request object to probe recipe API(s)
+const photos = document.getElementById('get_photos'); // test photo query btn
+
+/**
+ *
+ * @element Form
+ *
+ */
+
+const numSelect = document.getElementById('num_select'); // select #photos (or results when applicable),
+const queryBar = document.getElementById('query_bar'); // entry field for query params
+const ingredientList = document.getElementById('ingredient_list_ul'); // ul of query params
+const filterResult = document.getElementById('filter_results');
+const mealType = document.getElementById('meal_type');
+const mealChoices = mealType.childNodes;
+
+/**
+ *
+ * @element Table
+ *
+ */
+const toggleNutrition = document.getElementById('toggle_nutrition');
+const nutritionTable = document.getElementById('nutrition_table'); // table with dummy data (or nutrition facts),
+const nutritionHeader = document.getElementById('nutrition_header'); // label text for table
+
+/* __________________________________________________ */
+
+/*                                                    */
+/* =================== FUNCTIONS ==================== */
+/*  
+
+/**
+ *
+ * Query logic
  *
  */
 
 /**
+ * stringByIngredients
+ * @summary Stringify by ingredients for a 20-result query
+ * @param {Array} ingredients
+ * @returns {String} api-friendly request parameters
  *
- * @global Helper functions
  *
  */
 
-// /**
-//  *
-//  * Pull value and add to data object to querify for api
-//  * @param {Array} ingredients
-//  * @returns {Object} data
-//  */
-
-/**
- * Stringify by ingredients for a 20-result query
- */
-
-const stringByIngredients = (ingredients) => {
+function stringByIngredients(ingredients) {
     let ingStr;
     let num;
     let resultStr;
@@ -181,28 +216,40 @@ const stringByIngredients = (ingredients) => {
 
     resultStr = `apiKey=${api.key}&${ingStr}&number=20&ranking=1`;
     return resultStr;
-};
+}
 
-const finder = (str) => {
+/**
+ * simpleRecipeFinder
+ * @summary execute and return result of promise for simple search
+ * @param  {String} str -- query
+ *
+ *
+ *
+ */
+
+function simpleRecipeFinder(str) {
     return new Promise(
         () => {
             API.findRecipes(str);
         },
         (err) => console.log(err)
     );
-};
+}
 
 /**
- * @summary Pointless in retrospect
- * @param  {String} tag
+ *
+ * Helper functions
+ *
  */
 
-const createDomItem = (tag) => document.createElement(tag);
-
 /**
+ * setAttributes
  * @summary Set multiple attributes on single element
- * @param  {HTML} element
+ * @param  {HTMLElement} element
  * @param  {Array} attributePairs
+ *
+ * @returns {HTMLElement}
+ *
  */
 
 function setAttributes(element, attributePairs) {
@@ -215,9 +262,13 @@ function setAttributes(element, attributePairs) {
 }
 
 /**
+ * hasDuplicates
  * @summary Check if element with given ID exists in node collection
  * @param {Array} collection
  * @param {String} text
+ *
+ * @returns {Boolean}
+ *
  */
 
 function hasDuplicates(collection, text) {
@@ -230,127 +281,101 @@ function hasDuplicates(collection, text) {
     return false;
 }
 /**
- * @summary Remove element from DOM
+ * removeIngredient
+ * @summary Remove element from DOM & APIController store
  * @param  {String} ingredientText
+ *
+ *
  */
 
 function removeIngredient(ingredientText) {
     let ingredientToRemove = document.getElementById(ingredientText.id);
     ingredientList.removeChild(ingredientToRemove);
+    API.ingredients.pop(ingredientToRemove);
 }
 
-/*                                                    */
-/* =================== SELECTORS ==================== */
-/*                                                    */
+/**
+ * showHide
+ * @summary toggle visibility handler
+ * @param  {HTMLElement} el
+ *
+ *
+ */
 
-const addToList = document.getElementById('add_to_list'); // add btn
-const clear = document.getElementById('clear_photos'); // clear results btn,
-const submit = document.getElementById('submit_query'); // btn to send request object to probe recipe API(s)
-const photos = document.getElementById('get_photos'); // test photo query btn
-
-const numSelect = document.getElementById('num_select'); // select #photos (or results when applicable),
-const queryBar = document.getElementById('query_bar'); // entry field for query params
-const ingredientList = document.getElementById('ingredient_list_ul'); // ul of query params
-const filterResult = document.getElementById('filter_results');
-const mealType = document.getElementById('meal_type');
-const mealChoices = mealType.childNodes;
-
-const toggleNutrition = document.getElementById('toggle_nutrition');
-const nutritionTable = document.getElementById('nutrition_table'); // table with dummy data (or nutrition facts),
-const nutritionHeader = document.getElementById('nutrition_header'); // label text for table
-
-/* __________________________________________________ */
-
-/*                                                    */
-/* =================== FUNCTIONS ==================== */
-/*                                                    */
-
-const showHide = (el) => {
+function showHide(el) {
     if (el.className === 'show') {
         el.setAttribute('class', 'hide');
     }
     el.setAttribute('class', 'show');
-};
+}
 
-const importantProps = ['aisle', 'amount', 'meta', 'name', 'original', 'unit'];
+/**
+ * makeButton
+ * @summary Create custom button
+ * @param  {String} text
+ * @param  {String} classes
+ *
+ *
+ */
 
-const paramsToPassToDOM = [
-    'missedIngredients',
-    'unusedIngredients',
-    'likes',
-    'usedIngredients',
-];
-
-const makeButton = (text, classes) => {
-    let button = createDomItem('button');
+function makeButton(text, classes) {
+    let button = document.createElement('button');
     button.setAttribute('class', classes);
     button.innerHTML = text;
     return button;
-};
+}
 
 /**
- * @summary search object subtrees to transfer properties and their values into collapsible lists
- * @param {Object} object
+ * generateRecipeCard
+ * @summary Use each recipe object to make appended card
+ * @param {Object} recipe
  *
  * @returns {HTMLCollection} newList
  */
-const toggleRecipeData = (object) => {
-    let newList = createDomItem('ul');
-    let label = makeButton(
+
+function generateRecipeCard(recipe) {
+    let expandResultButton = makeButton(
         'view details',
         'recipe_card_button recipe btn btn-dark show'
     );
+    expandResultButton.setAttribute('id', recipe.id);
+    return expandResultButton;
+}
 
-    label.setAttribute('id', object.id);
-    label.onclick = function () {
-        newList.classList.toggle('hidden');
-    };
-    label.appendChild(newList);
+/**
+ * showRecipes
+ * @summary Called during the resolve method of API controller,
+ *  populates foodContainer
+ *
+ * @param {Array} arrRecipes
+ *
+ */
 
-    newList.setAttribute(
-        'class',
-        'hidden result_box recipe_card list-unstyled'
-    );
-
-    for (let subProperty in object) {
-        let li = createDomItem('li');
-        li.setAttribute('class', 'recipe_card_li');
-        li.setAttribute('name', subProperty);
-
-        if (paramsToPassToDOM.includes(subProperty)) {
-            if (!Array.isArray(object[subProperty])) {
-                li.innerHTML = `${subProperty}: ${object[subProperty]}`;
-            } else {
-                object[subProperty].length > 0
-                    ? object[subProperty].forEach((attr) => {
-                          importantProps.indexOf(attr) > -1
-                              ? (li.innerHTML = `${attr}: ${object[attr]}`)
-                              : '';
-                      })
-                    : null;
-            }
-        }
-        li.innerHTML = 'TEST TEXT IF IT DIDNT WORK';
-        newList.appendChild(li);
-    }
-    console.log('results label', label, 'list', newList);
-    return label;
-};
-
-const showRecipes = (arrRecipes) => {
+function showRecipes(arrRecipes) {
     arrRecipes.forEach((recipe) => {
-        let newCard = createDomItem('div');
-        let newPhoto = createDomItem('img');
+        let newCard = document.createElement('div');
+        let newPhoto = document.createElement('img');
         newPhoto.src = recipe.image;
         newCard.innerHTML = recipe.title;
         newCard.appendChild(newPhoto);
         newCard.setAttribute('class', 'food_container_card');
         newPhoto.setAttribute('class', 'food_container_img');
-        let childList = toggleRecipeData(recipe);
+        let childList = generateRecipeCard(recipe);
         newCard.appendChild(childList);
-        photoContainer.appendChild(newCard);
+        foodContainer.appendChild(newCard);
     });
-};
+}
+
+function makeRecipeComponent(singleRecipeData) {
+    // need to make a show/hide on the result box, and when a recipe is clicked it should hide
+    // if result box is showing, single recipe is hidden
+    // if single recipe is showing, result box is hidden
+    // two containers, one for all and one for one.
+    // clicking a result in result box hides result box,
+    // creates a new recipe object, and shows that in the single recipe
+    // a button 'back' will reverse this
+}
+
 /* __________________________________________________ */
 
 /*                                                    */
@@ -358,14 +383,28 @@ const showRecipes = (arrRecipes) => {
 /*                                                    */
 
 /**
- * @global =
+ *
+ *
+ * @global
  *
  */
 
+/**
+ * @element Forms
+ * @summary check for number, call simpleRecipeFinder
+ * @param {Event} click
+ *
+ * @returns {resolved promise} recipes
+ */
+
 submit.addEventListener('click', async (e) => {
-    let ingredients = [...ingredientList.children];
-    let queryStr = stringByIngredients(ingredients);
-    await finder(queryStr);
+    const ingredients = [...ingredientList.children];
+    const numberRequested = numSelect.value;
+    let queryStr =
+        !numberRequested || numberRequested <= 0
+            ? stringByIngredients(ingredients)
+            : stringByIngredients(ingredients, numberRequested);
+    await simpleRecipeFinder(queryStr);
 });
 
 /**
@@ -386,7 +425,7 @@ numSelect.addEventListener('change', (e) => {
 
 /**
  * @element Buttons
- * @summary Form control
+ * @summary Add removable input item to list
  */
 
 addToList.addEventListener('click', (e) => {
@@ -399,7 +438,7 @@ addToList.addEventListener('click', (e) => {
             queryBar.value = '';
             return false;
         } else {
-            let ingredientToAdd = createDomItem('li');
+            let ingredientToAdd = document.createElement('li');
             ingredientToAdd = setAttributes(ingredientToAdd, [
                 {
                     attribute: 'class',
@@ -416,15 +455,11 @@ addToList.addEventListener('click', (e) => {
             ]);
             ingredientToAdd.innerHTML = ingredientText;
             queryBar.value = '';
-
+            API.ingredients.push(ingredientToAdd);
             ingredientList.appendChild(ingredientToAdd);
         }
     }
 });
-
-/**
- * @summary Populate photo container with random food images -- temp function
- */
 
 /**
  * @summary Clear viewport container
