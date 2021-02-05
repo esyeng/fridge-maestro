@@ -1,6 +1,28 @@
 'use-strict';
 
 /**
+ * @note **
+ * I'm being very particular about knowing the exact data types of this recipe
+ * object for the sake of building robust queries. Ex, with missed ingredients we
+ * could pull in a shopping library. The id of the ingredient exists on the used/unused items,
+ * these could be helpful in implicit loading of nutrition facts (ingredient nutrition method
+ * requires this).
+ */
+
+const recipeDataTypes = {
+    id: Number,
+    image: String,
+    imageType: String,
+    likes: Number,
+    missedIngredientCount: Number,
+    missedIngredients: Array,
+    title: String,
+    unusedIngredients: Array,
+    usedIngredientCount: Number,
+    usedIngredients: Array,
+};
+
+/**
  * makeRecipeComponent
  * @param {*} singleRecipeData
  */
