@@ -16,7 +16,7 @@
  *
  */
 
-function setAttributes(element, attributePairs) {
+export function setAttributes(element, attributePairs) {
     attributePairs.forEach((attributePair) => {
         let attribute = attributePair.attribute;
         let value = attributePair.value;
@@ -35,7 +35,7 @@ function setAttributes(element, attributePairs) {
  *
  */
 
-function hasDuplicates(collection, text) {
+export function hasDuplicates(collection, text) {
     for (let i = 0; i < collection.length; i++) {
         let node = collection[i];
         if (node.id === text) {
@@ -53,7 +53,7 @@ function hasDuplicates(collection, text) {
  *
  */
 
-function removeIngredient(ingredientText) {
+export function removeIngredient(ingredientText) {
     let ingredientToRemove = document.getElementById(ingredientText.id);
     ingredientList.removeChild(ingredientToRemove);
     API.ingredients.pop(ingredientToRemove);
@@ -67,7 +67,7 @@ function removeIngredient(ingredientText) {
  *
  */
 
-function showHide(el) {
+export function showHide(el) {
     if (el.className === 'show') {
         el.setAttribute('class', 'hide');
     }
@@ -83,14 +83,14 @@ function showHide(el) {
  *
  */
 
-function makeButton(text, classes) {
+export function makeButton(text, classes) {
     let button = document.createElement('button');
     button.setAttribute('class', classes);
     button.innerHTML = text;
     return button;
 }
 
-function makeAnchor(text, classes) {
+export function makeAnchor(text, classes) {
     let anchor = document.createElement('a');
     anchor.setAttribute('class', classes);
     anchor.innerHTML = text;
@@ -99,14 +99,14 @@ function makeAnchor(text, classes) {
 
 /**
  * addGeneratorButtonToRecipe
- * @summary Append button to recipe, used to call function
+ * @summary Append button to recipe, used to call export function
  * to generate dynamic recipe
  * @param {Object} recipe
  *
  * @returns {HTMLCollection} newList
  */
 
-function addGeneratorButtonToRecipe(recipe) {
+export function addGeneratorButtonToRecipe(recipe) {
     let expandResultButton = makeAnchor(
         'view details',
         'recipe_card_button recipe btn btn-dark show'
@@ -127,7 +127,7 @@ function addGeneratorButtonToRecipe(recipe) {
  * @param {*} ingredients
  */
 
-function listFromIngredients(ingredients, listType) {
+export function listFromIngredients(ingredients, listType) {
     const listOfIngredients = document.createElement('ul');
     listOfIngredients.setAttribute('class', 'single_recipe_list list_unstyled');
     listOfIngredients.innerHTML = `<h4>${listType}: </h4>`;
@@ -147,7 +147,7 @@ function listFromIngredients(ingredients, listType) {
  *
  */
 
-function makeModal(id) {
+export function makeModal(id) {
     // const recipeModal = document.createElement('section');
     const modal = document.createElement('div');
     modal.innerHTML = `
@@ -159,7 +159,7 @@ function makeModal(id) {
     return modal;
 }
 
-function injectFunctionIntoModal(id) {
+export function injectFunctionIntoModal(id) {
     const modal = document.getElementById(`${id}-modal-header`);
     const btn = document.getElementById(`${id}-btn`);
     const span = document.getElementsByClassName('close')[0];

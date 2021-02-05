@@ -13,7 +13,7 @@
  * @method resolve Resolve promise and return result @param {Function} promise => @returns {Any}
  */
 
-class ApiController {
+export class ApiController {
     constructor() {
         this.ingredients = [];
         this.recipes = {};

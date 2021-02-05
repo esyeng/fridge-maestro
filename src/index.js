@@ -2,8 +2,19 @@
 /**
  * **************************** FRIDGE MAESTRO **********************
  *
- ** @todo: --
- * -- PROJECT TASKS --
+ *
+ */
+
+/**
+ * @imports
+ */
+
+import { API } from './utils/queryLogic';
+
+/**
+ * @todo --
+ *
+ * * -- PROJECT TASKS --
  *
  * CSS/HTML
  * [1/1] Align all content according to viewport width - √
@@ -31,7 +42,8 @@
  * [0/1] Enable fallback route for empty response
  *
  * Ongoing/active:
- *  -- ensure reliability of apiController @update simple query working
+ *  -- ensure reliability of apiController
+ *         @update simple query working
  *  -- standardize layout, format
  *  -- increase options for complex queries
  *  -- Evaluate performance, refactor & clean as needed
@@ -42,6 +54,11 @@
  *  -- Mealplanning tool
  *
  * ******************************************************************
+ */
+
+/* 
+** @todo: --
+ 
  */
 
 /**

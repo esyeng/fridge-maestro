@@ -1,5 +1,22 @@
 'use strict';
 
+import {
+    addToList,
+    foodContainer,
+    clear,
+    submit,
+    photos,
+    numSelect,
+    queryBar,
+    ingredientList,
+    filterResult,
+    mealType,
+    mealChoices,
+    toggleNutrition,
+    nutritionTable,
+    nutritionHeader,
+} from '../utils/elements';
+
 /*                                                    */
 /* ================= LISTENERS ====================== */
 /*                                                    */
@@ -103,3 +120,17 @@ toggleNutrition.addEventListener('click', (e) => {
     nutritionTable.classList.toggle('table_hidden');
     nutritionHeader.classList.toggle('table_hidden');
 });
+
+export {
+    addToList,
+    foodContainer,
+    clear,
+    submit,
+    numSelect,
+    queryBar,
+    ingredientList,
+    filterResult,
+    toggleNutrition,
+    nutritionTable,
+    nutritionHeader,
+};

@@ -1,5 +1,9 @@
 'use strict';
 
+import { ApiController } from '../components/ApiController';
+import { injectDataIntoModal } from '../components/SingleRecipe';
+import { makeModal, injectFunctionIntoModal } from './helpers';
+
 /**
  *
  * Query logic
@@ -17,7 +21,9 @@
  *
  */
 
-function stringByIngredients(ingredients) {
+export const API = new ApiController();
+
+export function stringByIngredients(ingredients) {
     let ingStr;
     let num;
     let resultStr;
@@ -43,7 +49,7 @@ function stringByIngredients(ingredients) {
  *
  */
 
-function simpleRecipeFinder(str) {
+export function simpleRecipeFinder(str) {
     return new Promise(
         () => {
             API.findRecipes(str);
@@ -61,7 +67,7 @@ function simpleRecipeFinder(str) {
  *
  */
 
-function showRecipes(recipes) {
+export function showRecipes(recipes) {
     recipes.forEach((recipe) => {
         const card = document.createElement('div');
         const photo = document.createElement('img');

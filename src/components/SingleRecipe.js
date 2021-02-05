@@ -27,7 +27,7 @@ const recipeDataTypes = {
  * @param {*} singleRecipeData
  */
 
-function injectDataIntoModal(singleRecipeData) {
+export function injectDataIntoModal(singleRecipeData) {
     const recipe = document.getElementById(`${singleRecipeData.id}-modal`);
     const recipeContent = document.createElement(`div`);
     recipeContent.setAttribute('class', 'modal-content');
