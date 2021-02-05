@@ -11,7 +11,7 @@
  * [1/1] Style navigation between recipes as responsive image blocks
  * [1/1] Fix recipe sublist display in standard format
  * [1/1] Create and style Nav
- * [0/1] Create and style Recipe component
+ * [1/1] Create and style Recipe component
  * [0/1] Create and style Recipes page with saved recipe cards
  *
  * JS
@@ -390,16 +390,10 @@ const recipeDataTypes = {
  * makeRecipeComponent
  * @summary Use recipe object data to create single recipe HTML
  *
- * @param {Object} singleRecipeData 
+ * @param {Object} singleRecipeData
  * @returns {HTML}
- * 
- * @notes ** 
- *  need to make a show/hide on the result box 
-
- * Option 2:
-  
-    // save appends a reference to it on a named anchor in recently viewed menu
-
+ *
+ * @notes **
  */
 
 /**
