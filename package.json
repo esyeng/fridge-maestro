@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server/index.js",
-    "start-dev": "npm run start & webpack"
+    "bundle": "webpack --config webpack.config.js",
+    "bundle-watch": "npm run bundle -w",
+    "start-dev": "npm run start & npm run bundle-watch"
   },
   "repository": {
     "type": "git",
