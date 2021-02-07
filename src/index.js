@@ -70,6 +70,7 @@ const api = (function () {
         baseUrl: `https://api.spoonacular.com/`,
         ingredientSearch: `https://api.spoonacular.com/food/ingredients/search`,
         recipeSearch: `https://api.spoonacular.com/recipes/findByIngredients`,
+        analyzeInstructions: `https://api.spoonacular.com/recipes/`,
         complexSearch: `https://api.spoonacular.com/recipes/complexSearch`,
         ingredientInfo: (id) =>
             `https://api.spoonacular.com/food/ingredients/${id}/information`,

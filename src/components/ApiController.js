@@ -6,7 +6,6 @@
  * @private Api access routes
  * @public Access control
  *
- * @method parseQuery Concatenate URL with ingredients to queryStr @param {Object} data => @returns {String} parsedQuery
  * @method getIngredients Fetch just ingredients @param {String} queryStr => @returns {Promise}
  * @method findRecipes Fetch recipes, accepts specified parameters @param {String} queryStr => @returns {Promise}
  * @method getPhotos Fetch demo data => @returns {Promise}
@@ -23,22 +22,28 @@ export class ApiController {
         fetch(`${api.random}`)
             .then((response) => response.json())
             .then((json) => json)
-            .catch((e) => this.getPhotos(9));
+            .catch(err);
     }
     getIngredients(queryStr) {
         fetch(`${api.ingredientSearch}?${queryStr}`)
             .then((response) => response.json())
             .then((json) => json)
-            .catch((e) => console.error(e));
+            .catch((err) => console.error(err));
     }
     complexFind(queryStr) {
         fetch(`${api.complexSearch}?${queryStr}`)
             .then((response) => response.json())
-            .then((json) => json)
-            .catch((e) => console.error(e));
+            .then((json) => this.resolve(json))
+            .catch((err) => console.error(err));
     }
     findRecipes(queryStr) {
         fetch(`${api.recipeSearch}?${queryStr}`)
+            .then((response) => response.json())
+            .then((json) => this.resolve(json))
+            .catch((err) => console.error(err));
+    }
+    analyzeInstructions(id) {
+        fetch(`${api.analyzeInstructions}/${id}/analyzedInstructions`)
             .then((response) => response.json())
             .then((json) => this.resolve(json))
             .catch((err) => console.error(err));
@@ -47,7 +52,7 @@ export class ApiController {
         fetch(`http://localhost:5500/${num}`)
             .then((response) => response.json())
             .then((json) => json)
-            .catch((e) => console.error(e));
+            .catch((err) => console.error(err));
     }
     resolve(json) {
         console.log('now resolving, setting this.recipes to our response data');
