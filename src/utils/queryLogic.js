@@ -1,8 +1,9 @@
 'use strict';
 
-import { ApiController } from '../components/ApiController';
+import { ApiController, api } from '../components/ApiController';
 import { injectDataIntoModal } from '../components/SingleRecipe';
 import { makeModal, injectFunctionIntoModal } from './helpers';
+import { foodContainer } from './elements';
 
 /**
  *
@@ -21,7 +22,7 @@ import { makeModal, injectFunctionIntoModal } from './helpers';
  *
  */
 
-export const API = new ApiController();
+export const Controller = new ApiController();
 
 export function stringByIngredients(ingredients) {
     let ingStr;
@@ -52,7 +53,7 @@ export function stringByIngredients(ingredients) {
 export function simpleRecipeFinder(str) {
     return new Promise(
         () => {
-            API.findRecipes(str);
+            Controller.findRecipes(str);
         },
         (err) => console.log(err)
     );

@@ -9,8 +9,6 @@
  * @imports
  */
 
-import { API } from './utils/queryLogic';
-
 /**
  * @todo --
  *
@@ -61,23 +59,64 @@ import { API } from './utils/queryLogic';
  
  */
 
+import '../public/styles/fonts.css';
+import '../public/styles/forms.css';
+import '../public/styles/layout.css';
+import '../public/styles/links.css';
+import '../public/styles/modal.css';
+import '../public/styles/utils.css';
+import '../public/styles/tables.css';
+
+import { Controller } from './utils/queryLogic';
+import { api } from './components/ApiController';
+
+import {
+    setAttributes,
+    hasDuplicates,
+    removeIngredient,
+    showHide,
+    makeButton,
+    makeAnchor,
+    addGeneratorButtonToRecipe,
+    listFromIngredients,
+    makeModal,
+    injectFunctionIntoModal,
+} from './utils/helpers';
+
+import {
+    addToList,
+    foodContainer,
+    clear,
+    submit,
+    numSelect,
+    queryBar,
+    ingredientList,
+    filterResult,
+    toggleNutrition,
+    nutritionTable,
+    nutritionHeader,
+} from './utils/elements';
+
+import { stringByIngredients, simpleRecipeFinder } from './utils/queryLogic';
+
+(function initFunc() {
+    return {
+        setAttributes,
+        hasDuplicates,
+        removeIngredient,
+        showHide,
+        makeButton,
+        makeAnchor,
+        addGeneratorButtonToRecipe,
+        listFromIngredients,
+        makeModal,
+        injectFunctionIntoModal,
+    };
+})();
+
 /**
  * @summary API INITIATION
  */
-
-const api = (function () {
-    return {
-        baseUrl: `https://api.spoonacular.com/`,
-        ingredientSearch: `https://api.spoonacular.com/food/ingredients/search`,
-        recipeSearch: `https://api.spoonacular.com/recipes/findByIngredients`,
-        analyzeInstructions: `https://api.spoonacular.com/recipes/`,
-        complexSearch: `https://api.spoonacular.com/recipes/complexSearch`,
-        ingredientInfo: (id) =>
-            `https://api.spoonacular.com/food/ingredients/${id}/information`,
-        random: `https://api.spoonacular.com/recipes/random`,
-        key: null,
-    };
-})();
 
 const domain = 'http://localhost:5500' || process.env.PORT;
 
@@ -98,4 +137,37 @@ const key = fetch(`${domain}/api/key`)
  *
  */
 
-const API = new ApiController();
+console.log('The gangs all here');
+console.log(`Here's our api object: ${api}`);
+console.log(`and the class that controlls communication: ${Controller}`);
+console.log(
+    `all of our elements with their associated event listeners: ${
+        (addToList,
+        foodContainer,
+        clear,
+        submit,
+        numSelect,
+        queryBar,
+        ingredientList,
+        filterResult,
+        toggleNutrition,
+        nutritionTable,
+        nutritionHeader)
+    }`
+);
+console.log(
+    `every helper function we need: ${
+        (setAttributes,
+        hasDuplicates,
+        removeIngredient,
+        showHide,
+        makeButton,
+        makeAnchor,
+        addGeneratorButtonToRecipe,
+        listFromIngredients,
+        makeModal,
+        injectFunctionIntoModal)
+    }`
+);
+
+console.log(`what's missing?`);

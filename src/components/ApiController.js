@@ -12,6 +12,22 @@
  * @method resolve Resolve promise and return result @param {Function} promise => @returns {Any}
  */
 
+import { showRecipes } from '../utils/queryLogic';
+
+export const api = (function () {
+    return {
+        baseUrl: `https://api.spoonacular.com/`,
+        ingredientSearch: `https://api.spoonacular.com/food/ingredients/search`,
+        recipeSearch: `https://api.spoonacular.com/recipes/findByIngredients`,
+        analyzeInstructions: `https://api.spoonacular.com/recipes/`,
+        complexSearch: `https://api.spoonacular.com/recipes/complexSearch`,
+        ingredientInfo: (id) =>
+            `https://api.spoonacular.com/food/ingredients/${id}/information`,
+        random: `https://api.spoonacular.com/recipes/random`,
+        key: null,
+    };
+})();
+
 export class ApiController {
     constructor() {
         this.ingredients = [];

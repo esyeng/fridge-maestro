@@ -10,9 +10,10 @@ const server = app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
 });
 
-app.use(express.static(path.resolve(__dirname, '..', 'public')));
+// app.use(express.static(path.resolve(__dirname, '..', 'public')));
+app.use(express.static(path.resolve(__dirname, '..', 'src')));
 app.use(express.static(path.resolve(__dirname, '..', 'content')));
-app.use('/client', express.static(path.resolve(__dirname, '..', 'client')));
+app.use(express.static(path.resolve(__dirname, '..', 'dist')));
 app.use(morgan('dev'));
 
 const apiRoutes = require('./routes/router.js');
@@ -44,7 +45,7 @@ app.use('/:n', async (req, res) => {
 
 app.use('/', async (req, res) => {
     try {
-        res.sendFile(path.join(__dirname, '..', 'public/index.html'));
+        res.sendFile(path.join(__dirname, '..', '/dist/index.html'));
     } catch (err) {
         console.log(err);
     }
@@ -59,7 +60,8 @@ app.use((req, res, next) => {
 app.use((err, req, res, next) => {
     console.error(err);
     console.error(err.stack);
-    res.stack(err.status || 500).send(err.message || 'Internal server error');
+    console.error(err.status || 500);
+    // .send(err.message || 'Internal server error');
 });
 
 module.exports = app;
