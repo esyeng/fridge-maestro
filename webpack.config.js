@@ -54,13 +54,12 @@ module.exports = {
                 ],
             },
             {
-                test: /\.(svg|png|jpg|gif|jpe?g)$/i,
-                type: 'asset/resource',
-                use: [
-                    {
-                        loader: 'url-loader',
-                    },
-                ],
+                test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
+                loader: 'url-loader',
+                options: {
+                    limit: 8192,
+                    fallback: 'file-loader',
+                },
             },
         ],
     },
