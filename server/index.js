@@ -29,13 +29,13 @@ const { generatePics } = require('./routes/demo');
  * @param  {Response} res
  */
 
-app.use('/:n', async (req, res) => {
+app.use('/:n', async (req, res, next) => {
     try {
         const input = req.params.n;
         const results = await generatePics(input);
         res.status(200).send(results);
     } catch (err) {
-        console.log(err);
+        next(err);
     }
 });
 
@@ -43,11 +43,11 @@ app.use('/:n', async (req, res) => {
  * @static root route to serve up HTML
  */
 
-app.use('/', async (req, res) => {
+app.use('/', async (req, res, next) => {
     try {
         res.sendFile(path.join(__dirname, '..', '/dist/index.html'));
     } catch (err) {
-        console.log(err);
+        next(err);
     }
 });
 
@@ -61,7 +61,7 @@ app.use((err, req, res, next) => {
     console.error(err);
     console.error(err.stack);
     console.error(err.status || 500);
-    // .send(err.message || 'Internal server error');
+    res.send(err.message || 'Internal server error');
 });
 
 module.exports = app;

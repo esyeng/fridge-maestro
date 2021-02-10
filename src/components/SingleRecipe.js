@@ -10,6 +10,8 @@
  */
 
 import { listFromIngredients } from '../utils/helpers';
+import { Controller } from '../utils/queryLogic';
+import { api } from './ApiController';
 
 const recipeDataTypes = {
     id: Number,
@@ -29,11 +31,11 @@ const recipeDataTypes = {
  * @param {*} singleRecipeData
  */
 
-export function injectDataIntoModal(singleRecipeData) {
+export function injectDataIntoModal(singleRecipeData, resolvedInstructions) {
+    console.log(resolvedInstructions);
     const recipe = document.getElementById(`${singleRecipeData.id}-modal`);
     const recipeContent = document.createElement(`div`);
     recipeContent.setAttribute('class', 'modal-content');
-
     const recipeHeader = document.getElementById(
         `${singleRecipeData.id}-modal-header`
     );
@@ -69,7 +71,7 @@ export function injectDataIntoModal(singleRecipeData) {
     recipeContent.appendChild(missedList);
     recipeContent.appendChild(usedList);
     recipeHeader.appendChild(recipeImage);
-    console.log(recipeContent);
+    // console.log(recipeContent);
     recipeHeader.appendChild(recipeContent);
     recipe.appendChild(recipeHeader);
     recipe.appendChild(recipeFooter);

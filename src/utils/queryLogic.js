@@ -24,6 +24,18 @@ import { foodContainer } from './elements';
 
 export const Controller = new ApiController();
 
+export function analyzeInstructions(id) {
+    fetch(
+        `${api.analyzeInstructions}/${id}/analyzedInstructions?apiKey=${api.key}`
+    )
+        .then((response) => response.json())
+        .then((json) => {
+            console.log('HERE ANALYZED INSTRUCTIONS', json);
+            return json;
+        })
+        .catch((err) => `No instructions found, error: ${err}`);
+}
+
 export function stringByIngredients(ingredients) {
     let ingStr;
     let num;
@@ -37,7 +49,7 @@ export function stringByIngredients(ingredients) {
         : '';
     ingStr = `ingredients=${ingStr.slice(0, ingStr.length - 1)}`;
 
-    resultStr = `apiKey=${api.key}&${ingStr}&number=20&ranking=1`;
+    resultStr = `apiKey=${api.key}&${ingStr}&number=8&ranking=1`;
     return resultStr;
 }
 
@@ -84,7 +96,6 @@ export function showRecipes(recipes) {
         card.appendChild(photo);
         card.appendChild(recipeModal);
         foodContainer.appendChild(card);
-
         injectFunctionIntoModal(recipe.id);
         injectDataIntoModal(recipe);
     });

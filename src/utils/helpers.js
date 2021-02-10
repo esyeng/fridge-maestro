@@ -1,5 +1,7 @@
 'use strict';
 
+import { analyzeInstructions } from './queryLogic';
+
 /**
  *
  * Helper functions

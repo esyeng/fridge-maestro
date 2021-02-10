@@ -19,7 +19,7 @@ export const api = (function () {
         baseUrl: `https://api.spoonacular.com/`,
         ingredientSearch: `https://api.spoonacular.com/food/ingredients/search`,
         recipeSearch: `https://api.spoonacular.com/recipes/findByIngredients`,
-        analyzeInstructions: `https://api.spoonacular.com/recipes/`,
+        analyzeInstructions: `https://api.spoonacular.com/recipes`,
         complexSearch: `https://api.spoonacular.com/recipes/complexSearch`,
         ingredientInfo: (id) =>
             `https://api.spoonacular.com/food/ingredients/${id}/information`,
@@ -33,12 +33,6 @@ export class ApiController {
         this.ingredients = [];
         this.recipes = {};
         this.photos = {};
-    }
-    fallBackRequest(queryStr) {
-        fetch(`${api.random}`)
-            .then((response) => response.json())
-            .then((json) => json)
-            .catch(err);
     }
     getIngredients(queryStr) {
         fetch(`${api.ingredientSearch}?${queryStr}`)
@@ -58,22 +52,17 @@ export class ApiController {
             .then((json) => this.resolve(json))
             .catch((err) => console.error(err));
     }
-    analyzeInstructions(id) {
-        fetch(`${api.analyzeInstructions}/${id}/analyzedInstructions`)
-            .then((response) => response.json())
-            .then((json) => this.resolve(json))
-            .catch((err) => console.error(err));
-    }
-    getPhotos(num) {
-        fetch(`http://localhost:5500/${num}`)
+    fallBackRequest(queryStr) {
+        fetch(`${api.random}`)
             .then((response) => response.json())
             .then((json) => json)
-            .catch((err) => console.error(err));
+            .catch(err);
     }
+
     resolve(json) {
-        console.log('now resolving, setting this.recipes to our response data');
-        this.recipes = json;
+        console.log('now resolving, setting our response data');
+        // this.recipes = json;
         console.log('what does this look like?', json);
-        showRecipes(this.recipes);
+        showRecipes(json);
     }
 }

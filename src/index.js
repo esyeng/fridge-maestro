@@ -135,34 +135,5 @@ const key = fetch(`${domain}/api/key`)
 console.log('The gangs all here');
 console.log(`Here's our api object: ${api}`);
 console.log(`and the class that controlls communication: ${Controller}`);
-console.log(
-    `all of our elements with their associated event listeners: ${
-        (addToList,
-        foodContainer,
-        clear,
-        submit,
-        numSelect,
-        queryBar,
-        ingredientList,
-        filterResult,
-        toggleNutrition,
-        nutritionTable,
-        nutritionHeader)
-    }`
-);
-console.log(
-    `every helper function we need: ${
-        (setAttributes,
-        hasDuplicates,
-        removeIngredient,
-        showHide,
-        makeButton,
-        makeAnchor,
-        addGeneratorButtonToRecipe,
-        listFromIngredients,
-        makeModal,
-        injectFunctionIntoModal)
-    }`
-);
 
 console.log(`what's missing?`);
