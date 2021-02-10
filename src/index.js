@@ -14,14 +14,6 @@
  *
  * * -- PROJECT TASKS --
  *
- * CSS/HTML
- * [1/1] Align all content according to viewport width - √
- * [1/2] Hide & show table with nutrition info
- * [1/1] Style navigation between recipes as responsive image blocks
- * [1/1] Fix recipe sublist display in standard format
- * [1/1] Create and style Nav
- * [1/1] Create and style Recipe component
- * [0/1] Create and style Recipes page with saved recipe cards
  *
  * JS
  * [2/2] Populate list with selected ingredients (add, remove) - √
@@ -31,18 +23,18 @@
  * [0/1] Save recipes in local storage
  *
  * Webpack
- * [0/1] Modularize code / restructure files to small chunks
- * [0/1] Webpack config
- * [0/1] Test to serve working build
+ * [1/1] Modularize code / restructure files to small chunks
+ * [1/1] Webpack config
  * [0/2] Run build as close to MVP as possible - complex/simple
+ *
+ * Sass
+ * [0/1] convert css to sass
+ * [0/1] include sass in updated webpack config
  *
  * Error handling
  * [0/1] Enable fallback route for empty response
  *
  * Ongoing/active:
- *  -- ensure reliability of apiController
- *         @update simple query working
- *  -- standardize layout, format
  *  -- increase options for complex queries
  *  -- Evaluate performance, refactor & clean as needed
  *
@@ -66,6 +58,9 @@ import '../public/styles/links.css';
 import '../public/styles/modal.css';
 import '../public/styles/utils.css';
 import '../public/styles/tables.css';
+import './content/Ingredients-250x125.jpg';
+import './content/Ingredients-600x300.jpg';
+import './content/Ingredients-1200x600.jpg';
 
 import { Controller } from './utils/queryLogic';
 import { api } from './components/ApiController';
