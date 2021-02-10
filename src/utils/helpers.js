@@ -144,6 +144,36 @@ export function listFromIngredients(ingredients, listType) {
     return listOfIngredients;
 }
 
+export function showMeTheSteps(instructions) {
+    const listOfInstructions = document.createElement('ul');
+    listOfInstructions.setAttribute(
+        'class',
+        'single_recipe_list list_unstyled'
+    );
+    listOfInstructions.innerHTML = `<h2>Instructions: </h2>`;
+    let eqList;
+    instructions.forEach((step) => {
+        if (step.equipment.length > 0) {
+            eqList = document
+                .createElement('ul')
+                .setAttribute('class', 'single_recipe_list list_unstyled');
+            step.equipment.forEach((item) =>
+                eqList.appendChild(
+                    (document.createElement(
+                        'li'
+                    ).innerHTML = `<p>${item.name}</p>`)
+                )
+            );
+        }
+        const stepToShow = document.createElement('li');
+        stepToShow.innerHTML = `
+        <p>${step.number}: ${step.step}</p>`;
+        listOfInstructions.appendChild(stepToShow);
+    });
+    step.equipment.length > 0 ? listOfInstructions.appendChild(eqList) : null;
+    return listOfInstructions;
+}
+
 /**
  * makeModal
  *

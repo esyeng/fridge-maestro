@@ -9,8 +9,8 @@
  * requires this).
  */
 
-import { listFromIngredients } from '../utils/helpers';
-import { Controller } from '../utils/queryLogic';
+import { listFromIngredients, showMeTheSteps } from '../utils/helpers';
+import { analyzeInstructions, getInstructions } from '../utils/queryLogic';
 import { api } from './ApiController';
 
 const recipeDataTypes = {
@@ -31,8 +31,7 @@ const recipeDataTypes = {
  * @param {*} singleRecipeData
  */
 
-export function injectDataIntoModal(singleRecipeData, resolvedInstructions) {
-    console.log(resolvedInstructions);
+export function injectDataIntoModal(singleRecipeData, instructions) {
     const recipe = document.getElementById(`${singleRecipeData.id}-modal`);
     const recipeContent = document.createElement(`div`);
     recipeContent.setAttribute('class', 'modal-content');
@@ -67,6 +66,12 @@ export function injectDataIntoModal(singleRecipeData, resolvedInstructions) {
               'ingredients used'
           ));
 
+    instructions
+        ? instructions[0].steps.length > 0
+            ? (recipeInstructions = showMeTheSteps(instructions[0].steps)) &&
+              recipeContent.appendChild(recipeInstructions)
+            : null
+        : null;
     recipeHeader.innerHTML = `${singleRecipeData.title}`;
     recipeContent.appendChild(missedList);
     recipeContent.appendChild(usedList);
@@ -75,4 +80,19 @@ export function injectDataIntoModal(singleRecipeData, resolvedInstructions) {
     recipeHeader.appendChild(recipeContent);
     recipe.appendChild(recipeHeader);
     recipe.appendChild(recipeFooter);
+}
+
+export async function resolveInstructionsAndData(recipeId, recipeData) {
+    const instructions = await analyzeInstructions(recipeId);
+    await instructions.then((data) => getInstructions(data));
+    let recipeInstructions;
+
+    instructions
+        ? instructions[0].steps.length > 0
+            ? (recipeInstructions = showMeTheSteps(instructions[0].steps))
+            : null
+        : null;
+    recipeInstructions
+        ? injectDataIntoModal(recipeData, recipeInstructions)
+        : console.error('IT BROKE BRUH');
 }

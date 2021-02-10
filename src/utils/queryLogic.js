@@ -1,7 +1,10 @@
 'use strict';
 
 import { ApiController, api } from '../components/ApiController';
-import { injectDataIntoModal } from '../components/SingleRecipe';
+import {
+    resolveInstructionsAndData,
+    injectDataIntoModal,
+} from '../components/SingleRecipe';
 import { makeModal, injectFunctionIntoModal } from './helpers';
 import { foodContainer } from './elements';
 
@@ -24,16 +27,25 @@ import { foodContainer } from './elements';
 
 export const Controller = new ApiController();
 
+/**
+ *
+ *
+ */
+
+export function getInstructions(instructions) {
+    console.log('Checking data types of resolved promise', instructions);
+    return instructions;
+}
+
 export function analyzeInstructions(id) {
-    fetch(
+    return fetch(
         `${api.analyzeInstructions}/${id}/analyzedInstructions?apiKey=${api.key}`
     )
         .then((response) => response.json())
         .then((json) => {
-            console.log('HERE ANALYZED INSTRUCTIONS', json);
             return json;
         })
-        .catch((err) => `No instructions found, error: ${err}`);
+        .catch((err) => console.error(err));
 }
 
 export function stringByIngredients(ingredients) {
@@ -96,8 +108,9 @@ export function showRecipes(recipes) {
         card.appendChild(photo);
         card.appendChild(recipeModal);
         foodContainer.appendChild(card);
+
         injectFunctionIntoModal(recipe.id);
-        injectDataIntoModal(recipe);
+        resolveInstructionsAndData(recipe.id, recipe);
     });
 }
 
