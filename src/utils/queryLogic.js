@@ -93,16 +93,8 @@ export function showRecipes(recipes) {
         card.appendChild(recipeModal);
         foodContainer.appendChild(card);
 
-        console.log('STEP 1: Inejct functionality into modal, function called');
         injectFunctionIntoModal(recipe.id);
-        console.log(
-            'STEP 3: Back in showRecipes, about to resolve instructions and inject data'
-        );
-
         resolveInstructionsAndData(recipe.id, recipe);
-        console.log(
-            'STEP 25: Due to the asynchronous operations on the call stack, this will get printed before the operation chain completes '
-        );
     });
 }
 

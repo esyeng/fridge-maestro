@@ -60,8 +60,7 @@ export class ApiController {
     }
 
     resolve(json) {
-        console.log('now resolving, setting our response data');
-        // this.recipes = json;
+        console.log('now resolving response, calling showRecipes with this');
         console.log('what does this look like?', json);
         showRecipes(json);
     }
