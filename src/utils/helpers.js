@@ -145,6 +145,11 @@ export function listFromIngredients(ingredients, listType) {
 }
 
 export function showMeTheSteps(instructions) {
+    console.log(
+        `STEP 11: Inside showMeTheSteps, our instructions did return an object 
+        with a steps property that was not empty. Now we create a new list`
+    );
+
     const listOfInstructions = document.createElement('ul');
     listOfInstructions.setAttribute(
         'class',
@@ -152,25 +157,70 @@ export function showMeTheSteps(instructions) {
     );
     listOfInstructions.innerHTML = `<h2>Instructions: </h2>`;
     let eqList;
+    let needsEquipment = false;
+    console.log(
+        `STEP 12: for each item in the instructions[0].steps array, 
+        we will attempt to append the pertinent data as list elements. 
+        We will use a boolean to determine if we have to add an equipment list
+`
+    );
+
+    console.log(
+        `STEP 13: Check if the step has an equipment property with a non-empty array`
+    );
     instructions.forEach((step) => {
         if (step.equipment.length > 0) {
+            needsEquipment = true;
+            console.log(
+                `STEP 14: our step had a list of equipment, 
+            prompting us to generate a new list and assign 
+            to an outer scope variable eqList. Set boolean check to true`
+            );
+
             eqList = document
                 .createElement('ul')
                 .setAttribute('class', 'single_recipe_list list_unstyled');
-            step.equipment.forEach((item) =>
+            console.log(
+                `STEP 15: Within instructions.forEach, 
+                jumping into step.equipment.forEach`
+            );
+
+            step.equipment.forEach((item) => {
+                console.log(
+                    'STEP 16: Creating list item for each piece of equipment'
+                );
+
                 eqList.appendChild(
                     (document.createElement(
                         'li'
                     ).innerHTML = `<p>${item.name}</p>`)
-                )
-            );
+                );
+            });
         }
+        console.log(
+            `STEP 17: our step did not have a list of equipment, 
+        leaving our boolean check false. now we create a list 
+        element for each step of instructions`
+        );
+
         const stepToShow = document.createElement('li');
         stepToShow.innerHTML = `
         <p>${step.number}: ${step.step}</p>`;
+        console.log(
+            `STEP 18: To conclude one iteration, 
+        append the step list element to the listOfInstructions`
+        );
+
         listOfInstructions.appendChild(stepToShow);
     });
-    step.equipment.length > 0 ? listOfInstructions.appendChild(eqList) : null;
+    console.log(
+        `STEP 19: Exiting instructions forEach, 
+        we will use our boolean to determine what the final list contains. 
+        If we need equipment, append that list to our main list. 
+        if not, continue to next line and return main list`
+    );
+
+    needsEquipment ? listOfInstructions.appendChild(eqList) : null;
     return listOfInstructions;
 }
 
@@ -192,6 +242,8 @@ export function makeModal(id) {
 }
 
 export function injectFunctionIntoModal(id) {
+    console.log('STEP 2: Inside modal generating function');
+
     const modal = document.getElementById(`${id}-modal-header`);
     const btn = document.getElementById(`${id}-btn`);
     const span = document.getElementsByClassName('close')[0];

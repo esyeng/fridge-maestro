@@ -132,8 +132,8 @@ const key = fetch(`${domain}/api/key`)
  *
  */
 
-console.log('The gangs all here');
-console.log(`Here's our api object: ${api}`);
-console.log(`and the class that controlls communication: ${Controller}`);
+// console.log('The gangs all here');
+// console.log(`Here's our api object: ${api}`);
+// console.log(`and the class that controlls communication: ${Controller}`);
 
-console.log(`what's missing?`);
+// console.log(`what's missing?`);

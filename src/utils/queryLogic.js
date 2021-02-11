@@ -32,22 +32,6 @@ export const Controller = new ApiController();
  *
  */
 
-export function getInstructions(instructions) {
-    console.log('Checking data types of resolved promise', instructions);
-    return instructions;
-}
-
-export function analyzeInstructions(id) {
-    return fetch(
-        `${api.analyzeInstructions}/${id}/analyzedInstructions?apiKey=${api.key}`
-    )
-        .then((response) => response.json())
-        .then((json) => {
-            return json;
-        })
-        .catch((err) => console.error(err));
-}
-
 export function stringByIngredients(ingredients) {
     let ingStr;
     let num;
@@ -61,7 +45,7 @@ export function stringByIngredients(ingredients) {
         : '';
     ingStr = `ingredients=${ingStr.slice(0, ingStr.length - 1)}`;
 
-    resultStr = `apiKey=${api.key}&${ingStr}&number=8&ranking=1`;
+    resultStr = `apiKey=${api.key}&${ingStr}&number=1&ranking=1`;
     return resultStr;
 }
 
@@ -109,8 +93,16 @@ export function showRecipes(recipes) {
         card.appendChild(recipeModal);
         foodContainer.appendChild(card);
 
+        console.log('STEP 1: Inejct functionality into modal, function called');
         injectFunctionIntoModal(recipe.id);
+        console.log(
+            'STEP 3: Back in showRecipes, about to resolve instructions and inject data'
+        );
+
         resolveInstructionsAndData(recipe.id, recipe);
+        console.log(
+            'STEP 25: Due to the asynchronous operations on the call stack, this will get printed before the operation chain completes '
+        );
     });
 }
 
