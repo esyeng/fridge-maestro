@@ -9,7 +9,7 @@
  * requires this).
  */
 
-import { listFromIngredients } from '../utils/helpers';
+import { listFromIngredients, passRecipe } from '../utils/helpers';
 // import { analyzeInstructions, getInstructions } from '../utils/queryLogic';
 import { api } from './ApiController';
 
@@ -30,6 +30,13 @@ const recipeDataTypes = {
  * makeRecipeComponent
  * @param {*} singleRecipeData
  */
+
+function captureRecipe(singleRecipeData, instructions) {
+    const recipe = {};
+    recipe.data = singleRecipeData;
+    recipe.instructions = instructions ? instructions : 'none';
+    passRecipe(recipe, 'DOM');
+}
 
 export function injectDataIntoModal(singleRecipeData, instructions) {
     const recipe = document.getElementById(`${singleRecipeData.id}-modal`);
@@ -98,6 +105,7 @@ export function analyzeInstructions(id) {
 export async function resolveInstructionsAndData(recipeId, recipeData) {
     analyzeInstructions(recipeId).then(async (instructions) => {
         const inst = await getInstructions(instructions);
+        inst ? captureRecipe(recipeData, inst) : captureRecipe(recipeData);
         let recipeInstructions;
 
         if (inst.length && inst[0].steps.length > 0) {
@@ -107,7 +115,6 @@ export async function resolveInstructionsAndData(recipeId, recipeData) {
         if (recipeInstructions) {
             injectDataIntoModal(recipeData, recipeInstructions);
         } else {
-            console.log('unable to resolve instructions');
             injectDataIntoModal(recipeData);
         }
     });

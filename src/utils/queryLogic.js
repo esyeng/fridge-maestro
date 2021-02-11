@@ -93,7 +93,7 @@ export function showRecipes(recipes) {
         card.appendChild(recipeModal);
         foodContainer.appendChild(card);
 
-        injectFunctionIntoModal(recipe.id);
+        injectFunctionIntoModal(recipe, recipe.id);
         resolveInstructionsAndData(recipe.id, recipe);
     });
 }

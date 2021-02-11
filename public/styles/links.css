@@ -19,3 +19,11 @@
     color: black;
     background-color: #fcf8e3;
 }
+
+.fake_tag {
+    color: cornflowerblue;
+    text-decoration: underline;
+}
+.fake_tag:hover {
+    color: aqua;
+}

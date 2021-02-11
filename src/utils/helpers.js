@@ -156,29 +156,42 @@ export function makeModal(id) {
     <button id="${id}-btn" class="btn btn-dark">View</button>
         <div id="${id}-modal-header" class="modal" style='display: none'>
          <span class="close">&times;</span>
-        <button id="${id}-save" class="btn btn-dark">Save</button>
         </div>`;
     modal.id = `${id}-modal`;
     return modal;
 }
 
-export function injectFunctionIntoModal(id) {
+export function injectFunctionIntoModal(recipe, id) {
     const modal = document.getElementById(`${id}-modal-header`);
     const btn = document.getElementById(`${id}-btn`);
-    const save = document.getElementById(`${id}-save`);
     const span = document.getElementsByClassName('close')[0];
-    const saved = document.getElementById('saved');
-
-    btn.addEventListener('click', (e) => {
+    const recent = document.getElementById('saved');
+    const anchor = document.createElement(`li`);
+    anchor.addEventListener('click', (e) => {
         if (modal.style.display === 'none') {
             modal.style.display = 'block';
         } else {
             modal.style.display = 'none';
         }
     });
-    save.addEventListener('click', (e) => {
-        localStorage.setItem('recipeStore', modal.innerHTML);
-        console.log(localStorage);
+    anchor.innerText = recipe.title;
+    anchor.setAttribute('class', 'breadcrumb-item fake_tag');
+
+    btn.addEventListener('click', (e) => {
+        if (
+            modal.style.display === 'none' &&
+            recent.lastChild.innerText !== anchor.innerText
+        ) {
+            recent.appendChild(anchor);
+            modal.style.display = 'block';
+        } else if (
+            modal.style.display === 'none' &&
+            recent.lastChild.innerText === anchor.innerText
+        ) {
+            modal.style.display = 'block';
+        } else {
+            modal.style.display = 'none';
+        }
     });
 
     span.addEventListener('click', (e) => {
@@ -190,4 +203,19 @@ export function injectFunctionIntoModal(id) {
             modal.style.display = 'none';
         }
     });
+}
+
+export function passRecipe(recipe, target) {
+    let i = 0;
+    if (target === 'DOM') {
+        i++;
+    }
+    let stringOfRecipe = JSON.stringify(recipe);
+    localStorage.setItem(`recipe ${i}`, stringOfRecipe);
+    console.log('localstorage: ', localStorage);
+}
+
+export function emailResults() {
+    const addressBar = document.getElementById('email_results');
+    // POST local storage in JSON format to input email via server
 }
