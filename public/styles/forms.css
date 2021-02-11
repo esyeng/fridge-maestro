@@ -16,7 +16,8 @@ Form control
 
 /* set bordered background */
 .fieldset_menu_bg {
-    background-color: #04d63cd2;
+    background-color: black;
+    color: white;
 }
 
 /* Set spacing for an input element */

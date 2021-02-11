@@ -121,14 +121,14 @@
                             id="query_bar" placeholder="What're you bringing to the table?">
                         <button id="add_to_list" class="btn btn-outline-secondary" type="button">+ Add to list</button>
                     </div>
-                    <select id="filter_results" name="filter_results" class="form-select input_margin">
+                    <!-- <select id="filter_results" name="filter_results" class="form-select input_margin">
                         <option selected>Filter results by preference</option>
                         <option value="Vegetarian">Vegetarian</option>
                         <option value="Vegan">Vegan</option>
-                    </select>
+                    </select> -->
                 </fieldset>
                 <fieldset id="meal_type" name="meal_type" class="fieldset_bordered fieldset_menu_bg">
-                    <legend class="fieldset_bordered_legend">I can't do:</legend>
+                    <legend class="fieldset_bordered_legend">Don't show me anything with:</legend>
                     <div id="dairy" name="dairy" class="form-check form-check-inline">
                         <label for="dairy_check" class="form-check-label">Dairy</label>
                         <input id="dairy_check" name="dairy" type="checkbox" class="form-check-inline">
@@ -136,6 +136,10 @@
                     <div id="gluten" class="form-check form-check-inline">
                         <label for="gluten_check" class="form-check-label">Gluten</label>
                         <input id="gluten_check" name="gluten" type="checkbox" class="form-check-inline">
+                    </div>
+                    <div id="meat" class="form-check form-check-inline">
+                        <label for="meat_check" class="form-check-label">Meat</label>
+                        <input id="meat_check" name="meat" type="checkbox" class="form-check-inline">
                     </div>
 
                 </fieldset>

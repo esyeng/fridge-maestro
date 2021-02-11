@@ -99,6 +99,22 @@ export function makeAnchor(text, classes) {
     return anchor;
 }
 
+export function stringFromValues(arr) {
+    let str = '';
+    arr.forEach((val) => (str += val));
+}
+
+export function getCheckedValues(HTMLElement) {
+    let arrVals = [];
+    for (let i = 1; i < HTMLElement.childElementCount; i++) {
+        let input = HTMLElement.children[i];
+        input.lastChild.checked
+            ? arrVals.push(`${input.lastChild.name}`)
+            : null;
+    }
+    return arrVals;
+}
+
 /**
  * addGeneratorButtonToRecipe
  * @summary Append button to recipe, used to call export function

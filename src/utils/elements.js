@@ -3,7 +3,7 @@
 /*                                                    */
 /* =================== SELECTORS ==================== */
 /*                                                    */
-import { setAttributes, hasDuplicates } from './helpers';
+import { setAttributes, hasDuplicates, getCheckedValues } from './helpers';
 import {
     Controller,
     stringByIngredients,
@@ -27,7 +27,6 @@ const foodContainer = document.getElementById('food_container');
 const addToList = document.getElementById('add_to_list'); // add btn
 const clear = document.getElementById('clear_photos'); // clear results btn,
 const submit = document.getElementById('submit_query'); // btn to send request object to probe recipe API(s)
-const photos = document.getElementById('get_photos'); // test photo query btn
 
 /**
  *
@@ -40,8 +39,19 @@ const queryBar = document.getElementById('query_bar'); // entry field for query 
 const ingredientList = document.getElementById('ingredient_list_ul'); // ul of query params
 const filterResult = document.getElementById('filter_results');
 const mealType = document.getElementById('meal_type');
-const mealChoices = mealType.childNodes;
+const testResultMeals = document.createElement('button');
 
+/**
+ * Test checkbox
+ */
+testResultMeals.setAttribute('class', 'btn btn-dark');
+testResultMeals.innerHTML = `I want to see the checkbox results`;
+
+testResultMeals.addEventListener('click', (e) => {
+    console.log(getCheckedValues(mealType));
+});
+
+foodContainer.appendChild(testResultMeals);
 /**
  *
  * @element Table
