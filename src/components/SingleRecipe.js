@@ -9,7 +9,7 @@
  * requires this).
  */
 
-import { listFromIngredients, showMeTheSteps } from '../utils/helpers';
+import { listFromIngredients } from '../utils/helpers';
 // import { analyzeInstructions, getInstructions } from '../utils/queryLogic';
 import { api } from './ApiController';
 
@@ -32,13 +32,6 @@ const recipeDataTypes = {
  */
 
 export function injectDataIntoModal(singleRecipeData, instructions) {
-    console.log(
-        ` Inside injectDataIntoModal. 
-        If we were successful in resolving our instructions, 
-        we should now see our instructions available in this function scope`,
-        instructions
-    );
-
     const recipe = document.getElementById(`${singleRecipeData.id}-modal`);
     const recipeContent = document.createElement(`div`);
     recipeContent.setAttribute('class', 'modal-content');
@@ -74,26 +67,15 @@ export function injectDataIntoModal(singleRecipeData, instructions) {
               [{ amount: 0, unit: '', name: '' }],
               'ingredients used'
           ));
-
-    console.log(
-        ` If we have instructions, 
-        lets append it to the modal`
-    );
     recipeContent.innerHTML = `<h2>${singleRecipeData.title}</h2>`;
     recipeContent.appendChild(missedList);
     recipeContent.appendChild(usedList);
     instructions
         ? recipeContent.appendChild(instructions)
         : recipeContent.appendChild(instructionNotFoundMessage);
-    // recipeHeader.appendChild(recipeImage);
     recipeHeader.appendChild(recipeContent);
     recipe.appendChild(recipeHeader);
     recipe.appendChild(recipeFooter);
-    console.log(
-        ` If all of this data trail was error free, 
-        the modal will have all our data as we exit 
-        this function and return to showRecipes`
-    );
 }
 
 export function getInstructions(instructions) {
@@ -129,4 +111,35 @@ export async function resolveInstructionsAndData(recipeId, recipeData) {
             injectDataIntoModal(recipeData);
         }
     });
+}
+
+export function showMeTheSteps(instructions) {
+    const listOfInstructions = document.createElement('ul');
+    listOfInstructions.setAttribute(
+        'class',
+        'single_recipe_list list_unstyled'
+    );
+    listOfInstructions.innerHTML = `<h3 class="modal_content_sub" >Instructions: </h3>`;
+    const eqList = document.createElement('ul');
+    eqList.setAttribute('class', 'single_recipe_list_eq list_unstyled');
+    eqList.innerHTML = `<h3 class="modal_content_sub">Equipment: </h3>`;
+    console.log('equipment list', eqList);
+    let needsEquipment = false;
+
+    instructions.forEach((step) => {
+        if (step.equipment.length > 0) {
+            needsEquipment = true;
+            step.equipment.forEach((item) => {
+                const eq = document.createElement('li');
+                eq.innerHTML = `<p>${item.name}</p>`;
+                eqList.appendChild(eq);
+            });
+        }
+        const stepToShow = document.createElement('li');
+        stepToShow.innerHTML = `
+        <p class="modal_content_list_p" >${step.number}: ${step.step}</p>`;
+        listOfInstructions.appendChild(stepToShow);
+    });
+    needsEquipment ? listOfInstructions.appendChild(eqList) : null;
+    return listOfInstructions;
 }

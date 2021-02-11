@@ -144,65 +144,6 @@ export function listFromIngredients(ingredients, listType) {
     return listOfIngredients;
 }
 
-export function showMeTheSteps(instructions) {
-    const listOfInstructions = document.createElement('ul');
-    listOfInstructions.setAttribute(
-        'class',
-        'single_recipe_list list_unstyled'
-    );
-    listOfInstructions.innerHTML = `<h3 class="modal_content_sub" >Instructions: </h3>`;
-    const eqList = document.createElement('ul');
-    eqList.setAttribute('class', 'single_recipe_list_eq list_unstyled');
-    eqList.innerHTML = `<h3 class="modal_content_sub">Equpment: </h3>`;
-    console.log('equipment list', eqList);
-    let needsEquipment = false;
-
-    instructions.forEach((step) => {
-        if (step.equipment.length > 0) {
-            needsEquipment = true;
-            console.log(
-                `1 - our step had a list of equipment, 
-                Set boolean check to true. Step: >>`,
-                step
-            );
-
-            console.log(
-                ` 2 - Within instructions.forEach, 
-                jumping into step.equipment.forEach`
-            );
-
-            step.equipment.forEach((item) => {
-                const eq = document.createElement('li');
-                eq.innerHTML = `<p>${item.name}</p>`;
-                console.log(
-                    '3 - Creating list item for each piece of equipment. Item: >>',
-                    item
-                );
-                eqList.appendChild(eq);
-            });
-        }
-        console.log(
-            `4 - our step did not have a list of equipment, 
-        leaving our boolean check false. now we create a list 
-        element for each step of instructions`
-        );
-
-        const stepToShow = document.createElement('li');
-        stepToShow.innerHTML = `
-        <p class="modal_content_list_p" >${step.number}: ${step.step}</p>`;
-        console.log(
-            `5 - To conclude one iteration, 
-        append the step list element to the listOfInstructions`
-        );
-
-        listOfInstructions.appendChild(stepToShow);
-    });
-    console.log(`6 - Exiting instructions forEach`);
-
-    needsEquipment ? listOfInstructions.appendChild(eqList) : null;
-    return listOfInstructions;
-}
-
 /**
  * makeModal
  *
@@ -212,9 +153,10 @@ export function makeModal(id) {
     // const recipeModal = document.createElement('section');
     const modal = document.createElement('div');
     modal.innerHTML = `
-    <button id="${id}-btn">Open Modal</button>
+    <button id="${id}-btn" class="btn btn-dark">View</button>
         <div id="${id}-modal-header" class="modal" style='display: none'>
          <span class="close">&times;</span>
+        <button id="${id}-save" class="btn btn-dark">Save</button>
         </div>`;
     modal.id = `${id}-modal`;
     return modal;
@@ -223,7 +165,9 @@ export function makeModal(id) {
 export function injectFunctionIntoModal(id) {
     const modal = document.getElementById(`${id}-modal-header`);
     const btn = document.getElementById(`${id}-btn`);
+    const save = document.getElementById(`${id}-save`);
     const span = document.getElementsByClassName('close')[0];
+    const saved = document.getElementById('saved');
 
     btn.addEventListener('click', (e) => {
         if (modal.style.display === 'none') {
@@ -232,6 +176,11 @@ export function injectFunctionIntoModal(id) {
             modal.style.display = 'none';
         }
     });
+    save.addEventListener('click', (e) => {
+        localStorage.setItem('recipeStore', modal.innerHTML);
+        console.log(localStorage);
+    });
+
     span.addEventListener('click', (e) => {
         modal.style.display = 'none';
     });
