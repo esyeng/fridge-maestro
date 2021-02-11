@@ -41,6 +41,8 @@
 
 /* Modal Content */
 .modal-content {
+    overflow-y: scroll;
+    scroll-behavior: smooth;
     position: relative;
     background-color: black;
     color: white;
@@ -68,14 +70,13 @@
     .modal-content ul {
         display: flex;
         flex-direction: column;
-        flex-wrap: wrap;
         min-width: 12.5rem;
         max-height: 300px;
     }
     .modal_content_list_p {
         flex-direction: column;
         flex-wrap: wrap;
-        width: 12.5rem;
+        width: 50rem;
         padding: 0.1875rem;
     }
 }

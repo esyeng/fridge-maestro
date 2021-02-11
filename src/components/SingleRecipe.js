@@ -82,7 +82,7 @@ export function injectDataIntoModal(singleRecipeData, instructions) {
         : recipeContent.appendChild(instructionNotFoundMessage);
     recipeHeader.appendChild(recipeContent);
     recipe.appendChild(recipeHeader);
-    recipe.appendChild(recipeFooter);
+    // recipe.appendChild(recipeFooter);
 }
 
 export function getInstructions(instructions) {
@@ -124,7 +124,7 @@ export function showMeTheSteps(instructions) {
     const listOfInstructions = document.createElement('ul');
     listOfInstructions.setAttribute(
         'class',
-        'single_recipe_list list_unstyled'
+        'single_recipe_list list_unstyled instructions_list'
     );
     listOfInstructions.innerHTML = `<h3 class="modal_content_sub" >Instructions: </h3>`;
     const eqList = document.createElement('ul');

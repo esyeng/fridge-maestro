@@ -195,7 +195,7 @@ body {
     max-width: 18.75rem;
     margin: auto;
     margin-top: 0.3125rem;
-    border-radius: 25px;
+    border-radius: 0.4375rem;
     max-height: 23.125rem;
     padding-bottom: 3.125rem;
     box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
@@ -248,20 +248,28 @@ body {
 
 .single_recipe_list {
     /* background-color: black;*/
-    display: block;
+    /* display: block; */
     max-height: 25rem;
     max-width: 25rem;
     color: white;
     background-color: black;
 }
 
+.instructions_list {
+    max-width: 56.25rem;
+    overflow-y: scroll;
+    flex-wrap: inherit;
+    scroll-behavior: smooth;
+}
+
 .single_recipe_list_eq {
-    display: block;
-    max-height: 25rem;
-    max-width: 25rem;
+    /* display: block; */
+    justify-self: flex-end;
+    max-height: 50rem;
+    max-width: 50rem;
     color: white;
     background-color: black;
-    overflow: scroll;
+    overflow-y: scroll;
 }
 
 .single_recipe_inner {
