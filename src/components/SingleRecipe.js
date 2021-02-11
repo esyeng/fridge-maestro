@@ -47,6 +47,8 @@ export function injectDataIntoModal(singleRecipeData, instructions) {
     );
     const recipeImage = document.createElement('img');
     const recipeFooter = document.createElement('footer');
+    const instructionNotFoundMessage = document.createElement('p');
+    instructionNotFoundMessage.innerHTML = `No instructions came up... Sorry :(`;
 
     recipeImage.src = `${singleRecipeData.image}`;
     recipeFooter.setAttribute('class', 'modal-footer');
@@ -77,11 +79,13 @@ export function injectDataIntoModal(singleRecipeData, instructions) {
         ` If we have instructions, 
         lets append it to the modal`
     );
-    recipeHeader.innerHTML = `${singleRecipeData.title}`;
+    recipeContent.innerHTML = `<h2>${singleRecipeData.title}</h2>`;
     recipeContent.appendChild(missedList);
     recipeContent.appendChild(usedList);
-    recipeContent.appendChild(instructions);
-    recipeHeader.appendChild(recipeImage);
+    instructions
+        ? recipeContent.appendChild(instructions)
+        : recipeContent.appendChild(instructionNotFoundMessage);
+    // recipeHeader.appendChild(recipeImage);
     recipeHeader.appendChild(recipeContent);
     recipe.appendChild(recipeHeader);
     recipe.appendChild(recipeFooter);
@@ -114,7 +118,7 @@ export async function resolveInstructionsAndData(recipeId, recipeData) {
         const inst = await getInstructions(instructions);
         let recipeInstructions;
 
-        if (inst[0].steps.length > 0) {
+        if (inst.length && inst[0].steps.length > 0) {
             recipeInstructions = showMeTheSteps(inst[0].steps);
         }
 
@@ -122,6 +126,7 @@ export async function resolveInstructionsAndData(recipeId, recipeData) {
             injectDataIntoModal(recipeData, recipeInstructions);
         } else {
             console.log('unable to resolve instructions');
+            injectDataIntoModal(recipeData);
         }
     });
 }

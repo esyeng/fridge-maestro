@@ -132,7 +132,7 @@ export function addGeneratorButtonToRecipe(recipe) {
 export function listFromIngredients(ingredients, listType) {
     const listOfIngredients = document.createElement('ul');
     listOfIngredients.setAttribute('class', 'single_recipe_list list_unstyled');
-    listOfIngredients.innerHTML = `<h4>${listType}: </h4>`;
+    listOfIngredients.innerHTML = `<h3 class="modal_content_sub">${listType}: </h3>`;
     ingredients.forEach((ingredient) => {
         const ingredientToAdd = document.createElement('li');
         ingredientToAdd.setAttribute('class', 'single_recipe_list_item');
@@ -150,54 +150,54 @@ export function showMeTheSteps(instructions) {
         'class',
         'single_recipe_list list_unstyled'
     );
-    listOfInstructions.innerHTML = `<h2>Instructions: </h2>`;
-    let eqList;
+    listOfInstructions.innerHTML = `<h3 class="modal_content_sub" >Instructions: </h3>`;
+    const eqList = document.createElement('ul');
+    eqList.setAttribute('class', 'single_recipe_list_eq list_unstyled');
+    eqList.innerHTML = `<h3 class="modal_content_sub">Equpment: </h3>`;
+    console.log('equipment list', eqList);
     let needsEquipment = false;
 
     instructions.forEach((step) => {
         if (step.equipment.length > 0) {
             needsEquipment = true;
             console.log(
-                `our step had a list of equipment, 
-            prompting us to generate a new list and assign 
-            to an outer scope variable eqList. Set boolean check to true`
+                `1 - our step had a list of equipment, 
+                Set boolean check to true. Step: >>`,
+                step
             );
 
-            eqList = document
-                .createElement('ul')
-                .setAttribute('class', 'single_recipe_list list_unstyled');
             console.log(
-                `Within instructions.forEach, 
+                ` 2 - Within instructions.forEach, 
                 jumping into step.equipment.forEach`
             );
 
             step.equipment.forEach((item) => {
-                console.log('Creating list item for each piece of equipment');
-
-                eqList.appendChild(
-                    (document.createElement(
-                        'li'
-                    ).innerHTML = `<p>${item.name}</p>`)
+                const eq = document.createElement('li');
+                eq.innerHTML = `<p>${item.name}</p>`;
+                console.log(
+                    '3 - Creating list item for each piece of equipment. Item: >>',
+                    item
                 );
+                eqList.appendChild(eq);
             });
         }
         console.log(
-            `our step did not have a list of equipment, 
+            `4 - our step did not have a list of equipment, 
         leaving our boolean check false. now we create a list 
         element for each step of instructions`
         );
 
         const stepToShow = document.createElement('li');
         stepToShow.innerHTML = `
-        <p>${step.number}: ${step.step}</p>`;
+        <p class="modal_content_list_p" >${step.number}: ${step.step}</p>`;
         console.log(
-            `To conclude one iteration, 
+            `5 - To conclude one iteration, 
         append the step list element to the listOfInstructions`
         );
 
         listOfInstructions.appendChild(stepToShow);
     });
-    console.log(`Exiting instructions forEach, `);
+    console.log(`6 - Exiting instructions forEach`);
 
     needsEquipment ? listOfInstructions.appendChild(eqList) : null;
     return listOfInstructions;

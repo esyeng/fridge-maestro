@@ -182,9 +182,8 @@ body {
 
 .food_container {
     display: flex;
-
+    overflow: scroll;
     flex-wrap: wrap;
-
     flex-grow: 1;
     margin: 0.125rem;
     padding-right: 0.75rem;
@@ -254,6 +253,15 @@ body {
     max-width: 25rem;
     color: white;
     background-color: black;
+}
+
+.single_recipe_list_eq {
+    display: block;
+    max-height: 25rem;
+    max-width: 25rem;
+    color: white;
+    background-color: black;
+    overflow: scroll;
 }
 
 .single_recipe_inner {

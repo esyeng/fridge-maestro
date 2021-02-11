@@ -32,11 +32,11 @@ export const Controller = new ApiController();
  *
  */
 
-export function stringByIngredients(ingredients) {
+export function stringByIngredients(ingredients, limit) {
     let ingStr;
-    let num;
+    let num = limit > 0 ? limit : 12;
     let resultStr;
-
+    console.log(limit);
     ingredients.length > 0
         ? (ingStr = ingredients.reduce((acc, cur) => {
               acc += cur.id + `,`;
@@ -45,7 +45,7 @@ export function stringByIngredients(ingredients) {
         : '';
     ingStr = `ingredients=${ingStr.slice(0, ingStr.length - 1)}`;
 
-    resultStr = `apiKey=${api.key}&${ingStr}&number=1&ranking=1`;
+    resultStr = `apiKey=${api.key}&${ingStr}&number=${num}&ranking=1`;
     return resultStr;
 }
 
