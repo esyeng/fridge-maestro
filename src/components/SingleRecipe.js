@@ -38,6 +38,18 @@ function captureRecipe(singleRecipeData, instructions) {
     passRecipe(recipe, 'DOM');
 }
 
+function createSaved() {
+    const savedRecipes = document.createElement('div');
+    savedRecipes.setAttribute('class', 'recently_viewed');
+    savedRecipes.id = 'saved';
+    savedRecipes.innerHTML = `
+    <a name="saved"></a>
+    <h3 class="result_box_item recipe">Saved</h3>
+    <ul id="saved-recipes" class="result_box_item recipe breadcrumb">
+    </ul>`;
+    return savedRecipes;
+}
+
 export function injectDataIntoModal(singleRecipeData, instructions) {
     const recipe = document.getElementById(`${singleRecipeData.id}-modal`);
     const recipeContent = document.createElement(`div`);
@@ -46,12 +58,23 @@ export function injectDataIntoModal(singleRecipeData, instructions) {
         `${singleRecipeData.id}-modal-header`
     );
     const recipeImage = document.createElement('img');
-    const recipeFooter = document.createElement('footer');
+    const saveRecipe = document.createElement('button');
+    saveRecipe.setAttribute('class', 'btn btn-dark search');
+    saveRecipe.addEventListener('click', (e) => {
+        const recipeCenter = document.getElementById('recipe_center_section');
+        const savedRef = document.document.createElement(`li`);
+        const savedDivIfFirstSave = createSaved();
+        savedRef.setAttribute('class', 'breadcrumb-item fake_tag');
+        savedRef.innerText = singleRecipeData.title;
+        recipeCenter.lastChild.id === 'saved' // Check if a saved section exists, if it does add the ref, if not add the section
+            ? recipeCenter.lastChild.appendChild(savedRef)
+            : recipeCenter.appendChild(savedDivIfFirstSave);
+    });
+
     const instructionNotFoundMessage = document.createElement('p');
     instructionNotFoundMessage.innerHTML = `No instructions came up... Sorry :(`;
 
     recipeImage.src = `${singleRecipeData.image}`;
-    recipeFooter.setAttribute('class', 'modal-footer');
 
     let missedList;
     singleRecipeData.missedIngredientCount > 0
@@ -82,7 +105,6 @@ export function injectDataIntoModal(singleRecipeData, instructions) {
         : recipeContent.appendChild(instructionNotFoundMessage);
     recipeHeader.appendChild(recipeContent);
     recipe.appendChild(recipeHeader);
-    // recipe.appendChild(recipeFooter);
 }
 
 export function getInstructions(instructions) {

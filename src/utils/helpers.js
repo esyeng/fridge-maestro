@@ -177,19 +177,19 @@ export function makeModal(id) {
     return modal;
 }
 
+export function controlModal(modal) {
+    modal.style.display === 'none'
+        ? (modal.style.display = 'block')
+        : (modal.style.display = 'none');
+}
+
 export function injectFunctionIntoModal(recipe, id) {
     const modal = document.getElementById(`${id}-modal-header`);
     const btn = document.getElementById(`${id}-btn`);
     const span = document.getElementsByClassName('close')[0];
-    const recent = document.getElementById('saved');
+    const recent = document.getElementById('recent');
     const anchor = document.createElement(`li`);
-    anchor.addEventListener('click', (e) => {
-        if (modal.style.display === 'none') {
-            modal.style.display = 'block';
-        } else {
-            modal.style.display = 'none';
-        }
-    });
+    anchor.addEventListener('click', controlModal(modal));
     anchor.innerText = recipe.title;
     anchor.setAttribute('class', 'breadcrumb-item fake_tag');
 
@@ -235,3 +235,50 @@ export function emailResults() {
     const addressBar = document.getElementById('email_results');
     // POST local storage in JSON format to input email via server
 }
+
+export function stringSplice(str, index, count, addition) {
+    index < 0 ? (index = str.length + index) : null;
+    return str.slice(0, index) + (addition || '') + str.slice(index + count);
+}
+
+export function saveRecipe(recipe, id) {
+    let saveThisPair = `${id}: ${JSON.stringify(recipe)}`;
+    localStorage.savedIds
+        ? localStorage.setItem(
+              `savedIds`,
+              stringSplice(
+                  `${localStorage.savedIds}, `,
+                  localStorage.savedIds.length - 1,
+                  0,
+                  saveThisPair
+              )
+          )
+        : localStorage.setItem(`savedIds`, `{ ${saveThisPair} }`);
+
+    JSON.stringify(localStorage.savedIds);
+}
+
+let testRecipe = {
+    ingredients: ['chocolate', 'peanut butter'],
+    instructions: [{ 1: 'make it chocolate' }, { 2: 'make it peanut butter' }],
+};
+
+let testTwo = {
+    ingredients: ['OTHER', 'OTHEERRR'],
+    instructions: [{ 1: 'MAKE IT' }, { 2: 'MAKE IT NOW' }],
+};
+
+let testId = 96;
+let testIdTwo = 543;
+
+localStorage.setItem(`savedIds`, '');
+
+console.log('localStorage before 1', localStorage);
+console.log('perform operation 1');
+saveRecipe(testRecipe, testId);
+console.log('localStorage after 1, before 2', localStorage);
+console.log('perform operation 2');
+saveRecipe(testTwo, testIdTwo);
+console.log('localStorage after 2', localStorage);
+
+console.log(JSON.parse(localStorage.savedIds));
