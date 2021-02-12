@@ -229,7 +229,6 @@ export function injectFunctionIntoModal(recipe, id) {
 export function passRecipe(recipe) {
     let stringOfRecipe = JSON.stringify(recipe);
     localStorage.setItem(`${recipe.id}`, stringOfRecipe);
-    console.log('localstorage: ', localStorage);
 }
 
 export function emailResults() {
@@ -250,14 +249,18 @@ export function stringSplice(str, index, count, addition) {
  * @inserts id into 'saved'
  */
 
-// export function saveRecipe(id) {
-//     localStorage.saved
-//         ? localStorage.saved.indexOf(toString(id))
-//             ? null
-//             : localStorage.saved.concat(toString(id))
-//         : localStorage.setItem('saved', `${id}`);
-// }
+export function saveRecipe(id) {
+    localStorage.saved
+        ? localStorage.saved.indexOf(toString(id)) > 0
+            ? console.log('id found')
+            : (localStorage.saved += `, ${id}`)
+        : localStorage.setItem('saved', `${id}`);
+    console.log(localStorage);
+}
 
-// console.log(saveRecipe(25));
+export function clearSaved() {
+    localStorage.setItem('saved', null);
+}
+
 // console.log(saveRecipe(99));
 // console.log(saveRecipe(73812));

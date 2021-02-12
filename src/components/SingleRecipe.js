@@ -59,10 +59,10 @@ export function injectDataIntoModal(singleRecipeData, instructions) {
         `${singleRecipeData.id}-modal-header`
     );
     const recipeImage = document.createElement('img');
-    const saveRecipe = document.createElement('button');
-    saveRecipe.innerText = 'Save';
-    saveRecipe.setAttribute('class', 'btn btn-light save');
-    saveRecipe.addEventListener('click', (e) => {
+    const saveButton = document.createElement('button');
+    saveButton.innerText = 'Save';
+    saveButton.setAttribute('class', 'btn btn-light save');
+    saveButton.addEventListener('click', (e) => {
         const recipeCenter = document.getElementById('recipe_center_section');
         const savedRef = document.createElement(`li`);
         const savedDivIfFirstSave = createSaved();
@@ -116,7 +116,7 @@ export function injectDataIntoModal(singleRecipeData, instructions) {
     recipeContent.innerHTML = `<h2>${singleRecipeData.title}</h2>`;
     recipeContent.appendChild(missedList);
     recipeContent.appendChild(usedList);
-    recipeContent.appendChild(saveRecipe);
+    recipeContent.appendChild(saveButton);
     instructions
         ? recipeContent.appendChild(instructions)
         : recipeContent.appendChild(instructionNotFoundMessage);

@@ -5,7 +5,12 @@ import {
     resolveInstructionsAndData,
     injectDataIntoModal,
 } from '../components/SingleRecipe';
-import { makeModal, injectFunctionIntoModal } from './helpers';
+import {
+    makeModal,
+    injectFunctionIntoModal,
+    saveRecipe,
+    clearSaved,
+} from './helpers';
 import { foodContainer } from './elements';
 
 /**
@@ -96,6 +101,28 @@ export function showRecipes(recipes) {
         injectFunctionIntoModal(recipe, recipe.id);
         resolveInstructionsAndData(recipe.id, recipe);
     });
+}
+
+export function postRecipesToEmail() {
+    let keyString = localStorage.saved;
+    const keys = keyString.split(', ');
+    console.log(keys);
+    const recipesToEmail = [];
+
+    for (let id in localStorage) {
+        if (localStorage.hasOwnPropery(id)) {
+            keys.forEach((key) => {
+                if (key === id) {
+                    recipesToEmail.push(localStorage[key]);
+                }
+            });
+        }
+    }
+
+    console.log('keys', keys);
+    console.log('recipes to email', recipesToEmail);
+
+    clearSaved();
 }
 
 /* __________________________________________________ */
