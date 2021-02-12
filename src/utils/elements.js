@@ -89,6 +89,9 @@ submit.addEventListener('click', async (e) => {
         !numberRequested || numberRequested <= 0
             ? stringByIngredients(ingredients)
             : stringByIngredients(ingredients, numberRequested);
+    while (foodContainer.firstChild) {
+        foodContainer.removeChild(foodContainer.firstChild);
+    }
     await simpleRecipeFinder(queryStr);
 });
 
@@ -154,6 +157,7 @@ clear.addEventListener('click', (e) => {
     while (foodContainer.firstChild) {
         foodContainer.removeChild(foodContainer.firstChild);
     }
+    localStorage.clear();
     return;
 });
 

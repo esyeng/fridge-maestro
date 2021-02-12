@@ -60,16 +60,31 @@ export function injectDataIntoModal(singleRecipeData, instructions) {
     );
     const recipeImage = document.createElement('img');
     const saveRecipe = document.createElement('button');
-    saveRecipe.setAttribute('class', 'btn btn-dark search');
+    saveRecipe.innerText = 'Save';
+    saveRecipe.setAttribute('class', 'btn btn-light save');
     saveRecipe.addEventListener('click', (e) => {
         const recipeCenter = document.getElementById('recipe_center_section');
-        const savedRef = document.document.createElement(`li`);
+        const savedRef = document.createElement(`li`);
         const savedDivIfFirstSave = createSaved();
         savedRef.setAttribute('class', 'breadcrumb-item fake_tag');
         savedRef.innerText = singleRecipeData.title;
-        recipeCenter.lastChild.id === 'saved' // Check if a saved section exists, if it does add the ref, if not add the section
-            ? recipeCenter.lastChild.appendChild(savedRef)
-            : recipeCenter.appendChild(savedDivIfFirstSave);
+        savedRef.addEventListener('click', (e) => {
+            if (recipeHeader.style.display === 'none') {
+                recipeHeader.style.display = 'block';
+            } else {
+                recipeHeader.style.display = 'none';
+            }
+        });
+        const savedDiv = document.getElementById('saved');
+        if (savedDiv && savedDiv.lastChild.innerText !== savedRef.innerText) {
+            savedDiv.appendChild(savedRef);
+        } else if (!savedDiv) {
+            savedDivIfFirstSave.appendChild(savedRef);
+            recipeCenter.appendChild(savedDivIfFirstSave);
+        }
+        let saved = document.getElementById('saved');
+        recipeHeader.style.display = 'none';
+        saved.scrollIntoView();
     });
 
     const instructionNotFoundMessage = document.createElement('p');
@@ -101,6 +116,7 @@ export function injectDataIntoModal(singleRecipeData, instructions) {
     recipeContent.innerHTML = `<h2>${singleRecipeData.title}</h2>`;
     recipeContent.appendChild(missedList);
     recipeContent.appendChild(usedList);
+    recipeContent.appendChild(saveRecipe);
     instructions
         ? recipeContent.appendChild(instructions)
         : recipeContent.appendChild(instructionNotFoundMessage);

@@ -176,11 +176,11 @@ export function makeModal(id) {
     return modal;
 }
 
-export function controlModal(modal) {
-    modal.style.display === 'none'
-        ? (modal.style.display = 'block')
-        : (modal.style.display = 'none');
-}
+// export function controlModal(modal) {
+//     modal.style.display === 'none'
+//         ? (modal.style.display = 'block')
+//         : (modal.style.display = 'none');
+// }
 
 export function injectFunctionIntoModal(recipe, id) {
     const modal = document.getElementById(`${id}-modal-header`);
@@ -194,7 +194,7 @@ export function injectFunctionIntoModal(recipe, id) {
         } else {
             modal.style.display = 'none';
         }
-    }););
+    });
     anchor.innerText = recipe.title;
     anchor.setAttribute('class', 'breadcrumb-item fake_tag');
 

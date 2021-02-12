@@ -27,3 +27,10 @@
 .fake_tag:hover {
     color: purple;
 }
+
+.save {
+    background-color: white;
+    width: fit-content;
+    padding: 0.3125rem 0.3125rem 0.3125rem 0.3125rem;
+    color: black;
+}
