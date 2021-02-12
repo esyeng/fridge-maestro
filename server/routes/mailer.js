@@ -4,6 +4,8 @@ const express = require('express');
 const mailer = express.Router();
 const nodemailer = require('nodemailer');
 
+module.exports = mailer;
+
 async function mail(sendTo) {
     let acct = sendTo ? sendTo : await nodemailer.createTestAccount();
 

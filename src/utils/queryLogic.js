@@ -126,11 +126,18 @@ export function postRecipesToEmail() {
     console.log('recipes to parse', recipesToParse);
     console.log('recipes to email', recipesToEmail);
     clearSaved();
-    return recipesToEmail;
+    sendEmail(recipesToEmail);
 }
 
 export function sendEmail(setOfRecipes) {
-    //
+    fetch('http://localhost:5500/mail/test', {
+        method: 'POST',
+        body: 'hi',
+        // headers: { 'Content-type': 'application/json; charset=UTF-8' },
+    })
+        .then((response) => response.text())
+        .then((text) => console.log(text))
+        .catch((err) => console.log(err));
 }
 
 /* __________________________________________________ */
