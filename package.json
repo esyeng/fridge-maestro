@@ -20,7 +20,8 @@
     "axios": "^0.21.1",
     "express": "^4.17.1",
     "file-loader": "^6.2.0",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "nodemailer": "^6.4.18"
   },
   "devDependencies": {
     "@babel/core": "^7.12.13",

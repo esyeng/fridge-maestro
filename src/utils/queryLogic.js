@@ -125,8 +125,12 @@ export function postRecipesToEmail() {
     console.log('keys', keys);
     console.log('recipes to parse', recipesToParse);
     console.log('recipes to email', recipesToEmail);
-
     clearSaved();
+    return recipesToEmail;
+}
+
+export function sendEmail(setOfRecipes) {
+    //
 }
 
 /* __________________________________________________ */

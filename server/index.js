@@ -16,8 +16,11 @@ app.use(express.static(path.resolve(__dirname, '..', 'content')));
 app.use(express.static(path.resolve(__dirname, '..', 'dist')));
 app.use(morgan('dev'));
 
-const apiRoutes = require('./routes/router.js');
-app.use('/api', apiRoutes);
+const keyGetter = require('./routes/key.js');
+const mailer = require('./routes/mailer.js');
+
+app.use('/api', keyGetter);
+app.use('/mail', mailer);
 
 const { generatePics } = require('./routes/demo');
 
