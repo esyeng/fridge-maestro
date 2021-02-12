@@ -166,7 +166,6 @@ export function listFromIngredients(ingredients, listType) {
  */
 
 export function makeModal(id) {
-    // const recipeModal = document.createElement('section');
     const modal = document.createElement('div');
     modal.innerHTML = `
     <button id="${id}-btn" class="btn btn-dark">View</button>
@@ -189,7 +188,13 @@ export function injectFunctionIntoModal(recipe, id) {
     const span = document.getElementsByClassName('close')[0];
     const recent = document.getElementById('recent');
     const anchor = document.createElement(`li`);
-    anchor.addEventListener('click', controlModal(modal));
+    anchor.addEventListener('click', (e) => {
+        if (modal.style.display === 'none') {
+            modal.style.display = 'block';
+        } else {
+            modal.style.display = 'none';
+        }
+    }););
     anchor.innerText = recipe.title;
     anchor.setAttribute('class', 'breadcrumb-item fake_tag');
 
@@ -221,13 +226,9 @@ export function injectFunctionIntoModal(recipe, id) {
     });
 }
 
-export function passRecipe(recipe, target) {
-    let i = 0;
-    if (target === 'DOM') {
-        i++;
-    }
+export function passRecipe(recipe) {
     let stringOfRecipe = JSON.stringify(recipe);
-    localStorage.setItem(`recipe ${i}`, stringOfRecipe);
+    localStorage.setItem(`${recipe.id}`, stringOfRecipe);
     console.log('localstorage: ', localStorage);
 }
 
@@ -241,44 +242,22 @@ export function stringSplice(str, index, count, addition) {
     return str.slice(0, index) + (addition || '') + str.slice(index + count);
 }
 
-export function saveRecipe(recipe, id) {
-    let saveThisPair = `${id}: ${JSON.stringify(recipe)}`;
-    localStorage.savedIds
-        ? localStorage.setItem(
-              `savedIds`,
-              stringSplice(
-                  `${localStorage.savedIds}, `,
-                  localStorage.savedIds.length - 1,
-                  0,
-                  saveThisPair
-              )
-          )
-        : localStorage.setItem(`savedIds`, `{ ${saveThisPair} }`);
+/**
+ *
+ * @param {JSON} recipe
+ * @param {Number} id
+ *
+ * @inserts id into 'saved'
+ */
 
-    JSON.stringify(localStorage.savedIds);
-}
+// export function saveRecipe(id) {
+//     localStorage.saved
+//         ? localStorage.saved.indexOf(toString(id))
+//             ? null
+//             : localStorage.saved.concat(toString(id))
+//         : localStorage.setItem('saved', `${id}`);
+// }
 
-let testRecipe = {
-    ingredients: ['chocolate', 'peanut butter'],
-    instructions: [{ 1: 'make it chocolate' }, { 2: 'make it peanut butter' }],
-};
-
-let testTwo = {
-    ingredients: ['OTHER', 'OTHEERRR'],
-    instructions: [{ 1: 'MAKE IT' }, { 2: 'MAKE IT NOW' }],
-};
-
-let testId = 96;
-let testIdTwo = 543;
-
-localStorage.setItem(`savedIds`, '');
-
-console.log('localStorage before 1', localStorage);
-console.log('perform operation 1');
-saveRecipe(testRecipe, testId);
-console.log('localStorage after 1, before 2', localStorage);
-console.log('perform operation 2');
-saveRecipe(testTwo, testIdTwo);
-console.log('localStorage after 2', localStorage);
-
-console.log(JSON.parse(localStorage.savedIds));
+// console.log(saveRecipe(25));
+// console.log(saveRecipe(99));
+// console.log(saveRecipe(73812));

@@ -33,9 +33,10 @@ const recipeDataTypes = {
 
 function captureRecipe(singleRecipeData, instructions) {
     const recipe = {};
+    recipe.id = singleRecipeData.id;
     recipe.data = singleRecipeData;
     recipe.instructions = instructions ? instructions : 'none';
-    passRecipe(recipe, 'DOM');
+    passRecipe(recipe);
 }
 
 function createSaved() {
