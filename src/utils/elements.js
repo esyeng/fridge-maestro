@@ -163,7 +163,6 @@ clear.addEventListener('click', (e) => {
     while (foodContainer.firstChild) {
         foodContainer.removeChild(foodContainer.firstChild);
     }
-    localStorage.clear();
     return;
 });
 

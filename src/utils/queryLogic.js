@@ -108,19 +108,22 @@ export function postRecipesToEmail() {
     let keyString = localStorage.saved;
     const keys = keyString.split(', ');
     console.log(keys);
-    const recipesToEmail = [];
+    const recipesToParse = [];
 
     for (let id in localStorage) {
         if (localStorage[id]) {
             keys.forEach((key) => {
                 if (key === id) {
-                    recipesToEmail.push(localStorage[id]);
+                    recipesToParse.push(localStorage[id]);
                 }
             });
         }
     }
-
+    let recipesToEmail = recipesToParse.map((jsonString) => {
+        return JSON.parse(jsonString);
+    });
     console.log('keys', keys);
+    console.log('recipes to parse', recipesToParse);
     console.log('recipes to email', recipesToEmail);
 
     clearSaved();
