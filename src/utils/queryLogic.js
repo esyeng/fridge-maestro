@@ -105,6 +105,8 @@ export function showRecipes(recipes) {
 
 export function postRecipesToEmail() {
     console.log(localStorage);
+    const bar = document.getElementById('email_results');
+    const address = bar.value;
     let keyString = localStorage.saved;
     const keys = keyString.split(', ');
     console.log(keys);
@@ -122,21 +124,25 @@ export function postRecipesToEmail() {
     let recipesToEmail = recipesToParse.map((jsonString) => {
         return JSON.parse(jsonString);
     });
-    console.log('keys', keys);
-    console.log('recipes to parse', recipesToParse);
+    // console.log('keys', keys);
+    // console.log('recipes to parse', recipesToParse);
     console.log('recipes to email', recipesToEmail);
+    console.log(address);
+    sendEmail(recipesToEmail, address);
     clearSaved();
-    sendEmail(recipesToEmail);
 }
 
-export function sendEmail(setOfRecipes) {
-    fetch('http://localhost:5500/mail/test', {
+export function sendEmail(setOfRecipes, recipient) {
+    const data = { recipient: recipient, recipes: setOfRecipes };
+    fetch('http://localhost:5500/mail/', {
         method: 'POST',
-        body: 'hi',
-        // headers: { 'Content-type': 'application/json; charset=UTF-8' },
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json',
+        },
     })
-        .then((response) => response.text())
-        .then((text) => console.log(text))
+        .then((response) => response.json())
+        .then((json) => console.log(json))
         .catch((err) => console.log(err));
 }
 

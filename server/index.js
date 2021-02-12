@@ -3,6 +3,7 @@
 const express = require('express');
 const app = express();
 const path = require('path');
+const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 5500;
 const morgan = require('morgan');
 
@@ -10,11 +11,12 @@ const server = app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
 });
 
-// app.use(express.static(path.resolve(__dirname, '..', 'public')));
+app.use(morgan('dev'));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(express.static(path.resolve(__dirname, '..', 'src')));
 app.use(express.static(path.resolve(__dirname, '..', 'content')));
 app.use(express.static(path.resolve(__dirname, '..', 'dist')));
-app.use(morgan('dev'));
 
 const keyGetter = require('./routes/key.js');
 const mailer = require('./routes/mailer.js');

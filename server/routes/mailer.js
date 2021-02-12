@@ -35,12 +35,15 @@ async function mail(sendTo) {
     // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
 }
 
-mailer.post('/:addr', async (req, res, next) => {
+mailer.post('/', async (req, res, next) => {
     try {
-        if (req.params.addr === 'test') {
-            mail();
-            res.sendStatus(200).send('test route reached');
-        }
+        // if (req.params === 'test') {
+        //     mail();
+        //     res.sendStatus(200).send('test route reached');
+        // } else {
+        console.log(req.body);
+        res.json({ msg: 'Mail received, thanks friend :|', why: 'tryouts' });
+        // }
     } catch (err) {
         next(err);
     }
