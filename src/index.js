@@ -72,6 +72,14 @@ import {
     showHide,
     makeButton,
     makeAnchor,
+    stringFromValues,
+    getCheckedValues,
+    passRecipe,
+    emailResults,
+    stringSplice,
+    saveRecipe,
+    clearSaved,
+    clearAll,
     addGeneratorButtonToRecipe,
     listFromIngredients,
     makeModal,
@@ -93,7 +101,7 @@ import {
 } from './utils/elements';
 
 import { stringByIngredients, simpleRecipeFinder } from './utils/queryLogic';
-
+// All helper functions available globally
 (function initFunc() {
     return {
         setAttributes,
@@ -103,6 +111,14 @@ import { stringByIngredients, simpleRecipeFinder } from './utils/queryLogic';
         makeButton,
         makeAnchor,
         addGeneratorButtonToRecipe,
+        stringFromValues,
+        getCheckedValues,
+        passRecipe,
+        emailResults,
+        stringSplice,
+        saveRecipe,
+        clearSaved,
+        clearAll,
         listFromIngredients,
         makeModal,
         injectFunctionIntoModal,
@@ -127,7 +143,7 @@ const key = fetch(`${domain}/api/key`)
 })();
 
 window.onload = function () {
-    localStorage.clear();
+    clearAll();
 };
 
 /**
