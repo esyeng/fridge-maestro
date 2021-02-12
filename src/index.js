@@ -126,6 +126,10 @@ const key = fetch(`${domain}/api/key`)
     key.then((data) => (api.key = data));
 })();
 
+window.onload = function () {
+    localStorage.clear();
+};
+
 /**
  *
  * @Module Controller initialization

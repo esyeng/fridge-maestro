@@ -104,16 +104,17 @@ export function showRecipes(recipes) {
 }
 
 export function postRecipesToEmail() {
+    console.log(localStorage);
     let keyString = localStorage.saved;
     const keys = keyString.split(', ');
     console.log(keys);
     const recipesToEmail = [];
 
     for (let id in localStorage) {
-        if (localStorage.hasOwnPropery(id)) {
+        if (localStorage[id]) {
             keys.forEach((key) => {
                 if (key === id) {
-                    recipesToEmail.push(localStorage[key]);
+                    recipesToEmail.push(localStorage[id]);
                 }
             });
         }

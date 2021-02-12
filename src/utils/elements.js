@@ -8,6 +8,7 @@ import {
     Controller,
     stringByIngredients,
     simpleRecipeFinder,
+    postRecipesToEmail,
 } from './queryLogic';
 
 /**
@@ -27,6 +28,7 @@ const foodContainer = document.getElementById('food_container');
 const addToList = document.getElementById('add_to_list'); // add btn
 const clear = document.getElementById('clear_photos'); // clear results btn,
 const submit = document.getElementById('submit_query'); // btn to send request object to probe recipe API(s)
+const email = document.getElementById('email_results_btn');
 
 /**
  *
@@ -93,6 +95,10 @@ submit.addEventListener('click', async (e) => {
         foodContainer.removeChild(foodContainer.firstChild);
     }
     await simpleRecipeFinder(queryStr);
+});
+
+email.addEventListener('click', (e) => {
+    postRecipesToEmail();
 });
 
 /**
@@ -183,4 +189,5 @@ export {
     toggleNutrition,
     nutritionTable,
     nutritionHeader,
+    email,
 };

@@ -262,5 +262,11 @@ export function clearSaved() {
     localStorage.setItem('saved', null);
 }
 
+export function clearAll() {
+    console.log('clearing all local storage', localStorage);
+    localStorage.clear();
+    console.log('it should be clear now', localStorage);
+}
+
 // console.log(saveRecipe(99));
 // console.log(saveRecipe(73812));

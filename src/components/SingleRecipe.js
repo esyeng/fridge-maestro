@@ -9,7 +9,7 @@
  * requires this).
  */
 
-import { listFromIngredients, passRecipe } from '../utils/helpers';
+import { listFromIngredients, passRecipe, saveRecipe } from '../utils/helpers';
 // import { analyzeInstructions, getInstructions } from '../utils/queryLogic';
 import { api } from './ApiController';
 
@@ -63,6 +63,7 @@ export function injectDataIntoModal(singleRecipeData, instructions) {
     saveButton.innerText = 'Save';
     saveButton.setAttribute('class', 'btn btn-light save');
     saveButton.addEventListener('click', (e) => {
+        saveRecipe(singleRecipeData.id);
         const recipeCenter = document.getElementById('recipe_center_section');
         const savedRef = document.createElement(`li`);
         const savedDivIfFirstSave = createSaved();
@@ -169,7 +170,6 @@ export function showMeTheSteps(instructions) {
     const eqList = document.createElement('ul');
     eqList.setAttribute('class', 'single_recipe_list_eq list_unstyled');
     eqList.innerHTML = `<h3 class="modal_content_sub">Equipment: </h3>`;
-    console.log('equipment list', eqList);
     let needsEquipment = false;
 
     instructions.forEach((step) => {
