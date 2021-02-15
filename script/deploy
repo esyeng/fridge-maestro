@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+# Trap any program EXIT and run this function.
+# Whether the deploy succeeds or fails, clean up the deploy branch.
+
+function cleanup_at_exit {
+  git checkout main
+
+  # git branch -D deploy
+}
+trap cleanup_at_exit EXIT
+
+
+# git add -f .env.js
+
+
+
+# "force" add the otherwise gitignored build files
+webpack
+git add -f dist/main.js dist/main.js.map dist/main.css dist/main.css.map dist/index.html dist/805cca3e061d1e06fc07ec563a10d3be.jpg dist/a58c59bf1bf9f0600b3fc3f5c0d3cd9a.jpg dist/b139fed3af8ca545f69ef91a3ea0feef.jpg
+
+# create a commit, even if nothing changed
+git commit --allow-empty -m 'Deploying'
+
+# push your local "deploy" branch to the "master" branch on heroku
+git push heroku main
