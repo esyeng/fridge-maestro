@@ -4,33 +4,6 @@ const express = require('express');
 const mailer = express.Router();
 const nodemailer = require('nodemailer');
 require('dotenv').config();
-/**
- * reference object
- * {
-  recipient: 'yenigun13@gmail.com',
-  recipes: [
-    { id: 604816, data: [Object], instructions: [Array] },
-    { id: 523194, data: [Object], instructions: [Array] }
-  ]
-}
-* reference output {
-     <div>
-    <h1>Orange- Glazed Grilled Shrimp</h1>
-    <img src='https://spoonacular.com/recipeImages/491525-312x231.jpg' >
-        <h3>Ingredients:</h3>
-            <p>Missing: </p>
-            <ul><li>1/1/2 tsp. grainy mustard</li><li>1/4 cup orange marmalade</li></ul>
-            <p>Used:</p>
-            <ul><li>16 large shrimp (with tails on)</li></ul>
-            <p>Unused: </p>
-            <ul></ul>
-            <p>Instructions: </p>
-            <ol><li>No instructions found</li></ol>
-    </div>
-}
-*
-*
- */
 
 module.exports = mailer;
 
@@ -166,7 +139,6 @@ mailer.post('/', async (req, res, next) => {
     try {
         await mail(req.body.recipient, req.body.recipes);
         res.json({ msg: 'Data received, mailing attempted' });
-        // }
     } catch (err) {
         next(err);
     }

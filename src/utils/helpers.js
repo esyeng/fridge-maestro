@@ -1,7 +1,5 @@
 'use strict';
 
-import { analyzeInstructions } from './queryLogic';
-
 /**
  *
  * Helper functions
@@ -175,12 +173,6 @@ export function makeModal(id) {
     modal.id = `${id}-modal`;
     return modal;
 }
-
-// export function controlModal(modal) {
-//     modal.style.display === 'none'
-//         ? (modal.style.display = 'block')
-//         : (modal.style.display = 'none');
-// }
 
 export function injectFunctionIntoModal(recipe, id) {
     const modal = document.getElementById(`${id}-modal-header`);
