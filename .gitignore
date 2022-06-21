@@ -50,3 +50,6 @@ Thumbs.db
 
 # workspace specific
 .env
+
+# notes
+notes.md
