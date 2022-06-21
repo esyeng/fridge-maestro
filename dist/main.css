@@ -1,0 +1,616 @@
+* {
+    font-family: sans-serif;
+}
+
+.main_title {
+    background-color: black;
+    color: white;
+    max-width: 100vw;
+    font-size: 36pt;
+    font-style: italic;
+    text-align: center;
+    font-family: 'Yusei Magic', sans-serif;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+}
+
+.header_default {
+    height: fit-content;
+    padding: 0.625rem;
+    background-color: black;
+}
+
+.header_hr_divider {
+    margin: 0%;
+    color: white;
+    border-top: 2px double;
+    height: 5px;
+    /* background-size: 2px; */
+}
+
+.slidein {
+    animation-name: slidein;
+    animation-duration: 3s;
+}
+
+@keyframes slidein {
+    from {
+        opacity: 0%;
+        margin-right: 1.5625rem;
+    }
+    to {
+        opacity: 100%;
+        margin-right: 0rem;
+    }
+}
+
+/* 
+Form control 
+*/
+
+/* Group fields with border */
+.fieldset_bordered {
+    margin: 0.625rem;
+    border: 0.0625rem solid black;
+}
+
+/* Apply margin rule with legend */
+.fieldset_bordered_legend {
+    margin: 0.625rem;
+    text-align: center;
+}
+
+/* set bordered background */
+.fieldset_menu_bg {
+    background-color: black;
+    color: white;
+}
+
+/* Set spacing for an input element */
+.input_margin {
+    margin-bottom: 0.625rem;
+}
+
+/* validation fields */
+
+.search_bar {
+    /* min-width: 31.25rem; */
+    padding: 0.75rem;
+    margin-bottom: 0rem;
+}
+@media (max-width: 23.125rem) {
+    .search_bar {
+        min-width: 23.125rem;
+    }
+}
+/* buttons */
+.search:hover {
+    background-color: beige;
+    color: black;
+}
+
+/* Class selector for floating right */
+*::before {
+    box-sizing: unset;
+}
+
+*::after {
+    box-sizing: unset;
+}
+
+body {
+    background-color: #fcf8e3;
+}
+
+/* hero */
+.hero {
+    background-color: black;
+}
+
+.hero_image {
+    max-width: max-content;
+    margin: 0;
+}
+
+.hero_paragraph_bold {
+    font-size: 3rem;
+}
+
+.hero_section_text {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.76);
+    border-radius: 25px;
+    top: 30%;
+    right: 5%;
+    left: 50%;
+    padding-right: 4%;
+    padding-left: 2%;
+    padding-bottom: 4%;
+    color: white;
+    text-align: end;
+    max-height: 24.375rem;
+    font-size: 1rem;
+}
+
+.hero_button_entry {
+    font-size: 1.375rem;
+    font-style: italic;
+    margin-bottom: 0.3125rem;
+}
+
+.form_label_start {
+    text-align: center;
+    font-size: 1.375rem;
+    margin-bottom: 0.3125rem;
+    padding: 0.625rem 0 0.625rem 0;
+}
+
+/* Hero media queries */
+@media screen and (max-width: 1260px) {
+    .hero_image {
+        background-color: black;
+        border-radius: 25px;
+        border-color: black;
+        border: 12px #fcf8e3;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 95%;
+    }
+
+    .hero_section_text {
+        position: unset;
+        text-align: center;
+        background-color: black;
+        border-radius: 0;
+        max-height: unset;
+    }
+    .hero_div_text {
+        display: flex;
+        flex-basis: 1;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .hero_div_text_p {
+        flex: 1;
+        justify-content: space-evenly;
+        align-self: stretch;
+    }
+}
+.hero_strong {
+    text-decoration: solid;
+    font-style: italic;
+    font-size: 1rem;
+}
+
+/* floats */
+.float_right {
+    float: right;
+}
+
+.float_left {
+    float: left;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* Rules for results area, ingredient section & recipes */
+
+.result_box {
+    display: flex;
+}
+
+.result_box_container {
+    flex-grow: 1;
+    padding: 1.875rem;
+}
+
+.ingredient_list {
+    align-items: flex-start;
+    background-color: black;
+    color: white;
+    max-width: 21.25rem;
+    margin-left: -0.5rem;
+}
+
+.ingredient {
+    flex-basis: 40%;
+    flex-grow: 1;
+}
+
+.ingredient_li {
+    min-width: 7.25rem;
+    width: fit-content;
+}
+
+@media only screen and (max-width: 37.5rem) {
+    .result_box {
+        flex-wrap: wrap;
+    }
+}
+
+.recipe {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.recipe_card {
+    z-index: 10;
+    flex-basis: 60%;
+    flex-grow: 1;
+    flex-direction: column;
+    margin: 0.125rem;
+    flex-shrink: 0;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.recipe_card_li {
+    z-index: 8;
+    min-width: 7.25rem;
+    width: fit-content;
+    border: 1px solid green;
+    font-size: 0.875rem;
+}
+
+.recipe_card_button {
+    z-index: 12;
+    max-height: 3.125rem;
+    max-width: min-content;
+    padding-left: 0.9375rem;
+    padding-right: 0.9375rem;
+}
+
+.recently_viewed {
+    margin: 0.75rem;
+}
+
+/* Image container */
+
+.food_container {
+    display: flex;
+    overflow: scroll;
+    flex-wrap: wrap;
+    flex-grow: 1;
+    margin: 0.125rem;
+    padding-right: 0.75rem;
+}
+
+.food_container_card {
+    padding-left: 1.25rem;
+    padding-top: 0.625rem;
+    max-width: 18.75rem;
+    margin: auto;
+    margin-top: 0.3125rem;
+    border-radius: 0.4375rem;
+    max-height: 23.125rem;
+    padding-bottom: 3.125rem;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+        rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+
+.food_container_card_btn {
+    flex: auto;
+}
+
+.food_container_card:hover {
+    /* max-height: 16.25rem; */
+    /* max-width: 16.25rem; */
+    /* max-height: 23.125rem; */
+    /* min-width: 100%; */
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset,
+        rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+}
+
+.food_container_img {
+    flex-grow: 1;
+    max-height: 12.5rem;
+    max-width: 12.5rem;
+    min-height: 12.5rem;
+    min-width: 12.5rem;
+    margin: 0.1875rem;
+    border-radius: 25px;
+}
+
+.food_container_toggle {
+    z-index: 4;
+}
+
+@media screen and (max-width: 37.5rem) {
+    .food_container_img {
+        max-height: 9.375rem;
+        max-width: 9.375rem;
+        min-height: 9.375rem;
+        min-width: 9.375rem;
+    }
+}
+
+.single_recipe {
+    max-height: 25rem;
+    max-width: 25rem;
+    background-color: black;
+    border-radius: 25px;
+    z-index: 100;
+}
+
+.single_recipe_list {
+    /* background-color: black;*/
+    /* display: block; */
+    max-height: 25rem;
+    max-width: 25rem;
+    color: white;
+    background-color: black;
+}
+
+.instructions_list {
+    max-width: 56.25rem;
+    overflow-y: scroll;
+    flex-wrap: inherit;
+    scroll-behavior: smooth;
+}
+
+.single_recipe_list_eq {
+    /* display: block; */
+    justify-self: flex-end;
+    max-height: 50rem;
+    max-width: 50rem;
+    color: white;
+    background-color: black;
+    overflow-y: scroll;
+}
+
+.single_recipe_inner {
+    background-color: black;
+    color: white;
+}
+
+.single_recipe_content {
+    background-color: black;
+    color: white;
+}
+
+.single_recipe_button {
+    height: 200px;
+    width: 200px;
+    color: red;
+}
+
+/* Footer */
+
+.footer {
+    position: sticky;
+    height: 6.25rem;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    margin: auto;
+    background-color: #000000e3;
+}
+
+.footer_text {
+    align-items: center;
+}
+
+/* Link & a tag rules */
+
+/* Navigation list */
+.list_nav {
+    display: inline-block;
+    list-style-type: none;
+    margin: 0%;
+    margin-bottom: 0%;
+}
+
+.list_nav_item a {
+    text-decoration: none;
+    color: #fcf8e3;
+    background-color: black;
+    padding: 0.25rem;
+}
+
+.list_nav_item a:hover {
+    color: black;
+    background-color: #fcf8e3;
+}
+
+.fake_tag {
+    color: cornflowerblue;
+    text-decoration: underline;
+}
+.fake_tag:hover {
+    color: purple;
+}
+
+.save {
+    background-color: white;
+    width: fit-content;
+    padding: 0.3125rem 0.3125rem 0.3125rem 0.3125rem;
+    color: black;
+}
+
+/* Modal control */
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    /* visibility: hidden; */
+    margin-left: auto;
+    margin-right: auto;
+    position: fixed; /* Stay in place */
+    z-index: 200; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* .modal-hello {
+    visibility: visible;
+} */
+/* Modal Header */
+.modal-header {
+    padding: 2px 16px;
+    background-color: black;
+    color: white;
+}
+
+/* Modal Body */
+.modal-body {
+    padding: 2px 16px;
+}
+
+/* Modal Footer */
+.modal-footer {
+    padding: 2px 16px;
+    background-color: black;
+    color: white;
+}
+
+/* Modal Content */
+.modal-content {
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    position: relative;
+    background-color: black;
+    color: white;
+    margin: auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 80%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    animation-name: animatetop;
+    animation-duration: 0.4s;
+    max-height: 37.5rem;
+    margin-top: 5%;
+}
+
+.modal-content > {
+    display: flex;
+    justify-content: stretch;
+}
+
+.modal_content_sub {
+    margin-right: 10px;
+}
+
+@media screen and (min-width: 50rem) {
+    .modal-content ul {
+        display: flex;
+        flex-direction: column;
+        min-width: 12.5rem;
+        max-height: 300px;
+    }
+    .modal_content_list_p {
+        flex-direction: column;
+        flex-wrap: wrap;
+        width: 50rem;
+        padding: 0.1875rem;
+    }
+}
+
+/* Add Animation */
+@keyframes animatetop {
+    from {
+        top: -300px;
+        opacity: 0;
+    }
+    to {
+        top: 0;
+        opacity: 1;
+    }
+}
+/* Modal Content/Box */
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Buttons & functional components */
+
+#get_photos {
+    max-width: 25rem;
+}
+
+.get_photos {
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
+    max-width: 12.5rem;
+    min-width: 3.75rem;
+}
+
+/* specifics to ingredients_search */
+#add_to_list {
+    background-color: black;
+    color: white;
+}
+
+#add_to_list:hover {
+    background-color: #04d63cd2;
+    color: black;
+}
+
+.tag-remove::before {
+    content: 'x ';
+    color: red;
+    font-weight: 300;
+    font-family: Arial, sans-serif;
+}
+
+.collapsible {
+    background-color: black;
+    color: white;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.active,
+.collapsible:hover {
+    background-color: rgb(202, 202, 202);
+    color: black;
+}
+
+/* Style the collapsible content. Note: hidden by default */
+.collapsible_content {
+    padding: 0 18px;
+    display: none;
+    overflow: hidden;
+    background-color: #f1f1f1;
+}
+
+/* Table selectors */
+.table_hidden {
+    visibility: hidden;
+}
+
+.table_show {
+    visibility: visible;
+}
+
+
+/*# sourceMappingURL=main.css.map*/
